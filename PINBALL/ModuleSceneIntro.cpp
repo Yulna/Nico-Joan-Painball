@@ -28,7 +28,9 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
+	background = App->textures->Load("pinball/KirbyPinball.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -80,6 +82,15 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
+
+	//Draw Background
+	if (ground != NULL)
+	{
+		int x, y;
+		ground->GetPosition(x, y);
+		App->renderer->Blit(background, x, y, NULL, 1.0f, ground->GetRotation());
+	}
+
 	p2List_item<PhysBody*>* c = circles.getFirst();
 
 	while(c != NULL)
@@ -129,6 +140,7 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
+
 
 	return UPDATE_CONTINUE;
 }
