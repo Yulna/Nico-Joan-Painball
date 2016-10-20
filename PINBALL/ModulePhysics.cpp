@@ -393,7 +393,7 @@ update_status ModulePhysics::PostUpdate()
 		if ((mouse_joint != nullptr) && (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)) {
 
 			mouse_joint->SetTarget(b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY())));
-			App->renderer->DrawLine(METERS_TO_PIXELS( mouse_pos.x),METERS_TO_PIXELS( mouse_pos.y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 100, 100);
+			App->renderer->DrawLine(METERS_TO_PIXELS( mouse_joint->GetAnchorB().x) , METERS_TO_PIXELS( mouse_joint->GetAnchorB().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 100, 100);
 		}
 		// If a body was selected we will attach a mouse joint to it
 		// so we can pull it around
