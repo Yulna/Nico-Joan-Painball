@@ -57,6 +57,6 @@ private:
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;
-	b2Body* bodypointered;
-	iPoint clicked;
+	b2Body* mouse_body;
+	b2Vec2 mouse_pos;
 };
