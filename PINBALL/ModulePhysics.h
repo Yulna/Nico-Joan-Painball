@@ -44,6 +44,8 @@ public:
 
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateRectangleKicker(int x, int y, int width, int height);
+	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
@@ -56,7 +58,12 @@ private:
 	bool debug;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
+	b2RevoluteJoint* revolute_joint;
+
 	b2Body* ground;
+	PhysBody* kicker;
+	PhysBody* kickerjoint;
+
 	b2Body* mouse_body;
 	b2Vec2 mouse_pos;
 };
