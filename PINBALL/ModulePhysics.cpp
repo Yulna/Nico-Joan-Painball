@@ -145,11 +145,12 @@ bool ModulePhysics::Start()
 	App->scene_intro->ground = App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), Pinball, 164);
 
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
-	kicker = CreateRectangleKicker(53, 411, 16,8);
+	kicker = CreateRectangleKicker(53, 411, 30,8);
 
 	b2RevoluteJointDef revolutedef;
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
+	revolutedef.localAnchorB = b2Vec2( -0.2, 0);
 	revolutedef.enableLimit = true;
 	revolutedef.lowerAngle = -(3.14 / 4);
 	revolutedef.upperAngle = (3.14 / 4);
@@ -159,6 +160,11 @@ bool ModulePhysics::Start()
 
 	return true;
 }
+
+//Kicker force
+
+
+
 
 // 
 update_status ModulePhysics::PreUpdate()

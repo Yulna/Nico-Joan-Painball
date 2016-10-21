@@ -66,7 +66,7 @@ update_status ModuleSceneIntro::Update()
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10));
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		// Pivot 0, 0
 		
