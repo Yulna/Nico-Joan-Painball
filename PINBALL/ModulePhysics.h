@@ -48,7 +48,15 @@ public:
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+<<<<<<< HEAD
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
+=======
+
+	//Floating walls
+	void CreateFloatingWalls();
+
+
+>>>>>>> origin/master
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
