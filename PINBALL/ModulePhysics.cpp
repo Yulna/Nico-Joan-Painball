@@ -151,7 +151,7 @@ bool ModulePhysics::Start()
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
 	revolutedef.enableLimit = true;
-	revolutedef.lowerAngle = -(3.14/4);
+	revolutedef.lowerAngle = -(3.14 / 4);
 	revolutedef.upperAngle = (3.14 / 4);
 	revolutedef.collideConnected = false;
 
@@ -189,7 +189,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 
 	b2CircleShape shape;
 	shape.m_radius = PIXEL_TO_METERS(radius);
-	b2FixtureDef fixture;
+	b2FixtureDef fixture;	
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
 
