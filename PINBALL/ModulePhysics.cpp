@@ -55,7 +55,7 @@ bool ModulePhysics::Start()
 	big_ball->CreateFixture(&fixture);*/
 	
 	// Pivot 0, 0
-	int Pinball[164] = {
+	int Pinball_exterior[164] = {
 		28, 448,
 		39, 423,
 		16, 413,
@@ -142,7 +142,7 @@ bool ModulePhysics::Start()
 
 
 
-	App->scene_intro->ground = App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), Pinball, 164);
+	App->scene_intro->ground = CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), Pinball_exterior, 164);
 
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
 	kicker = CreateRectangleKicker(53, 411, 30,8);
@@ -347,6 +347,14 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	pbody->width = pbody->height = 0;
 
 	return pbody;
+}
+
+
+//
+void ModulePhysics::CreateFloatingWalls()
+{
+
+
 }
 
 
@@ -583,3 +591,5 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
+
+
