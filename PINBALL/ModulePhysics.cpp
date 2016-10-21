@@ -371,7 +371,7 @@ update_status ModulePhysics::PostUpdate()
 			{
 				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 				b2Vec2 pos = f->GetBody()->GetPosition();
-				App->renderer->DrawCircle(METERS_TO_PIXELS(pos.x)*SCREEN_SIZE, METERS_TO_PIXELS(pos.y)*SCREEN_SIZE, METERS_TO_PIXELS(shape->m_radius), 100, 100, 255);
+				App->renderer->DrawCircle(METERS_TO_PIXELS(pos.x * SCREEN_SIZE), METERS_TO_PIXELS(pos.y * SCREEN_SIZE), METERS_TO_PIXELS(shape->m_radius * SCREEN_SIZE), 100, 100, 255);
 			}
 			break;
 
@@ -473,9 +473,6 @@ update_status ModulePhysics::PostUpdate()
 
 		// TODO 3: If the player keeps pressing the mouse button, update
 		// target position and draw a red line between both anchor points
-
-
-
 
 		// TODO 4: If the player releases the mouse button, destroy the joint
 
