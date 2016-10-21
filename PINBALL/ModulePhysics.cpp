@@ -146,25 +146,42 @@ bool ModulePhysics::Start()
 
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
 	kicker = CreateRectangleKicker(53, 411, 30,8);
-
-	b2RevoluteJointDef revolutedef;
+	
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
 	revolutedef.localAnchorB = b2Vec2( -0.2, 0);
 	revolutedef.enableLimit = true;
-	revolutedef.lowerAngle = -(3.14 / 4);
-	revolutedef.upperAngle = (3.14 / 4);
+	revolutedef.lowerAngle = -(3.14 /4);
+	revolutedef.upperAngle = (3.14 / 6);
 	revolutedef.collideConnected = false;
-
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
 
+	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 2, 1);
+	kickerV2 = CreateRectangleKicker(106, 411, 30, 8);
+
+	revolutedefV2.bodyA = kickerjointV2->body;
+	revolutedefV2.bodyB = kickerV2->body;
+	revolutedefV2.localAnchorB = b2Vec2(0.2, 0);
+	revolutedefV2.enableLimit = true;
+	revolutedefV2.lowerAngle = -(3.14 / 6);
+	revolutedefV2.upperAngle = (3.14 / 4);
+	revolutedefV2.collideConnected = false;
+	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
+	
 	return true;
 }
 
 //Kicker force
-
-
-
+void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit) {
+	if (App->scene_intro->leftkick == true) {
+		revolutedef.bodyB->ApplyForce(vectforce, posit, true);
+		App->scene_intro->leftkick = false;
+	}
+	else if (App->scene_intro->rightkick == true) {
+		revolutedefV2.bodyB->ApplyForce(vectforce, posit, true);
+		App->scene_intro->rightkick = false;
+	}
+}
 
 // 
 update_status ModulePhysics::PreUpdate()

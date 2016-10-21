@@ -48,11 +48,11 @@ public:
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-
+	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
-
+	
 private:
 
 	bool debug;
@@ -63,7 +63,10 @@ private:
 	b2Body* ground;
 	PhysBody* kicker;
 	PhysBody* kickerjoint;
-
+	PhysBody* kickerV2;
+	PhysBody* kickerjointV2;
+	b2RevoluteJointDef revolutedef;
+	b2RevoluteJointDef revolutedefV2;
 	b2Body* mouse_body;
 	b2Vec2 mouse_pos;
 };

@@ -66,9 +66,16 @@ update_status ModuleSceneIntro::Update()
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10));
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		// Pivot 0, 0
+		leftkick = true;
+		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(0, 0));
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		rightkick = true;
+		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(5, 0));
 		
 	}
 
