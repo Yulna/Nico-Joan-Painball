@@ -44,4 +44,6 @@ public:
 	p2Point<int> ray;
 	bool ray_on;
 	bool kirbyumbrella;
+	int TimesKickCloud;
+	bool raincloud;
 };

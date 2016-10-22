@@ -52,6 +52,7 @@ bool ModuleSceneIntro::Start()
 	cloud = App->textures->Load("pinball/movingCloud.png");
 	cloudanim.PushBack({0,1,24,14});
 	cloudanim.PushBack({27,0,26,16});
+	
 	cloudanim.speed = 0.07f;
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
 	fatkirbyanim.PushBack({ 0,17,26,25 });
@@ -237,9 +238,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	//como hacer sensores
 	App->audio->PlayFx(bonus_fx);
 	if (bodyA != nullptr && bodyB != nullptr) {
-		if (bodyA->body == App->physics->paco->body || bodyB->body == App->physics->paco->body) {
-
+		if (bodyA->body == App->physics->kinematicrect->body || bodyB->body == App->physics->kinematicrect->body) {
+			if (TimesKickCloud == 3) {
+				cloudanim.PushBack({ 56,0,26,16 });
+			}
+			TimesKickCloud++;
 		}
+		
 	}
 	/*
 	if(bodyA)

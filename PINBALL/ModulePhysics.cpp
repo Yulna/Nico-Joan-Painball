@@ -212,8 +212,7 @@ bool ModulePhysics::Start()
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
 	//como hacer sensores
-	paco = CreateRectangleSensor(0, 0, 10, 10);
-	paco->listener = App->scene_intro;
+	kinematicrect->listener = App->scene_intro;
 	//Walls
 	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f);
 	CreateFloatingWalls();
@@ -468,10 +467,10 @@ update_status ModulePhysics::Update() {
 
 	int xkin, ykin;
 	kinematicrect->GetPosition(xkin, ykin);
-	if (xkin<10) {
+	if (xkin<20) {
 		kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 	}
-	else if (xkin>125) {
+	else if (xkin>115) {
 		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
 	}
 
