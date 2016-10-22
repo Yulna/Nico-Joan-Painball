@@ -25,6 +25,8 @@ public:
 	PhysBody* ground;
 	Animation spikyball1Anim;
 	Animation ghostanim;
+	Animation cloudanim;
+	Animation fatkirbyanim;
 	PhysBody* sensor;
 	bool sensed;
 	bool rightkick;
@@ -36,7 +38,10 @@ public:
 	SDL_Texture* kicker;
 	SDL_Texture* spikyBall;
 	SDL_Texture* ghost;
+	SDL_Texture* cloud;
+	SDL_Texture* fatkirbytext;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
+	bool kirbyumbrella;
 };

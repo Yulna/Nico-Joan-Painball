@@ -49,7 +49,21 @@ bool ModuleSceneIntro::Start()
 	ghostanim.PushBack({ 141,0,14,15 });
 	ghostanim.speed = 0.02f;
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-
+	cloud = App->textures->Load("pinball/movingCloud.png");
+	cloudanim.PushBack({0,1,24,14});
+	cloudanim.PushBack({27,0,26,16});
+	cloudanim.speed = 0.07f;
+	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
+	fatkirbyanim.PushBack({ 0,17,26,25 });
+	if (kirbyumbrella == true) {
+		fatkirbyanim.PushBack({ 29,17,26,28 });
+		fatkirbyanim.PushBack({ 58,17,26,28 });
+		fatkirbyanim.PushBack({ 86,11,29,32 });
+		fatkirbyanim.PushBack({ 118,3,25,40 });
+		fatkirbyanim.PushBack({ 146,3,25,40 });
+		fatkirbyanim.PushBack({ 174,5,25,38 });
+		fatkirbyanim.PushBack({ 202,0,25,43 });
+	}
 	return ret;
 }
 
@@ -209,15 +223,24 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(ghost, x - (App->physics->ghost1->width / 2), y - (App->physics->ghost1->height / 2), &(ghostanim.GetCurrentFrame()));
 	App->physics->ghost2->GetPosition(x, y);
 	App->renderer->Blit(ghost, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(ghostanim.GetCurrentFrame()));
+	App->physics->kinematicrect->GetPosition(x, y);
+	App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
+	App->physics->fatkirby->GetPosition(x, y);
+	App->renderer->Blit(fatkirbytext, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(fatkirbyanim.GetCurrentFrame()));
+	
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
-
+	//como hacer sensores
 	App->audio->PlayFx(bonus_fx);
+	if (bodyA != nullptr && bodyB != nullptr) {
+		if (bodyA->body == App->physics->paco->body || bodyB->body == App->physics->paco->body) {
 
+		}
+	}
 	/*
 	if(bodyA)
 	{

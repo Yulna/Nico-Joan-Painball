@@ -47,6 +47,7 @@ public:
 	bool Start();
 	update_status PreUpdate();
 	update_status PostUpdate();
+	update_status Update();
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
@@ -74,7 +75,8 @@ public:
 	PhysBody* spikyball2;
 	PhysBody* ghost2;
 	PhysBody* kinematicrect;
-
+	PhysBody* paco;
+	PhysBody* fatkirby;
 private:
 
 	bool debug;

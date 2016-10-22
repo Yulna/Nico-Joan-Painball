@@ -227,9 +227,11 @@ bool ModulePhysics::Start()
 	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
-
+	//como hacer sensores
+	paco = CreateRectangleSensor(0, 0, 10, 10);
+	paco->listener = App->scene_intro;
 	//Walls
-
+	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f);
 	CreateFloatingWalls();
 
 	return true;
@@ -476,6 +478,24 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, int fi
 
 
 
+
+
+update_status ModulePhysics::Update() {
+
+	int xkin, ykin;
+	kinematicrect->GetPosition(xkin, ykin);
+	if (xkin<10) {
+		kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+	}
+	else if (xkin>125) {
+		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
+	}
+
+
+	return UPDATE_CONTINUE;
+}
+
+
 // 
 update_status ModulePhysics::PostUpdate()
 {
@@ -607,16 +627,6 @@ update_status ModulePhysics::PostUpdate()
 
 		}
 	}
-
-	int xkin, ykin;
-	kinematicrect->GetPosition(xkin, ykin);
-	if (xkin<10) {
-		kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
-	}
-	else if (xkin>125) {
-		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
-	}
-
 
 
 	return UPDATE_CONTINUE;
@@ -781,3 +791,4 @@ void ModulePhysics::CreateFloatingWalls()
 
 
 }
+
