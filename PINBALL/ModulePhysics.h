@@ -48,7 +48,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type);
+	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleKicker(int x, int y, int width, int height);
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
@@ -68,12 +68,16 @@ public:
 	void BeginContact(b2Contact* contact);
 	PhysBody* kicker;
 	PhysBody* kickerV2;
+	PhysBody* spikyball;
+	PhysBody* ghost;
+
 private:
 
 	bool debug;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2RevoluteJoint* revolute_joint;
+	b2RevoluteJoint* revolutemotor;
 
 	b2Body* ground;
 
