@@ -26,11 +26,10 @@ bool ModuleSceneIntro::Start()
 	
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
 	background = App->textures->Load("pinball/KirbyPinball.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	kicker = App->textures->Load("pinball/kicker.png");
+	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -117,7 +116,6 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		//App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
 		if(ray_on)
 		{
 			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
