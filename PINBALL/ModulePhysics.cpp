@@ -224,6 +224,10 @@ bool ModulePhysics::Start()
 	revdef2.localAnchorB = b2Vec2(-0.25, 0);
 	revolutemotorghost2 = (b2RevoluteJoint*)world->CreateJoint(&revdef2);
 	
+	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
+	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+
+
 	//Walls
 
 	CreateFloatingWalls();
@@ -326,6 +330,35 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 
 	return pbody;
 }
+
+
+PhysBody* ModulePhysics::CreateKinematicRectangle(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_kinematicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.restitution = 0.3f;
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width * 0.5f;
+	pbody->height = height * 0.5f;
+
+	return pbody;
+}
+
 
 
 //Tes purposes only, Erase/Change later-------------------------------------------------------------------------------------------------------------------------
@@ -574,6 +607,16 @@ update_status ModulePhysics::PostUpdate()
 
 		}
 	}
+
+	int xkin, ykin;
+	kinematicrect->GetPosition(xkin, ykin);
+	if (xkin<10) {
+		kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+	}
+	else if (xkin>125) {
+		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
+	}
+
 
 
 	return UPDATE_CONTINUE;

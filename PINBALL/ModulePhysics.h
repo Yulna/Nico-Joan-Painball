@@ -56,7 +56,7 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, int filterIndex);
 	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int filterIndex);
-
+	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
 
 
@@ -73,7 +73,7 @@ public:
 	PhysBody* ghost1;
 	PhysBody* spikyball2;
 	PhysBody* ghost2;
-	
+	PhysBody* kinematicrect;
 
 private:
 
