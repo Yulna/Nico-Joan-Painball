@@ -142,7 +142,7 @@ bool ModulePhysics::Start()
 
 
 
-	App->scene_intro->ground = CreateChain(App->input->GetMouseX(), App->input->GetMouseY() - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164);
+	App->scene_intro->ground = CreateChain(0, 0 - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164, NULL);
 
 
 	//kicker 1
@@ -157,7 +157,7 @@ bool ModulePhysics::Start()
 
 
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
-	kicker = CreatePolygon(53, 411, kicker1, 10);
+	kicker = CreatePolygon(48, 406, kicker1, 10, 100, -2);
 	
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
@@ -169,12 +169,23 @@ bool ModulePhysics::Start()
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
 	
 	
+
+	// Pivot 0, 0
+	int kicker2[10] = {
+		0, 12,
+		20, 10,
+		23, 5,
+		20, 1,
+		14, 2
+	};
+
+
 	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 2, 1);
-	kickerV2 = CreateRectangleKicker(106, 411, 30, 8);
+	kickerV2 = CreatePolygon(86, 406, kicker2, 10, 100, -2);
 
 	revolutedefV2.bodyA = kickerjointV2->body;
 	revolutedefV2.bodyB = kickerV2->body;
-	revolutedefV2.localAnchorB = b2Vec2(0.2, 0);
+	revolutedefV2.localAnchorB = b2Vec2(0.3, 0.1);
 	revolutedefV2.enableLimit = true;
 	revolutedefV2.lowerAngle = -(3.14 / 6);
 	revolutedefV2.upperAngle = (3.14 / 4);
@@ -184,6 +195,13 @@ bool ModulePhysics::Start()
 
 	CreateCircle(26,315,5,STATIC);
 	CreateCircle(134, 315, 5,STATIC);
+
+	//WAlls
+
+	CreateFloatingWalls();
+	
+
+
 	return true;
 }
 
@@ -364,7 +382,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
+PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, int filterIndex)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -385,6 +403,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
+	fixture.filter.groupIndex = filterIndex;
 
 	b->CreateFixture(&fixture);
 
@@ -481,11 +500,9 @@ update_status ModulePhysics::PostUpdate()
 			}
 			break;
 			}
-
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
 			
+
+			//Get mous postion in a body
 			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
 
 				mouse_pos.x = PIXEL_TO_METERS(App->input->GetMouseX());
@@ -503,6 +520,7 @@ update_status ModulePhysics::PostUpdate()
 		}
 
 
+		//Debug mouse joint
 		if (debug_joint == true) {
 			b2MouseJointDef def;
 			def.bodyA = ground;
@@ -520,16 +538,7 @@ update_status ModulePhysics::PostUpdate()
 			mouse_joint->SetTarget(b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY())));
 			App->renderer->DrawLine(METERS_TO_PIXELS( mouse_joint->GetAnchorB().x) , METERS_TO_PIXELS( mouse_joint->GetAnchorB().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 100, 100);
 		}
-		// If a body was selected we will attach a mouse joint to it
-		// so we can pull it around
-		// TODO 2: If a body was selected, create a mouse joint
-		// using mouse_joint class property
-
-		// TODO 3: If the player keeps pressing the mouse button, update
-		// target position and draw a red line between both anchor points
-
-		// TODO 4: If the player releases the mouse button, destroy the joint
-
+	
 
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != nullptr)
 		{
@@ -634,7 +643,7 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 
 //
-PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size)
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int filterIndex)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -656,7 +665,8 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size)
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 1.0f;
+	fixture.density = dens;
+	fixture.filter.groupIndex = filterIndex;
 
 	b->CreateFixture(&fixture);
 
@@ -670,10 +680,36 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size)
 }
 
 
+
+
+
 //
 void ModulePhysics::CreateFloatingWalls()
 {
+	// Pivot 0, 0
+	int LeftBottomFloor[12] = {
+		48, 413,
+		52, 406,
+		29, 395,
+		29, 377,
+		24, 377,
+		24, 400
+	};
 
+
+	// Pivot 0, 0
+	int RightBottomFloor[12] = {
+		112, 413,
+		108, 406,
+		131, 395,
+		131, 377,
+		136, 377,
+		136, 400
+	};
+
+	
+	CreateChain(0 , 0, LeftBottomFloor, 12, -2);
+	CreateChain(0, 0, RightBottomFloor, 12, -2);
 
 
 
