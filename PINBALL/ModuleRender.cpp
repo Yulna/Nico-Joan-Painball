@@ -51,6 +51,9 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
 	/*
+	camera.x = 0;
+	camera.y = -290*SCREEN_SIZE;*/
+	/*
 	int speed = 3;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

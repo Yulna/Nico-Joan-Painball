@@ -31,6 +31,7 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* background;
+	SDL_Texture* kicker;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;

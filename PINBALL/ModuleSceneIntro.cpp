@@ -23,14 +23,14 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
+	
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-	
+	kicker = App->textures->Load("pinball/kicker.png");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -59,6 +59,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
+
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -78,6 +79,7 @@ update_status ModuleSceneIntro::Update()
 		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(5, 0));
 		
 	}
+	
 
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -137,8 +139,8 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
-
-
+	App->renderer->Blit(kicker, 49, 403, NULL, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
+	
 	return UPDATE_CONTINUE;
 }
 

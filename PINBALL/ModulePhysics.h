@@ -48,7 +48,7 @@ public:
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-
+	
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
 
 
@@ -59,8 +59,8 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
-
-	
+	PhysBody* kicker;
+	PhysBody* kickerV2;
 private:
 
 	bool debug;
@@ -69,9 +69,9 @@ private:
 	b2RevoluteJoint* revolute_joint;
 
 	b2Body* ground;
-	PhysBody* kicker;
+
 	PhysBody* kickerjoint;
-	PhysBody* kickerV2;
+
 	PhysBody* kickerjointV2;
 	b2RevoluteJointDef revolutedef;
 	b2RevoluteJointDef revolutedefV2;

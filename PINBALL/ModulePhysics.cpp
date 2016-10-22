@@ -142,7 +142,7 @@ bool ModulePhysics::Start()
 
 
 
-	App->scene_intro->ground = CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), Pinball_exterior, 164);
+	App->scene_intro->ground = CreateChain(App->input->GetMouseX(), App->input->GetMouseY() - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164);
 
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
 	kicker = CreateRectangleKicker(53, 411, 30,8);
@@ -155,7 +155,7 @@ bool ModulePhysics::Start()
 	revolutedef.upperAngle = (3.14 / 6);
 	revolutedef.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
-
+	
 	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 2, 1);
 	kickerV2 = CreateRectangleKicker(106, 411, 30, 8);
 
