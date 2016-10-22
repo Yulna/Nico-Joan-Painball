@@ -88,15 +88,17 @@ update_status ModuleSceneIntro::Update()
 	//Spawning test objects
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
-		int kicker[10] = {
+		int kicker[12] = {
 			2, 1,
 			0, 7,
 			13, 11,
 			22, 10,
-			8, 2
+			8, 2,
 		};
 
-		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker , 10));
+
+		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, -2));
+		
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
