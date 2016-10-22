@@ -182,8 +182,8 @@ bool ModulePhysics::Start()
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
 	
 
-	CreateCircleStatic(26,315,5);
-	CreateCircleStatic(134, 315, 5);
+	CreateCircle(26,315,5,STATIC);
+	CreateCircle(134, 315, 5,STATIC);
 	return true;
 }
 
@@ -218,45 +218,34 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	if (type == DINAMIC) {
+		body.type = b2_dynamicBody;
+	}
+	else if (type == KINEMATIC) {
+		body.type = b2_kinematicBody;
+	}
+	else if (type == STATIC) {
+		body.type = b2_staticBody;
+	}
+
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	body.bullet = true;
-	b2Body* b = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(radius);
-	b2FixtureDef fixture;	
-	fixture.shape = &shape;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = radius;
-
-	return pbody;
-}
-
-
-PhysBody* ModulePhysics::CreateCircleStatic(int x, int y, int radius)
-{
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
+	if (type == DINAMIC) {
+		body.bullet = true;
+	}
 	b2Body* b = world->CreateBody(&body);
 
 	b2CircleShape shape;
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 1.0f;
+	fixture.density = 6;
 
+	if (type == STATIC || type == KINEMATIC) {
+		fixture.restitution = 0.3f;
+	}
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -266,6 +255,7 @@ PhysBody* ModulePhysics::CreateCircleStatic(int x, int y, int radius)
 
 	return pbody;
 }
+
 
 
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
