@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	spikyBall = App->textures->Load("pinball/spikyBall.png");
 	spikyball1Anim.PushBack({ 0,0,17,16 });
-	spikyball1Anim.PushBack({ 17,0,17,16 });
+	spikyball1Anim.PushBack({ 18,0,17,16 });
 	spikyball1Anim.speed = 0.015f;
 
 	ghost = App->textures->Load("pinball/ghost.png");
@@ -173,10 +173,24 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
-	int a, b;
-	App->physics->kicker->GetPosition(a, b);
+	if (kicker) {
+		int x, y;
+		App->physics->kicker->GetPosition(x, y);
+		SDL_Rect rect = {0,0, 22, 12};
+		App->renderer->Blit(kicker, x, y, &rect, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
+	}
 
-	App->renderer->Blit(kicker, a, b, NULL, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
+	if (kicker)
+	{
+		int x, y;
+		App->physics->kickerV2->GetPosition(x, y);
+		SDL_Rect rect = { 24,0, 22, 12 };
+		App->renderer->Blit(kicker, x, y, &rect, 1.0f, App->physics->kickerV2->GetRotation(), -0.2, 0);
+
+	}
+
+
+
 	SDL_Rect rect;
 	rect.x = 0;
 	rect.y = 0;
@@ -184,17 +198,17 @@ update_status ModuleSceneIntro::Update()
 	rect.h = 16;
 	int x, y;
 	App->physics->spikyball1->GetPosition(x,y);
-	App->renderer->Blit(spikyBall, x-App->physics->spikyball1->width, y - App->physics->spikyball1->height, &(spikyball1Anim.GetCurrentFrame()));
+	App->renderer->Blit(spikyBall, x - (App->physics->spikyball1->width / 2), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 	App->physics->spikyball2->GetPosition(x, y);
-	App->renderer->Blit(spikyBall, x - App->physics->spikyball2->width, y - App->physics->spikyball2->height, &(spikyball1Anim.GetCurrentFrame()));
+	App->renderer->Blit(spikyBall, x - (App->physics->spikyball2->width / 2), y - (App->physics->spikyball2->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 	rect.x = 0;
 	rect.y = 0;
 	rect.w = 16;
 	rect.h = 15;
 	App->physics->ghost1->GetPosition(x, y);
-	App->renderer->Blit(ghost, x - App->physics->ghost1->width, y - App->physics->ghost1->height, &(ghostanim.GetCurrentFrame()));
+	App->renderer->Blit(ghost, x - (App->physics->ghost1->width / 2), y - (App->physics->ghost1->height / 2), &(ghostanim.GetCurrentFrame()));
 	App->physics->ghost2->GetPosition(x, y);
-	App->renderer->Blit(ghost, x - App->physics->ghost2->width, y - App->physics->ghost2->height, &(ghostanim.GetCurrentFrame()));
+	App->renderer->Blit(ghost, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(ghostanim.GetCurrentFrame()));
 	return UPDATE_CONTINUE;
 }
 

@@ -156,15 +156,15 @@ bool ModulePhysics::Start()
 	};
 
 
-	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
-	kicker = CreatePolygon(48, 406, kicker1, 10, 100, -2);
+	kickerjoint = CreateRectangleKickerPoint(53, 411, 1,1);
+	kicker = CreatePolygon(48, 407, kicker1, 10, 100, -2);
 	
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
 	revolutedef.localAnchorB = b2Vec2(0.1, 0.1);
 	revolutedef.enableLimit = true;
 	revolutedef.lowerAngle = -(3.14 /3);
-	revolutedef.upperAngle = (3.14 / 8);
+	revolutedef.upperAngle = (3.14 / 32);
 	revolutedef.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
 	
@@ -180,15 +180,15 @@ bool ModulePhysics::Start()
 	};
 
 
-	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 2, 1);
+	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 1, 1);
 	kickerV2 = CreatePolygon(86, 406, kicker2, 10, 100, -2);
 
 	revolutedefV2.bodyA = kickerjointV2->body;
 	revolutedefV2.bodyB = kickerV2->body;
-	revolutedefV2.localAnchorB = b2Vec2(0.3, 0.1);
+	revolutedefV2.localAnchorB = b2Vec2(0.33, 0.1);
 	revolutedefV2.enableLimit = true;
-	revolutedefV2.lowerAngle = -(3.14 / 6);
-	revolutedefV2.upperAngle = (3.14 / 4);
+	revolutedefV2.lowerAngle = -(3.14 / 32);
+	revolutedefV2.upperAngle = (3.14 / 3);
 	revolutedefV2.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
 	
