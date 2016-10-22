@@ -52,7 +52,6 @@ public:
 
 	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateRectangleKicker(int x, int y, int width, int height);
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, int filterIndex);
@@ -61,6 +60,11 @@ public:
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
 
 
+	PhysBody* CreateKicker( int kickerX, int kickerY, int* points, int size);
+
+	void BuildLeftKickers(p2List<PhysBody*>* leftKickers);
+	void BuildRightKickers(p2List<PhysBody*>* rightKickers);
+
 	//Floating walls
 	void CreateFloatingWalls();
 
@@ -68,6 +72,9 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+
+
+	//Temporary test stuff
 	PhysBody* kicker;
 	PhysBody* kickerV2;
 	PhysBody* spikyball1;
@@ -77,6 +84,11 @@ public:
 	PhysBody* kinematicrect;
 	PhysBody* paco;
 	PhysBody* fatkirby;
+
+
+	p2List<PhysBody*> leftKickers;
+	p2List<PhysBody*> rightKickers;
+
 private:
 
 	bool debug;

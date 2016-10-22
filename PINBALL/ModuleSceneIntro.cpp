@@ -125,7 +125,7 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		rightkick = true;
-		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(5, 0));
+		App->physics->KickersForce(b2Vec2(0, -50), b2Vec2(0, 0));
 		
 	}
 	
@@ -190,20 +190,31 @@ update_status ModuleSceneIntro::Update()
 
 	if (kicker) {
 		int x, y;
-		App->physics->kicker->GetPosition(x, y);
-		SDL_Rect rect = {0,0, 22, 12};
-		App->renderer->Blit(kicker, x, y, &rect, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
+		p2List_item<PhysBody*>* item = App->physics->leftKickers.getFirst();
+
+		while (item != nullptr)
+		{
+			item->data->GetPosition(x, y);
+			SDL_Rect rect = { 0,0, 22, 12 };
+			App->renderer->Blit(kicker, x, y, &rect, 1.0f, item->data->GetRotation(), -0.2, 0);
+			item = item->next;
+		}
 	}
 
 	if (kicker)
 	{
 		int x, y;
-		App->physics->kickerV2->GetPosition(x, y);
-		SDL_Rect rect = { 24,0, 22, 12 };
-		App->renderer->Blit(kicker, x, y, &rect, 1.0f, App->physics->kickerV2->GetRotation(), -0.2, 0);
+		p2List_item<PhysBody*>* item = App->physics->rightKickers.getFirst();
+
+		while (item != nullptr)
+		{
+			item->data->GetPosition(x, y);
+			SDL_Rect rect = { 24,0, 22, 12 };
+			App->renderer->Blit(kicker, x, y, &rect, 1.0f, item->data->GetRotation(), -0.2, 0);
+			item = item->next;
+		}
 
 	}
-
 
 
 	SDL_Rect rect;
