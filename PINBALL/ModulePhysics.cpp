@@ -167,6 +167,8 @@ bool ModulePhysics::Start()
 	revdef2.localAnchorB = b2Vec2(-0.25, 0);
 	revolutemotorghost2 = (b2RevoluteJoint*)world->CreateJoint(&revdef2);
 	
+
+
 	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
@@ -758,7 +760,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	};
 
 	PhysBody* k = CreateKicker(86, 407, kicker1, 10);
-	PhysBody* k2 = CreateRectangleKickerPoint(106, 411, 1, 1);
+	PhysBody* k2 = CreateRectangleKickerPoint(107, 411, 1, 1);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -773,7 +775,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 
 
 	k = CreateKicker(86, 119, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(106, 123, 1, 1);
+	k2 = CreateRectangleKickerPoint(107, 123, 1, 1);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -787,7 +789,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	rightKickers->add(k);
 
 	k = CreateKicker(86, 263, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(106, 267, 1, 1);
+	k2 = CreateRectangleKickerPoint(107, 267, 1, 1);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;

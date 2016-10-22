@@ -144,7 +144,7 @@ update_status ModuleSceneIntro::Update()
 		int x, y;
 		c->data->GetPosition(x, y);
 		
-		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(circle, x - (c->data->width / 2), y - (c->data->height / 2), NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
@@ -225,8 +225,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(ghost, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(ghostanim.GetCurrentFrame()));
 	App->physics->kinematicrect->GetPosition(x, y);
 	App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
+
+
 	App->physics->fatkirby->GetPosition(x, y);
-	App->renderer->Blit(fatkirbytext, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(fatkirbyanim.GetCurrentFrame()));
+	App->renderer->Blit(fatkirbytext, x , y, &(fatkirbyanim.GetCurrentFrame()));
 	
 	return UPDATE_CONTINUE;
 }

@@ -75,8 +75,7 @@ public:
 
 
 	//Temporary test stuff
-	PhysBody* kicker;
-	PhysBody* kickerV2;
+
 	PhysBody* spikyball1;
 	PhysBody* ghost1;
 	PhysBody* spikyball2;
