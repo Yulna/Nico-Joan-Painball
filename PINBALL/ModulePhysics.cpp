@@ -133,33 +133,12 @@ bool ModulePhysics::Start()
 	App->scene_intro->ground = CreateChain(0, 0 - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164, NULL);
 
 
-	//kicker 1
+	//Kickers Left
 	BuildLeftKickers(&leftKickers);
 	
-	
+	//Kickers Right
 	BuildRightKickers(&rightKickers);
-	// Pivot 0, 0
-	/*int kicker2[10] = {
-		0, 12,
-		20, 10,
-		23, 5,
-		20, 1,
-		14, 1
-	};
 
-
-	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 1, 1);
-	kickerV2 = CreatePolygon(86, 406, kicker2, 10, 100, -2);
-
-	revolutedefV2.bodyA = kickerjointV2->body;
-	revolutedefV2.bodyB = kickerV2->body;
-	revolutedefV2.localAnchorB = b2Vec2(0.33, 0.1);
-	revolutedefV2.enableLimit = true;
-	revolutedefV2.lowerAngle = -(3.14 / 32);
-	revolutedefV2.upperAngle = (3.14 / 3);
-	revolutedefV2.collideConnected = false;
-	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);*/
-	
 
 	
 	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
@@ -201,8 +180,8 @@ bool ModulePhysics::Start()
 }
 
 //Kicker force
-void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit) {
-	if (App->scene_intro->leftkick == true) 
+void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl) {
+	if (rl == LEFT) 
 	{
 		p2List_item<PhysBody*>* item = leftKickers.getFirst();
 		while (item != nullptr)
@@ -210,16 +189,14 @@ void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit) {
 			item->data->body->ApplyForce(vectforce, posit, true);
 			item = item->next;
 		}
-		App->scene_intro->leftkick = false;
 	}
-	else if (App->scene_intro->rightkick == true) {
+	else if (rl == RIGHT) {
 		p2List_item<PhysBody*>* item = rightKickers.getFirst();
 		while (item != nullptr)
 		{
 			item->data->body->ApplyForce(vectforce, posit, true);
 			item = item->next;
 		}
-		App->scene_intro->rightkick = false;
 	}
 }
 

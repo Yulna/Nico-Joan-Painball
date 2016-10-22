@@ -116,20 +116,8 @@ update_status ModuleSceneIntro::Update()
 		
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		leftkick = true;
-		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(0, 0));
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		rightkick = true;
-		App->physics->KickersForce(b2Vec2(0, -50), b2Vec2(0, 0));
-		
-	}
 	
-
+	
 	// Prepare for raycast ------------------------------------------------------
 	
 	iPoint mouse;

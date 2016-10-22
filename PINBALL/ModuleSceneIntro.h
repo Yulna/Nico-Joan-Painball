@@ -29,8 +29,6 @@ public:
 	Animation fatkirbyanim;
 	PhysBody* sensor;
 	bool sensed;
-	bool rightkick;
-	bool leftkick;
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;

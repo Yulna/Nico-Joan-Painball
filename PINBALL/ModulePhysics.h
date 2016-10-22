@@ -57,7 +57,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size, int filterIndex);
 	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int filterIndex);
 	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
-	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
+	void KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl);
 
 
 	PhysBody* CreateKicker( int kickerX, int kickerY, int* points, int size);
@@ -103,7 +103,6 @@ private:
 
 	PhysBody* kickerjointV2;
 	b2RevoluteJointDef revolutedef;
-	b2RevoluteJointDef revolutedefV2;
 	b2Body* mouse_body;
 	b2Vec2 mouse_pos;
 };
