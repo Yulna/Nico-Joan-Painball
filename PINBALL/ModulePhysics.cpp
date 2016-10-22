@@ -144,17 +144,30 @@ bool ModulePhysics::Start()
 
 	App->scene_intro->ground = CreateChain(App->input->GetMouseX(), App->input->GetMouseY() - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164);
 
+
+	//kicker 1
+	// Pivot 0, 0
+	int kicker1[10] = {
+		23, 12,
+		2, 10,
+		0, 5,
+		2, 1,
+		8, 1
+	};
+
+
 	kickerjoint = CreateRectangleKickerPoint(53, 411, 2,1);
-	kicker = CreateRectangleKicker(53, 411, 30,8);
+	kicker = CreatePolygon(53, 411, kicker1, 10);
 	
 	revolutedef.bodyA = kickerjoint->body;
 	revolutedef.bodyB = kicker->body;
-	revolutedef.localAnchorB = b2Vec2( -0.2, 0);
+	revolutedef.localAnchorB = b2Vec2(0.1, 0.1);
 	revolutedef.enableLimit = true;
-	revolutedef.lowerAngle = -(3.14 /4);
-	revolutedef.upperAngle = (3.14 / 6);
+	revolutedef.lowerAngle = -(3.14 /3);
+	revolutedef.upperAngle = (3.14 / 8);
 	revolutedef.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
+	
 	
 	kickerjointV2 = CreateRectangleKickerPoint(106, 411, 2, 1);
 	kickerV2 = CreateRectangleKicker(106, 411, 30, 8);
@@ -167,6 +180,7 @@ bool ModulePhysics::Start()
 	revolutedefV2.upperAngle = (3.14 / 4);
 	revolutedefV2.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
+	
 
 	CreateCircleStatic(26,315,5);
 	CreateCircleStatic(134, 315, 5);
@@ -264,6 +278,8 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	b2PolygonShape box;
 	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
 
+
+
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
@@ -288,11 +304,11 @@ PhysBody* ModulePhysics::CreateRectangleKicker(int x, int y, int width, int heig
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
-
+	b2PolygonShape shape;
+	shape.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	
 	b2FixtureDef fixture;
-	fixture.shape = &box;
+	fixture.shape = &shape;
 	fixture.density = 1.0f;
 
 	b->CreateFixture(&fixture);
@@ -391,15 +407,6 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 
 	return pbody;
 }
-
-
-//
-void ModulePhysics::CreateFloatingWalls()
-{
-
-
-}
-
 
 
 
@@ -636,3 +643,48 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 }
 
 
+//
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size)
+{
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape shape;
+
+
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+	shape.Set(p, size / 2);
+
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = 0;
+	pbody->height = 0;
+
+	return pbody;
+}
+
+
+//
+void ModulePhysics::CreateFloatingWalls()
+{
+
+
+
+
+}

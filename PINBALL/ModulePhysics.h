@@ -49,6 +49,7 @@ public:
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+	PhysBody* CreatePolygon(int x, int y, int* points , int size);
 	
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit);
 

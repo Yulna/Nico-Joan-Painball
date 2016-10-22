@@ -66,6 +66,22 @@ update_status ModuleSceneIntro::Update()
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10));
 	}
 
+
+
+	//Spawning test objects
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		int kicker[10] = {
+			2, 1,
+			0, 7,
+			13, 11,
+			22, 10,
+			8, 2
+		};
+
+		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker , 10));
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		leftkick = true;
@@ -137,7 +153,11 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
-	App->renderer->Blit(kicker, 49, 403, NULL, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
+
+	int a, b;
+	App->physics->kicker->GetPosition(a, b);
+
+	App->renderer->Blit(kicker, a, b, NULL, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
 	
 	return UPDATE_CONTINUE;
 }
