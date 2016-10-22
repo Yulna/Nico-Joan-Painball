@@ -182,23 +182,35 @@ bool ModulePhysics::Start()
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
 	
 	
-	spikyball = CreateCircle(26,315,5,STATIC,6, 0.3f);
-	ghost = CreateCircle(26, 320, 5, DINAMIC,50, 0.6f);
+	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
+	ghost1 = CreateCircle(31, 324, 5, DINAMIC,50, 0.6f);
 	/*b2DistanceJointDef disdef;
 	disdef.bodyA = spikyball->body;
 	disdef.bodyB = ghost->body;
 	disdef.collideConnected = false;
 	disdef.length = 0.25f;*/
 	b2RevoluteJointDef revdef;
-	revdef.bodyA = spikyball->body;
-	revdef.bodyB = ghost->body;
+	revdef.bodyA = spikyball1->body;
+	revdef.bodyB = ghost1->body;
 	revdef.collideConnected = false;
 	revdef.enableMotor = true;
-	revdef.motorSpeed = 2;
+	revdef.motorSpeed = -2;
 	revdef.maxMotorTorque = 10;
 	revdef.localAnchorB = b2Vec2(0.25, 0);
-	revolutemotor = (b2RevoluteJoint*)world->CreateJoint(&revdef);
-	CreateCircle(134, 315, 5,STATIC,6,0.3f);
+	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
+
+	spikyball2=CreateCircle(134, 318, 5,STATIC,6,0.3f);
+	ghost2= CreateCircle(134, 326, 5, DINAMIC, 50, 0.3f);
+	b2RevoluteJointDef revdef2;
+	revdef2.bodyA = spikyball2->body;
+	revdef2.bodyB = ghost2->body;
+	revdef2.collideConnected = false;
+	revdef2.enableMotor = true;
+	revdef2.motorSpeed = 2;
+	revdef2.maxMotorTorque = 10;
+	revdef2.localAnchorB = b2Vec2(-0.25, 0);
+	revolutemotorghost2 = (b2RevoluteJoint*)world->CreateJoint(&revdef2);
+	
 	return true;
 }
 

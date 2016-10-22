@@ -3,6 +3,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include"Animation.h"
 
 class PhysBody;
 
@@ -22,7 +23,8 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> floating_walls;	
 	PhysBody* ground;
-
+	Animation spikyball1Anim;
+	Animation ghostanim;
 	PhysBody* sensor;
 	bool sensed;
 	bool rightkick;
@@ -32,6 +34,8 @@ public:
 	SDL_Texture* rick;
 	SDL_Texture* background;
 	SDL_Texture* kicker;
+	SDL_Texture* spikyBall;
+	SDL_Texture* ghost;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;

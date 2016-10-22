@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
 #include"p2Point.h"
+#include"Animation.h"
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y -7.0f
 
@@ -68,8 +69,11 @@ public:
 	void BeginContact(b2Contact* contact);
 	PhysBody* kicker;
 	PhysBody* kickerV2;
-	PhysBody* spikyball;
-	PhysBody* ghost;
+	PhysBody* spikyball1;
+	PhysBody* ghost1;
+	PhysBody* spikyball2;
+	PhysBody* ghost2;
+	
 
 private:
 
@@ -77,10 +81,10 @@ private:
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2RevoluteJoint* revolute_joint;
-	b2RevoluteJoint* revolutemotor;
-
+	b2RevoluteJoint* revolutemotorghost1;
+	b2RevoluteJoint* revolutemotorghost2;
 	b2Body* ground;
-
+	
 	PhysBody* kickerjoint;
 
 	PhysBody* kickerjointV2;

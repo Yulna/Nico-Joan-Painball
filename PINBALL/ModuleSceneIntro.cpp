@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include"ModuleRender.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -29,8 +30,24 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	kicker = App->textures->Load("pinball/kicker.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-	
 
+	spikyBall = App->textures->Load("pinball/spikyBall.png");
+	spikyball1Anim.PushBack({ 0,0,17,16 });
+	spikyball1Anim.PushBack({ 17,0,17,16 });
+	spikyball1Anim.speed = 0.015f;
+
+	ghost = App->textures->Load("pinball/ghost.png");
+	ghostanim.PushBack({0,0,16,15});
+	ghostanim.PushBack({ 18,0,16,15 });
+	ghostanim.PushBack({ 37,0,16,15 });
+	ghostanim.PushBack({56,0,16,15 });
+	ghostanim.PushBack({ 73,3,14,11 });
+	//
+	ghostanim.PushBack({ 90,0,14,15 });
+	ghostanim.PushBack({ 107,0,16,15 });
+	ghostanim.PushBack({ 124,3,14,11 });
+	ghostanim.PushBack({ 141,0,14,15 });
+	ghostanim.speed = 0.02f;
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
@@ -158,7 +175,24 @@ update_status ModuleSceneIntro::Update()
 	App->physics->kicker->GetPosition(a, b);
 
 	App->renderer->Blit(kicker, a, b, NULL, 1.0f, App->physics->kicker->GetRotation(), -0.2, 0);
-	
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = 17;
+	rect.h = 16;
+	int x, y;
+	App->physics->spikyball1->GetPosition(x,y);
+	App->renderer->Blit(spikyBall, x-App->physics->spikyball1->width, y - App->physics->spikyball1->height, &(spikyball1Anim.GetCurrentFrame()));
+	App->physics->spikyball2->GetPosition(x, y);
+	App->renderer->Blit(spikyBall, x - App->physics->spikyball2->width, y - App->physics->spikyball2->height, &(spikyball1Anim.GetCurrentFrame()));
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = 16;
+	rect.h = 15;
+	App->physics->ghost1->GetPosition(x, y);
+	App->renderer->Blit(ghost, x - App->physics->ghost1->width, y - App->physics->ghost1->height, &(ghostanim.GetCurrentFrame()));
+	App->physics->ghost2->GetPosition(x, y);
+	App->renderer->Blit(ghost, x - App->physics->ghost2->width, y - App->physics->ghost2->height, &(ghostanim.GetCurrentFrame()));
 	return UPDATE_CONTINUE;
 }
 
