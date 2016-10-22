@@ -40,19 +40,7 @@ bool ModulePhysics::Start()
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
-	/*
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* big_ball = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	big_ball->CreateFixture(&fixture);*/
+	
 	
 	// Pivot 0, 0
 	int Pinball_exterior[164] = {
@@ -196,11 +184,7 @@ bool ModulePhysics::Start()
 	
 	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
 	ghost1 = CreateCircle(31, 324, 5, DINAMIC,50, 0.6f);
-	/*b2DistanceJointDef disdef;
-	disdef.bodyA = spikyball->body;
-	disdef.bodyB = ghost->body;
-	disdef.collideConnected = false;
-	disdef.length = 0.25f;*/
+
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
 	revdef.bodyB = ghost1->body;
@@ -763,6 +747,8 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, floa
 //
 void ModulePhysics::CreateFloatingWalls()
 {
+
+	//Bottom Floor
 	// Pivot 0, 0
 	int LeftBottomFloor[12] = {
 		48, 413,
@@ -772,8 +758,6 @@ void ModulePhysics::CreateFloatingWalls()
 		24, 377,
 		24, 400
 	};
-
-
 	// Pivot 0, 0
 	int RightBottomFloor[12] = {
 		112, 413,
@@ -784,11 +768,59 @@ void ModulePhysics::CreateFloatingWalls()
 		136, 400
 	};
 
-	
 	CreateChain(0 , 0, LeftBottomFloor, 12, -2);
 	CreateChain(0, 0, RightBottomFloor, 12, -2);
 
 
+	//MiddleFloor
+	// Pivot 0, 0
+	int LeftMiddleFloor[12] = {
+		47, 268,
+		25, 257,
+		25, 235,
+		28, 235,
+		28, 251,
+		51, 262
+	};
+	// Pivot 0, 0
+	int RightMiddleFloor[12] = {
+		112, 268,
+		135, 257,
+		135, 235,
+		132, 235,
+		132, 250,
+		109, 262
+	};
+
+	CreateChain(0, 0, LeftMiddleFloor, 12, -2);
+	CreateChain(0, 0, RightMiddleFloor, 12, -2);
+
+	
+	//UpperFloor
+	// Pivot 0, 0
+	int LeftUpperFloor[12] = {
+		48, 124,
+		25, 112,
+		25, 91,
+		28, 91,
+		28, 107,
+		51, 118
+	};
+	// Pivot 0, 0
+	int RightUpperFloor[12] = {
+		109, 118,
+		132, 106,
+		132, 91,
+		135, 91,
+		135, 113,
+		111, 124
+	};
+
+	CreateChain(0, 0, LeftUpperFloor, 12, -2);
+	CreateChain(0, 0, RightUpperFloor, 12, -2);
+
+
+	
 
 }
 
