@@ -880,7 +880,56 @@ void ModulePhysics::CreateFloatingWalls()
 	CreateChain(0, 0, RightUpperFloor, 12, -2);
 
 
+	//Triangles
+	// Pivot 0, 0
+	int LeftBottomTriangle[6] = {
+		39, 378,
+		39, 387,
+		48, 391
+	};
+	// Pivot 0, 0
+	int RightBottomTriangle[6] = {
+		112, 392,
+		120, 388,
+		120, 379
+	};
+
+	CreateChain(0, 0, LeftBottomTriangle, 6, -2);
+	CreateChain(0, 0, RightBottomTriangle, 6, -2);
+
 	
+	// Pivot 0, 0
+	int LeftMiddleTriangle[6] = {
+		48, 247,
+		40, 243,
+		40, 236
+	};
+	// Pivot 0, 0
+	int RightMiddleTriangle[6] = {
+		112, 248,
+		120, 243,
+		120, 236
+	};
+
+	CreateChain(0, 0, LeftMiddleTriangle, 6, -2);
+	CreateChain(0, 0, RightMiddleTriangle, 6, -2);
+
+
+	// Pivot 0, 0
+	int LeftUpperTriangle[6] = {
+		48, 103,
+		40, 99,
+		40, 92
+	};
+	// Pivot 0, 0
+	int RightUpperTriangle[6] = {
+		112, 103,
+		120, 99,
+		120, 92
+	};
+	CreateChain(0, 0, LeftUpperTriangle, 6, -2);
+	CreateChain(0, 0, RightUpperTriangle, 6, -2);
+
 
 }
 
