@@ -181,9 +181,24 @@ bool ModulePhysics::Start()
 	revolutedefV2.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedefV2);
 	
-
-	CreateCircle(26,315,5,STATIC);
-	CreateCircle(134, 315, 5,STATIC);
+	
+	spikyball = CreateCircle(26,315,5,STATIC,6, 0.3f);
+	ghost = CreateCircle(26, 320, 5, DINAMIC,50, 0.6f);
+	/*b2DistanceJointDef disdef;
+	disdef.bodyA = spikyball->body;
+	disdef.bodyB = ghost->body;
+	disdef.collideConnected = false;
+	disdef.length = 0.25f;*/
+	b2RevoluteJointDef revdef;
+	revdef.bodyA = spikyball->body;
+	revdef.bodyB = ghost->body;
+	revdef.collideConnected = false;
+	revdef.enableMotor = true;
+	revdef.motorSpeed = 2;
+	revdef.maxMotorTorque = 10;
+	revdef.localAnchorB = b2Vec2(0.25, 0);
+	revolutemotor = (b2RevoluteJoint*)world->CreateJoint(&revdef);
+	CreateCircle(134, 315, 5,STATIC,6,0.3f);
 	return true;
 }
 
@@ -218,7 +233,7 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest)
 {
 	b2BodyDef body;
 	if (type == DINAMIC) {
@@ -241,11 +256,9 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 6;
+	fixture.density = density;
+	fixture.restitution = rest;
 
-	if (type == STATIC || type == KINEMATIC) {
-		fixture.restitution = 0.3f;
-	}
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
