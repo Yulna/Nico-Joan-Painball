@@ -736,6 +736,8 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 	k = CreateKicker(48, 119, kicker1, 10);
 	k2 = CreateRectangleKickerPoint(53, 123, 1, 1);
 
+	//CreateKickerRev(k, k2, RIGHT);
+
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
 	revolutedef.localAnchorB = b2Vec2(0.1, 0.1);
@@ -744,7 +746,7 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 	revolutedef.upperAngle = (3.14 / 32);
 	revolutedef.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
-
+	
 	leftKickers->add(k);
 
 }
@@ -803,6 +805,24 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	rightKickers->add(k);
 
 }
+
+void ModulePhysics::CreateKickerRev(PhysBody * b_A, PhysBody * b_B, sides map_side)
+{
+	revolutedef.bodyA = b_A->body;
+	revolutedef.bodyB = b_B->body;
+	revolutedef.collideConnected = false;
+
+	
+		revolutedef.localAnchorB = b2Vec2(0.1, 0.1);
+		revolutedef.enableLimit = true;
+		revolutedef.lowerAngle = -(3.14 / 3);
+		revolutedef.upperAngle = (3.14 / 32);
+
+	
+	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
+}
+
+
 
 //
 void ModulePhysics::CreateFloatingWalls()

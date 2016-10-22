@@ -65,6 +65,8 @@ public:
 	void BuildLeftKickers(p2List<PhysBody*>* leftKickers);
 	void BuildRightKickers(p2List<PhysBody*>* rightKickers);
 
+	void CreateKickerRev(PhysBody* b_A, PhysBody* b_B, sides map_side);
+
 	//Floating walls
 	void CreateFloatingWalls();
 
