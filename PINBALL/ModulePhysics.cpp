@@ -180,7 +180,7 @@ bool ModulePhysics::Start()
 	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
-	sun = CreateKinematicRectangle(30, 40, 15, 15);
+	sun = CreateCircle(27, 40, 10, KINEMATIC, 10, 2);
 	sun->body->SetLinearVelocity(b2Vec2(1, 0));
 
 	//Walls
