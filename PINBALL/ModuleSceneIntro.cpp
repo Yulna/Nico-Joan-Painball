@@ -55,16 +55,17 @@ bool ModuleSceneIntro::Start()
 	
 	cloudanim.speed = 0.07f;
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
-	fatkirbyanim.PushBack({ 0,17,26,25 });
-	if (kirbyumbrella == true) {
-		fatkirbyanim.PushBack({ 29,17,26,28 });
-		fatkirbyanim.PushBack({ 58,17,26,28 });
+	fatkirbyanim.PushBack({ 0,17,25,26 });
+	if (kirbyumbrella == false) {
+		fatkirbyanim.PushBack({ 28,17,26,28 });
+		fatkirbyanim.PushBack({ 57,17,26,28 });
 		fatkirbyanim.PushBack({ 86,11,29,32 });
 		fatkirbyanim.PushBack({ 118,3,25,40 });
 		fatkirbyanim.PushBack({ 146,3,25,40 });
 		fatkirbyanim.PushBack({ 174,5,25,38 });
 		fatkirbyanim.PushBack({ 202,0,25,43 });
 	}
+	fatkirbyanim.speed = 0.02f;
 	return ret;
 }
 
