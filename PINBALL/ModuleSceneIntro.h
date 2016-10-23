@@ -57,5 +57,9 @@ public:
 	bool raincloud;
 	bool extappear;
 
+
 	TripleKirby* tKirby;
+
+	bool printThObj;
+
 };

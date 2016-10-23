@@ -24,7 +24,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	extappear = false;
-	
+	printThObj = false;
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	background = App->textures->Load("pinball/KirbyPinball.png");
@@ -253,9 +253,15 @@ update_status ModuleSceneIntro::Update()
 	App->physics->fatkirby->GetPosition(x, y);
 	App->renderer->Blit(fatkirbytext, x , y, &(fatkirbyanim.GetCurrentFrame()));
 	if (extappear == true) {
-		App->physics->extinguisher->GetPosition(x, y);
-		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2))+10, y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
+		App->physics->Useextinguisher->GetPosition(x, y);
+		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 	}
+	if (App->physics->cloudrightthrow) {
+			App->physics->cloudrightthrow->GetPosition(x, y);
+			App->physics->cloudrightthrow->body->SetLinearVelocity(b2Vec2(1, 0));
+			App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
+		}
+		
 	return UPDATE_CONTINUE;
 }
 
@@ -285,7 +291,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			extappear = false;
 		}
-		
+		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
+			App->physics->throwingRightCloud();
+			printThObj = true;
+		}
 	}
 	
 
