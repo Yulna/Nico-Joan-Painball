@@ -9,6 +9,7 @@
 #include"ModuleRender.h"
 #include "ModulePlayer.h"
 
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	circle = box = rick = NULL;
@@ -33,6 +34,9 @@ bool ModuleSceneIntro::Start()
 	extappear5 = false;
 	extappear6 = false;
 	sun_life = moon_life = 3;
+	triangleDraw = false;
+	trianglecount = 0;
+
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	background = App->textures->Load("pinball/KirbyPinball.png");
@@ -128,6 +132,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -271,6 +276,8 @@ update_status ModuleSceneIntro::Update()
 
 	}
 
+
+
 	if (tKirby)
 	{
 		int x, y;
@@ -389,6 +396,24 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(moonanim.GetCurrentFrame()));
 	}
 
+	if (triangleDraw)
+	{
+		trianglecount++;
+		SDL_Rect rect1 = { 0,0,25,30 };
+		App->renderer->Blit(sun_moon_textures, triX, triY, &rect1);
+		if (trianglecount > 15) {
+			triangleDraw = false;
+			trianglecount = 0;
+		}
+	}
+
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneIntro::PostUpdate()
+{
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -545,11 +570,27 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
 	{
-		App->player->IncreaseScore(200);
+		App->player->IncreaseScore(900);
+	}
+	if (bodyA == App->physics->moon || bodyB == App->physics->moon)
+	{
+		App->player->IncreaseScore(1800);
 	}
 
 	if ((App->physics->GetLeftKickers()->find(bodyA) != -1) || (App->physics->GetLeftKickers()->find(bodyB) != -1)) 
 	{
 		App->player->IncreaseScore(20);
 	}
+
+	if ((App->physics->GetTriangles()->find(bodyB)) != -1)
+	{
+		int x, y;
+		App->player->IncreaseScore(20);
+		bodyB->GetPosition(triX, triY);
+		SDL_Rect rect = { 0,0,25,30 };
+		triangleDraw = true;
+		App->renderer->Blit(sun_moon_textures, 80, 100, &rect);
+	}
+
+
 }

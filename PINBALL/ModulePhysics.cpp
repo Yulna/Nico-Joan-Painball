@@ -47,6 +47,7 @@ bool ModulePhysics::Start()
 	
 	leftKickers = new p2List<PhysBody*>;
 	rightKickers = new p2List<PhysBody*>;
+	triangles = new p2List<PhysBody*>;
 
 	
 	// Pivot 0, 0
@@ -142,7 +143,6 @@ bool ModulePhysics::Start()
 
 	//Kickers Left
 	BuildLeftKickers(leftKickers);
-	
 	//Kickers Right
 	BuildRightKickers(rightKickers);
 
@@ -220,6 +220,8 @@ bool ModulePhysics::Start()
 
 	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
 
+	//Kirby Jackpot
+
 	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1, 0);
 	cloudrightsensor->listener = App->scene_intro;
 
@@ -256,7 +258,7 @@ void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl) {
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
-
+	
 	for(b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
 		if(c->GetFixtureA()->IsSensor() && c->IsTouching())
@@ -831,6 +833,11 @@ p2List<PhysBody*>* ModulePhysics::GetRightKickers()
 	return rightKickers;
 }
 
+p2List<PhysBody*>* ModulePhysics::GetTriangles()
+{
+	return triangles;
+}
+
 
 //
 PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int rest, int filterIndex)
@@ -1110,7 +1117,8 @@ void ModulePhysics::CreateFloatingWalls()
 	};
 
 	CreatePolygon(0, 0, LeftBottomTriangle, 6, 100, 100, 0)->body->SetType(b2_staticBody);
-	CreateChain(0, 0, RightBottomTriangle, 6, -2);
+
+	triangles->add(CreateChain(0, 0, RightBottomTriangle, 6, -2));
 
 	
 	// Pivot 0, 0
@@ -1126,8 +1134,8 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 236
 	};
 
-	CreateChain(0, 0, LeftMiddleTriangle, 6, -2);
-	CreateChain(0, 0, RightMiddleTriangle, 6, -2);
+	triangles->add(CreateChain(0, 0, LeftMiddleTriangle, 6, -2));
+	triangles->add(CreateChain(0, 0, RightMiddleTriangle, 6, -2));
 
 
 	// Pivot 0, 0
@@ -1142,8 +1150,8 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 99,
 		120, 92
 	};
-	CreateChain(0, 0, LeftUpperTriangle, 6, -2);
-	CreateChain(0, 0, RightUpperTriangle, 6, -2);
+	triangles->add(CreateChain(0, 0, LeftUpperTriangle, 6, -2));
+	triangles->add(CreateChain(0, 0, RightUpperTriangle, 6, -2));
 
 
 }
@@ -1176,8 +1184,8 @@ void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
 	}
 	
 
+
+
 }
 
-void ModulePhysics::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
-{
-}
+

@@ -37,6 +37,20 @@ public:
 	Module* listener;
 };
 
+
+//Small Jackpot Kirby class
+
+class JackpotKirby
+{
+public:
+	JackpotKirby(PhysBody* body) : physBody(body), state(1)
+	{}
+
+public:
+	PhysBody* physBody;
+	int state;
+};
+
 // Module --------------------------------------
 class ModulePhysics : public Module, public b2ContactListener // TODO
 {
@@ -49,7 +63,6 @@ public:
 	update_status PostUpdate();
 	update_status Update();
 	bool CleanUp();
-	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index);
 	PhysBody* CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
@@ -84,6 +97,7 @@ public:
 	//Get variables 
 	p2List<PhysBody*>* GetLeftKickers();
 	p2List<PhysBody*>* GetRightKickers();
+	p2List<PhysBody*>* GetTriangles();
 
 
 	//Temporary test stuff
@@ -129,6 +143,7 @@ public:
 	int xcloud, ycloud;
 	int ballx, bally;
 
+
 private:
 
 	bool debug;
@@ -148,4 +163,5 @@ private:
 
 	p2List<PhysBody*>* leftKickers;
 	p2List<PhysBody*>* rightKickers;
+	p2List<PhysBody*>* triangles;
 };
