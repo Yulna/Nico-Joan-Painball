@@ -44,6 +44,7 @@ public:
 	Animation fatkirbyThrowup;
 
 	Animation sunanim;
+	Animation moonanim;
 
 	PhysBody* sensor;
 	bool sensed;

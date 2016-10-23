@@ -98,6 +98,11 @@ bool ModuleSceneIntro::Start()
 	sunanim.PushBack({ 81, 0, 24, 28 });
 	sunanim.speed = 0.02f;
 
+	moonanim.PushBack({ 160, 0, 21, 22 });
+	moonanim.PushBack({ 185, 0, 21, 22 });
+	moonanim.speed = 0.02f;
+
+
 	return ret;
 }
 
@@ -319,7 +324,13 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(sunanim.GetCurrentFrame()));
 	}
 
-	
+	if (App->physics->moon)
+	{
+		int x, y;
+		App->physics->moon->GetPosition(x, y);
+		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(moonanim.GetCurrentFrame()));
+	}
+
 
 	return UPDATE_CONTINUE;
 }

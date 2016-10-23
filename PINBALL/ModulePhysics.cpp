@@ -245,7 +245,7 @@ update_status ModulePhysics::PreUpdate()
 		sun = nullptr;
 
 		//Create moon when sun dies
-		moon = CreateCircle(22, 22, 7, STATIC, 10, 2,0);
+		moon = CreateCircle(28, 28, 10, STATIC, 10, 2,0);
 	}
 
 
