@@ -112,7 +112,7 @@ update_status ModuleSceneIntro::Update()
 		};
 
 
-		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, -2));
+		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, 0,-2));
 		
 	}
 
@@ -220,9 +220,9 @@ update_status ModuleSceneIntro::Update()
 	rect.w = 16;
 	rect.h = 15;
 	App->physics->ghost1->GetPosition(x, y);
-	App->renderer->Blit(ghost, x - (App->physics->ghost1->width / 2), y - (App->physics->ghost1->height / 2), &(ghostanim.GetCurrentFrame()));
+	App->renderer->Blit(ghost, x, y, &(ghostanim.GetCurrentFrame()));
 	App->physics->ghost2->GetPosition(x, y);
-	App->renderer->Blit(ghost, x - (App->physics->ghost2->width / 2), y - (App->physics->ghost2->height / 2), &(ghostanim.GetCurrentFrame()));
+	App->renderer->Blit(ghost, x , y, &(ghostanim.GetCurrentFrame()));
 	App->physics->kinematicrect->GetPosition(x, y);
 	App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
 

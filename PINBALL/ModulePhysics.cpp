@@ -141,8 +141,8 @@ bool ModulePhysics::Start()
 
 
 	
-	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
-	ghost1 = CreateCircle(31, 324, 5, DINAMIC,50, 0.6f);
+	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1);
+	ghost1 = CreateCircle(31, 324, 7, DINAMIC,500, 1);
 
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
@@ -150,20 +150,20 @@ bool ModulePhysics::Start()
 	revdef.collideConnected = false;
 	revdef.enableMotor = true;
 	revdef.motorSpeed = -2;
-	revdef.maxMotorTorque = 10;
+	revdef.maxMotorTorque = 100;
 	revdef.localAnchorB = b2Vec2(0.25, 0);
 
 	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
 
-	spikyball2=CreateCircle(134, 318, 5,STATIC,6,0.3f);
-	ghost2= CreateCircle(134, 326, 5, DINAMIC, 50, 0.3f);
+	spikyball2=CreateCircle(130, 318, 5,STATIC,6,1);
+	ghost2= CreateCircle(134, 326, 7, DINAMIC, 500, 1);
 	b2RevoluteJointDef revdef2;
 	revdef2.bodyA = spikyball2->body;
 	revdef2.bodyB = ghost2->body;
 	revdef2.collideConnected = false;
 	revdef2.enableMotor = true;
 	revdef2.motorSpeed = 2;
-	revdef2.maxMotorTorque = 10;
+	revdef2.maxMotorTorque = 100;
 	revdef2.localAnchorB = b2Vec2(-0.25, 0);
 	revolutemotorghost2 = (b2RevoluteJoint*)world->CreateJoint(&revdef2);
 	
@@ -649,7 +649,7 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 
 //
-PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int filterIndex)
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int rest, int filterIndex)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -672,6 +672,7 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, floa
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = dens;
+	fixture.restitution = 0;
 	fixture.filter.groupIndex = filterIndex;
 
 	b->CreateFixture(&fixture);
@@ -691,7 +692,7 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, floa
 
 PhysBody * ModulePhysics::CreateKicker( int kickerX, int kickerY, int* points, int size)
 {
-		return CreatePolygon(kickerX, kickerY, points, size, 100, -2);
+		return CreatePolygon(kickerX, kickerY, points, size, 100, 0, -2);
 }
 
 void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
@@ -903,8 +904,8 @@ void ModulePhysics::CreateFloatingWalls()
 	//Triangles
 	// Pivot 0, 0
 	int LeftBottomTriangle[6] = {
-		39, 378,
-		39, 387,
+		40, 378,
+		40, 387,
 		48, 391
 	};
 	// Pivot 0, 0
@@ -914,7 +915,7 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 379
 	};
 
-	CreateChain(0, 0, LeftBottomTriangle, 6, -2);
+	CreatePolygon(0, 0, LeftBottomTriangle, 6, 100, 100, 0)->body->SetType(b2_staticBody);
 	CreateChain(0, 0, RightBottomTriangle, 6, -2);
 
 	
