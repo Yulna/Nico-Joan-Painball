@@ -52,10 +52,15 @@ bool ModuleSceneIntro::Start()
 	ghostanim.speed = 0.02f;
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	cloud = App->textures->Load("pinball/movingCloud.png");
+	//normal cloud
 	cloudanim.PushBack({0,1,24,14});
-	cloudanim.PushBack({27,0,26,16});
-	
+	cloudanim.PushBack({ 27,0,26,16 });
 	cloudanim.speed = 0.07f;
+	//sad cloud
+	sadcloudanim.PushBack({ 56,0,26,16 });
+	sadcloudanim.PushBack({ 85,1,26,16 });
+	sadcloudanim.speed = 0.07f;
+	
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
 	fatkirbyanim.PushBack({ 0,0,25,45 });
 	if (kirbyumbrella == false) {
@@ -248,7 +253,13 @@ update_status ModuleSceneIntro::Update()
 	App->physics->ghost2->GetPosition(x, y);
 	App->renderer->Blit(ghost, x , y, &(ghostanim.GetCurrentFrame()));
 	App->physics->kinematicrect->GetPosition(x, y);
-	App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
+	if (TimesKickCloud <3) {
+		App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
+	}
+	else {
+		App->renderer->Blit(cloud, x, y, &(sadcloudanim.GetCurrentFrame()));
+	}
+	
 
 
 	//Fat Kirby Blit
@@ -280,7 +291,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA != nullptr && bodyB != nullptr) {
 		if (bodyA->body == App->physics->kinematicrect->body || bodyB->body == App->physics->kinematicrect->body) {
 			if (TimesKickCloud == 3) {
-				cloudanim.PushBack({ 56,0,26,16 });
+				
 			}
 			TimesKickCloud++;
 		}

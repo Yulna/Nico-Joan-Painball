@@ -37,6 +37,7 @@ public:
 	Animation ghostanim;
 	Animation cloudanim;
 	Animation fatkirbyanim;
+	Animation sadcloudanim;
 	PhysBody* sensor;
 	bool sensed;
 	SDL_Texture* circle;
