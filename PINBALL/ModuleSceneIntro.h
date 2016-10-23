@@ -39,6 +39,8 @@ public:
 	Animation fatkirbyanim;
 	Animation sadcloudanim;
 	Animation rainingcloud;
+	Animation kirbyumbrella;
+	Animation fatkirbyThrowup;
 	PhysBody* sensor;
 	bool sensed;
 	SDL_Texture* circle;
@@ -54,7 +56,6 @@ public:
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
-	bool kirbyumbrella;
 	int TimesKickCloud;
 	bool raincloud;
 	bool extappear;

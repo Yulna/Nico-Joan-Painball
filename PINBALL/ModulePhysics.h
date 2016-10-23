@@ -50,7 +50,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
+	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index);
 	PhysBody* CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
@@ -72,7 +72,7 @@ public:
 	//Floating walls
 	void CreateFloatingWalls();
 	void throwingRightCloud();
-
+	void ballupsideumbrella(PhysBody* ball);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
@@ -95,9 +95,8 @@ public:
 	PhysBody* fatkirby;
 	PhysBody* extinguisher;//to appear the extinguisher
 	PhysBody* Useextinguisher;//to use the extinguisher
-
-
-
+	PhysBody* DetectFatKirbyAnimation;
+	bool ballupumbrella;
 	PhysBody* tripleKirby;
 
 	PhysBody* cloudrightsensor;
@@ -105,6 +104,7 @@ public:
 	bool trowrightobj;
 	bool otherthrowobj;
 	int xcloud, ycloud;
+	
 
 private:
 

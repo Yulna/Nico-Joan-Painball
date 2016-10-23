@@ -69,17 +69,20 @@ bool ModuleSceneIntro::Start()
 
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
 	fatkirbyanim.PushBack({ 0,0,25,45 });
-	if (kirbyumbrella == false) {
-		fatkirbyanim.PushBack({ 28,0,26,45});
-		fatkirbyanim.PushBack({ 57,0,26,45 });
-		fatkirbyanim.PushBack({ 86,0,29,45 });
-		fatkirbyanim.PushBack({ 118,0,25,45 });
-		fatkirbyanim.PushBack({ 146,0,25,45 });
-		fatkirbyanim.PushBack({ 174,0,25,45 });
-		fatkirbyanim.PushBack({ 202,0,25,45 });
-	}
-
 	fatkirbyanim.speed = 0.02f;
+	//kirby take out the umbrella
+	kirbyumbrella.PushBack({ 28,0,26,45});
+	kirbyumbrella.PushBack({ 57,0,26,45 });
+	kirbyumbrella.PushBack({ 86,0,29,45 });
+	kirbyumbrella.PushBack({ 118,0,25,45 });
+	kirbyumbrella.speed = 0.02f;
+	kirbyumbrella.loop = false;
+	//kirby throw up the ball
+	fatkirbyThrowup.PushBack({ 146,0,25,45 });
+	fatkirbyThrowup.PushBack({ 174,0,25,45 });
+	fatkirbyThrowup.PushBack({ 202,0,25,45 });
+	fatkirbyThrowup.speed = 0.02f;
+
 
 
 	tKirby = new TripleKirby(App->physics->tripleKirby);
@@ -107,7 +110,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5,DINAMIC,25,0));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5,DINAMIC,25,0, -1));
 		circles.getLast()->data->listener = this;
 
 	}
@@ -273,8 +276,13 @@ update_status ModuleSceneIntro::Update()
 
 	//Fat Kirby Blit
 	App->physics->fatkirby->GetPosition(x, y);
-	App->renderer->Blit(fatkirbytext, x , y - 17, &(fatkirbyanim.GetCurrentFrame()));
-
+	if (TimesKickCloud <3 || TimesKickCloud == 3 && App->physics->xcloud != 70) {
+		App->renderer->Blit(fatkirbytext, x, y - 17, &(fatkirbyanim.GetCurrentFrame()));
+	}
+	else {
+		App->renderer->Blit(fatkirbytext, x, y - 17, &(kirbyumbrella.GetCurrentFrame()));
+	
+	}
 
 
 	if (extappear == true) {
@@ -322,6 +330,15 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
 			App->physics->throwingRightCloud();
 			printThObj = true;
+		}
+		if (bodyA->body == App->physics->DetectFatKirbyAnimation->body || bodyB->body == App->physics->DetectFatKirbyAnimation->body) {
+			if (bodyA->body == App->physics->DetectFatKirbyAnimation->body) {
+				App->physics->ballupsideumbrella(bodyB);
+			}
+			else {
+				App->physics->ballupsideumbrella(bodyA);
+			}		
+
 		}
 	}
 	

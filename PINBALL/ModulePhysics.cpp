@@ -36,7 +36,7 @@ bool ModulePhysics::Start()
 	// needed to create joints like mouse joint
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
-
+	ballupumbrella = false;
 	// big static circle as "ground" in the middle of the screen
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
@@ -147,8 +147,8 @@ bool ModulePhysics::Start()
 
 
 	
-	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1);
-	ghost1 = CreateCircle(31, 324, 7, DINAMIC,500, 1);
+	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1, 0);
+	ghost1 = CreateCircle(31, 324, 7, DINAMIC,500, 1, 0);
 	
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
@@ -162,8 +162,8 @@ bool ModulePhysics::Start()
 	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
 
 
-	spikyball2=CreateCircle(130, 318, 5,STATIC,6,1);
-	ghost2= CreateCircle(134, 326, 7, DINAMIC, 500, 1);
+	spikyball2=CreateCircle(130, 318, 5,STATIC,6,1, 0);
+	ghost2= CreateCircle(134, 326, 7, DINAMIC, 500, 1, 0);
 
 	b2RevoluteJointDef revdef2;
 	revdef2.bodyA = spikyball2->body;
@@ -181,7 +181,7 @@ bool ModulePhysics::Start()
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
 	//Walls
-	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f);
+	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f,0);
 	CreateFloatingWalls();
 	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
 	extinguisher->listener = App->scene_intro;
@@ -190,9 +190,11 @@ bool ModulePhysics::Start()
 
 	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
 
-	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1);
+	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1, 0);
 	cloudrightsensor->listener = App->scene_intro;
 
+	DetectFatKirbyAnimation = CreateRectangleSensor(83, 185, 21, 24);
+	DetectFatKirbyAnimation->listener = App->scene_intro;
 	return true;
 }
 
@@ -236,7 +238,7 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index)
 {
 	b2BodyDef body;
 	if (type == DINAMIC) {
@@ -261,7 +263,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type
 	fixture.shape = &shape;
 	fixture.density = density;
 	fixture.restitution = rest;
-	
+	fixture.filter.groupIndex = index;
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -356,6 +358,7 @@ PhysBody* ModulePhysics::CreateKinematicRectangle(int x, int y, int width, int h
 	fixture.shape = &box;
 	fixture.density = 1.0f;
 	fixture.restitution = 0.3f;
+	
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -481,11 +484,14 @@ update_status ModulePhysics::Update() {
 		}
 		else if (xcloud == 70) {
 			kinematicrect->body->SetLinearVelocity(b2Vec2(0, 0));
+			b2Filter filter;
+			filter.groupIndex = -1;
+			kinematicrect->body->GetFixtureList()->SetFilterData(filter);
 		}
 	}
 	int posobjthrow_x, posobjthrow_y;
 	if (trowrightobj == true && otherthrowobj == false) {
-		cloudrightthrow = CreateCircle(28, 189, 6, KINEMATIC, 50, 0.3f);
+		cloudrightthrow = CreateCircle(28, 189, 6, KINEMATIC, 50, 0.3f, 0);
 		trowrightobj = false;
 		otherthrowobj = true;
 		
@@ -498,6 +504,7 @@ update_status ModulePhysics::Update() {
 			otherthrowobj = false;
 		}
 	}
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -1060,5 +1067,14 @@ void ModulePhysics::throwingRightCloud() {
 
 		trowrightobj = true;
 
+}
+
+void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
+	
+	//App->scene_intro->circles.clear();
+	Mball->body->SetLinearVelocity(b2Vec2(0, -30));
+	//world->DestroyBody(Mball->body);
+	ballupumbrella = true;
+	
 
 }
