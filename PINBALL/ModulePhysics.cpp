@@ -142,7 +142,7 @@ bool ModulePhysics::Start()
 
 	
 	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
-	ghost1 = CreateCircle(31, 324, 5, DINAMIC,50, 0.6f);
+	ghost1 = CreateCircle(31, 324, 6, DINAMIC,50, 0.6f);
 
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
@@ -155,8 +155,8 @@ bool ModulePhysics::Start()
 
 	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
 
-	spikyball2=CreateCircle(134, 318, 5,STATIC,6,0.3f);
-	ghost2= CreateCircle(134, 326, 5, DINAMIC, 50, 0.3f);
+	spikyball2=CreateCircle(132, 318, 5,STATIC,6,0.3f);
+	ghost2= CreateCircle(132, 326, 6, DINAMIC, 50, 0.3f);
 	b2RevoluteJointDef revdef2;
 	revdef2.bodyA = spikyball2->body;
 	revdef2.bodyB = ghost2->body;
@@ -172,11 +172,14 @@ bool ModulePhysics::Start()
 	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
-	//como hacer sensores
-	kinematicrect->listener = App->scene_intro;
 	//Walls
 	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f);
 	CreateFloatingWalls();
+	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
+	extinguisher->listener = App->scene_intro;
+	Useextinguisher = CreateRectangleSensor(141, 388, 3, 7);
+	Useextinguisher->listener = App->scene_intro;
+	cloudsensor = CreateCircle(18, 198, 12, STATIC, 6, 0.3f);
 
 	return true;
 }
@@ -246,7 +249,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type
 	fixture.shape = &shape;
 	fixture.density = density;
 	fixture.restitution = rest;
-
+	
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -257,6 +260,48 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type
 	return pbody;
 }
 
+
+PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest) {
+
+	b2BodyDef body;
+	if (type == DINAMIC) {
+		body.type = b2_dynamicBody;
+	}
+	else if (type == KINEMATIC) {
+		body.type = b2_kinematicBody;
+	}
+	else if (type == STATIC) {
+		body.type = b2_staticBody;
+	}
+
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	if (type == DINAMIC) {
+		body.bullet = true;
+	}
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = density;
+	fixture.restitution = rest;
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	return pbody;
+
+
+
+
+
+}
 
 
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
@@ -358,7 +403,6 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	fixture.shape = &box;
 	fixture.density = 1.0f;
 	fixture.isSensor = true;
-
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -804,6 +848,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 
 	rightKickers->add(k);
 
+	
 }
 
 void ModulePhysics::CreateKickerRev(PhysBody * b_A, PhysBody * b_B, sides map_side)
@@ -953,3 +998,6 @@ void ModulePhysics::CreateFloatingWalls()
 
 }
 
+void ModulePhysics::ApplayVerticalForce(PhysBody* ball) {
+	ball->body->ApplyForce(b2Vec2(0, -200), b2Vec2(0, 0), true);
+}

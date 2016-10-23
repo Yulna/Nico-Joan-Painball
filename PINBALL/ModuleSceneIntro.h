@@ -44,4 +44,5 @@ public:
 	bool kirbyumbrella;
 	int TimesKickCloud;
 	bool raincloud;
+	bool extappear;
 };

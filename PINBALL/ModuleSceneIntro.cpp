@@ -23,7 +23,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	extappear = false;
 	
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
@@ -229,14 +229,16 @@ update_status ModuleSceneIntro::Update()
 
 	App->physics->fatkirby->GetPosition(x, y);
 	App->renderer->Blit(fatkirbytext, x , y, &(fatkirbyanim.GetCurrentFrame()));
-	
+	if (extappear == true) {
+		App->physics->extinguisher->GetPosition(x, y);
+		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2))+10, y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
+	}
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
-	//como hacer sensores
 	App->audio->PlayFx(bonus_fx);
 	if (bodyA != nullptr && bodyB != nullptr) {
 		if (bodyA->body == App->physics->kinematicrect->body || bodyB->body == App->physics->kinematicrect->body) {
@@ -244,6 +246,21 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				cloudanim.PushBack({ 56,0,26,16 });
 			}
 			TimesKickCloud++;
+		}
+
+		if (bodyA->body == App->physics->extinguisher->body || bodyB->body == App->physics->extinguisher->body) {
+			extappear = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher->body || bodyB->body == App->physics->Useextinguisher->body) {
+			if (extappear==true) {
+				if (bodyA->body == App->physics->Useextinguisher->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear = false;
 		}
 		
 	}

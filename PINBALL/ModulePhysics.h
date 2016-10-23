@@ -51,6 +51,7 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
+	PhysBody* CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
@@ -58,6 +59,7 @@ public:
 	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int filterIndex);
 	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl);
+	void ApplayVerticalForce(PhysBody* ball);
 
 
 	PhysBody* CreateKicker( int kickerX, int kickerY, int* points, int size);
@@ -83,10 +85,10 @@ public:
 	PhysBody* spikyball2;
 	PhysBody* ghost2;
 	PhysBody* kinematicrect;
-	PhysBody* paco;
 	PhysBody* fatkirby;
-
-
+	PhysBody* extinguisher;//to appear the extinguisher
+	PhysBody* Useextinguisher;//to use the extinguisher
+	PhysBody* cloudsensor;
 	p2List<PhysBody*> leftKickers;
 	p2List<PhysBody*> rightKickers;
 
