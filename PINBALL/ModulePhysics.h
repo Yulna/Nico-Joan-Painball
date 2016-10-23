@@ -71,7 +71,7 @@ public:
 
 	//Floating walls
 	void CreateFloatingWalls();
-
+	void throwingRightCloud();
 
 
 	// b2ContactListener ---
@@ -88,10 +88,12 @@ public:
 	PhysBody* fatkirby;
 	PhysBody* extinguisher;//to appear the extinguisher
 	PhysBody* Useextinguisher;//to use the extinguisher
-	PhysBody* cloudsensor;
+	PhysBody* cloudrightsensor;
+	PhysBody* cloudrightthrow;
 	p2List<PhysBody*> leftKickers;
 	p2List<PhysBody*> rightKickers;
-
+	bool trowrightobj;
+	bool otherthrowobj;
 private:
 
 	bool debug;

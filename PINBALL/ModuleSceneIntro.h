@@ -45,4 +45,5 @@ public:
 	int TimesKickCloud;
 	bool raincloud;
 	bool extappear;
+	bool printThObj;
 };

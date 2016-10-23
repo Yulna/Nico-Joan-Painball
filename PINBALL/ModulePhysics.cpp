@@ -18,6 +18,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 	world = NULL;
 	mouse_joint = NULL;
 	debug = true;
+	otherthrowobj = false;
 }
 
 // Destructor
@@ -40,7 +41,7 @@ bool ModulePhysics::Start()
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
-	
+
 	
 	// Pivot 0, 0
 	int Pinball_exterior[164] = {
@@ -179,10 +180,10 @@ bool ModulePhysics::Start()
 	CreateFloatingWalls();
 	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
 	extinguisher->listener = App->scene_intro;
-	Useextinguisher = CreateRectangleSensor(141, 388, 3, 7);
+	Useextinguisher = CreateRectangleSensor(20, 388, 3, 7);
 	Useextinguisher->listener = App->scene_intro;
-	cloudsensor = CreateCircle(18, 198, 12, STATIC, 6, 0.3f);
-
+	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1);
+	cloudrightsensor->listener = App->scene_intro;
 	return true;
 }
 
@@ -465,7 +466,21 @@ update_status ModulePhysics::Update() {
 	else if (xkin>115) {
 		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
 	}
-
+	int posobjthrow_x, posobjthrow_y;
+	if (trowrightobj == true && otherthrowobj == false) {
+		cloudrightthrow = CreateCircle(28, 189, 6, KINEMATIC, 50, 0.3f);
+		trowrightobj = false;
+		otherthrowobj = true;
+		
+	}
+	if (cloudrightthrow) {
+		cloudrightthrow->GetPosition(posobjthrow_x, posobjthrow_y);
+		if (posobjthrow_x == 137) {
+			world->DestroyBody(cloudrightthrow->body);
+			cloudrightthrow = nullptr;
+			otherthrowobj = false;
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -1012,4 +1027,11 @@ void ModulePhysics::CreateFloatingWalls()
 
 void ModulePhysics::ApplayVerticalForce(PhysBody* ball) {
 	ball->body->ApplyForce(b2Vec2(0, -200), b2Vec2(0, 0), true);
+}
+
+void ModulePhysics::throwingRightCloud() {
+
+		trowrightobj = true;
+
+
 }
