@@ -49,6 +49,7 @@ public:
 	update_status PostUpdate();
 	update_status Update();
 	bool CleanUp();
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index);
 	PhysBody* CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest);

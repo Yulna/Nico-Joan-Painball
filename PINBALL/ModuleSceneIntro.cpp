@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include"ModuleRender.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -523,4 +524,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		moon_life--;
 	}
 
+
+	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
+	{
+		App->player->IncreaseScore(200);
+	}
+
+	if ((App->physics->GetLeftKickers()->find(bodyA) != -1) || (App->physics->GetLeftKickers()->find(bodyB) != -1)) 
+	{
+		App->player->IncreaseScore(20);
+	}
 }

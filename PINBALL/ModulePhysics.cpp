@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "math.h"
 #include "ModuleSceneIntro.h"
+#include "ModulePlayer.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -745,6 +746,7 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
+
 void PhysBody::GetPosition(int& x, int &y) const
 {
 	b2Vec2 pos = body->GetPosition();
@@ -1174,4 +1176,8 @@ void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
 	}
 	
 
+}
+
+void ModulePhysics::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
+{
 }

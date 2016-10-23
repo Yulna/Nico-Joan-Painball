@@ -14,6 +14,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	score = 0;
+
 	LOG("Loading player");
 	return true;
 }
@@ -24,6 +26,11 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	return true;
+}
+
+void ModulePlayer::IncreaseScore(int points)
+{
+	score += points;
 }
 
 // Update: draw background
