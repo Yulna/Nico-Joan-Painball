@@ -7,6 +7,16 @@
 
 class PhysBody;
 
+class TripleKirby
+{
+public:
+	TripleKirby(PhysBody* body) : pBody(body), state(1)
+	{}
+
+	PhysBody* pBody;
+	int state;
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -38,6 +48,7 @@ public:
 	SDL_Texture* ghost;
 	SDL_Texture* cloud;
 	SDL_Texture* fatkirbytext;
+	SDL_Texture* tripleKirby;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
@@ -45,4 +56,6 @@ public:
 	int TimesKickCloud;
 	bool raincloud;
 	bool extappear;
+
+	TripleKirby* tKirby;
 };

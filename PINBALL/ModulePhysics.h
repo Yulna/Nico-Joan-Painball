@@ -78,6 +78,13 @@ public:
 	void BeginContact(b2Contact* contact);
 
 
+
+
+	//Get variables 
+	p2List<PhysBody*>* GetLeftKickers();
+	p2List<PhysBody*>* GetRightKickers();
+
+
 	//Temporary test stuff
 
 	PhysBody* spikyball1;
@@ -89,8 +96,9 @@ public:
 	PhysBody* extinguisher;//to appear the extinguisher
 	PhysBody* Useextinguisher;//to use the extinguisher
 	PhysBody* cloudsensor;
-	p2List<PhysBody*> leftKickers;
-	p2List<PhysBody*> rightKickers;
+
+
+	PhysBody* tripleKirby;
 
 private:
 
@@ -108,4 +116,7 @@ private:
 	b2RevoluteJointDef revolutedef;
 	b2Body* mouse_body;
 	b2Vec2 mouse_pos;
+
+	p2List<PhysBody*>* leftKickers;
+	p2List<PhysBody*>* rightKickers;
 };
