@@ -463,13 +463,25 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, int fi
 
 update_status ModulePhysics::Update() {
 
-	int xkin, ykin;
-	kinematicrect->GetPosition(xkin, ykin);
-	if (xkin<20) {
-		kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+	kinematicrect->GetPosition(xcloud, ycloud);
+	if (App->scene_intro->TimesKickCloud < 3) {
+		if (xcloud < 20) {
+			kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+		}
+		else if (xcloud > 115) {
+			kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
+		}
 	}
-	else if (xkin>115) {
-		kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
+	else {
+		if (xcloud < 70) {
+			kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
+		}
+		else if (xcloud > 70) {
+			kinematicrect->body->SetLinearVelocity(b2Vec2(-1, 0));
+		}
+		else if (xcloud == 70) {
+			kinematicrect->body->SetLinearVelocity(b2Vec2(0, 0));
+		}
 	}
 	int posobjthrow_x, posobjthrow_y;
 	if (trowrightobj == true && otherthrowobj == false) {

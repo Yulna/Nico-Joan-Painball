@@ -38,6 +38,7 @@ public:
 	Animation cloudanim;
 	Animation fatkirbyanim;
 	Animation sadcloudanim;
+	Animation rainingcloud;
 	PhysBody* sensor;
 	bool sensed;
 	SDL_Texture* circle;

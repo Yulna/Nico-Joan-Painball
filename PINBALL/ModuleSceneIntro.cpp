@@ -60,7 +60,13 @@ bool ModuleSceneIntro::Start()
 	sadcloudanim.PushBack({ 56,0,26,16 });
 	sadcloudanim.PushBack({ 85,1,26,16 });
 	sadcloudanim.speed = 0.07f;
-	
+	//raining cloud
+	rainingcloud.PushBack({ 112,0,26,33 });
+	rainingcloud.PushBack({ 141,0,26,33 });
+	rainingcloud.PushBack({ 170,0,26,33 });
+	rainingcloud.PushBack({ 199,0,26,33 });
+	rainingcloud.speed = 0.07f;
+
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
 	fatkirbyanim.PushBack({ 0,0,25,45 });
 	if (kirbyumbrella == false) {
@@ -256,8 +262,11 @@ update_status ModuleSceneIntro::Update()
 	if (TimesKickCloud <3) {
 		App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
 	}
-	else {
+	else if(TimesKickCloud ==3 && App->physics->xcloud != 70){
 		App->renderer->Blit(cloud, x, y, &(sadcloudanim.GetCurrentFrame()));
+	}
+	else{
+		App->renderer->Blit(cloud, x, y, &(rainingcloud.GetCurrentFrame()));
 	}
 	
 

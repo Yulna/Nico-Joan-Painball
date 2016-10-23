@@ -104,7 +104,7 @@ public:
 	PhysBody* cloudrightthrow;
 	bool trowrightobj;
 	bool otherthrowobj;
-
+	int xcloud, ycloud;
 
 private:
 
