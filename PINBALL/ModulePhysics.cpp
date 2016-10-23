@@ -206,8 +206,16 @@ bool ModulePhysics::Start()
 	extinguisher4->listener = App->scene_intro;
 	Useextinguisher4 = CreateRectangleSensor(19, 244, 3, 7);
 	Useextinguisher4->listener = App->scene_intro;
-
-
+	//Activation of right extinguisher5
+	extinguisher5 = CreateRectangleSensor(127, 100, 5, 7);
+	extinguisher5->listener = App->scene_intro;
+	Useextinguisher5 = CreateRectangleSensor(20, 100, 3, 7);
+	Useextinguisher5->listener = App->scene_intro;
+	//Activation of right extinguisher6
+	extinguisher6 = CreateRectangleSensor(34, 100, 5, 7);
+	extinguisher6->listener = App->scene_intro;
+	Useextinguisher6 = CreateRectangleSensor(141, 100, 3, 7);
+	Useextinguisher6->listener = App->scene_intro;
 
 	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
 

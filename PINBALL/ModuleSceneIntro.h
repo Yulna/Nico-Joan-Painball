@@ -72,6 +72,8 @@ public:
 	bool extappear2;
 	bool extappear3;
 	bool extappear4;
+	bool extappear5;
+	bool extappear6;
 	TripleKirby* tKirby;
 
 	int sun_life;

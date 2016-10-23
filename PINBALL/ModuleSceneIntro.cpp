@@ -29,6 +29,8 @@ bool ModuleSceneIntro::Start()
 	printThObj = false;
 	printThObj2 = false;
 	extappear4 = false;
+	extappear5 = false;
+	extappear6 = false;
 	sun_life = moon_life = 3;
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
@@ -329,6 +331,15 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
 	}
 
+	if (extappear5 == true) {
+		App->physics->Useextinguisher5->GetPosition(x, y);
+		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
+	}
+
+	if (extappear6 == true) {
+		App->physics->Useextinguisher6->GetPosition(x, y);
+		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
+	}
 
 	if (App->physics->cloudrightthrow) {
 			App->physics->cloudrightthrow->GetPosition(x, y);
@@ -436,8 +447,36 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			extappear4 = false;
 		}
-		//
-
+		//extingisher 5
+		if (bodyA->body == App->physics->extinguisher5->body || bodyB->body == App->physics->extinguisher5->body) {
+			extappear5 = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher5->body || bodyB->body == App->physics->Useextinguisher5->body) {
+			if (extappear5 == true) {
+				if (bodyA->body == App->physics->Useextinguisher5->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher5->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear5 = false;
+		}
+		//extingisher 6
+		if (bodyA->body == App->physics->extinguisher6->body || bodyB->body == App->physics->extinguisher6->body) {
+			extappear6 = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher6->body || bodyB->body == App->physics->Useextinguisher6->body) {
+			if (extappear6 == true) {
+				if (bodyA->body == App->physics->Useextinguisher6->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher6->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear6 = false;
+		}
 
 		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
 			App->physics->throwingRightCloud();

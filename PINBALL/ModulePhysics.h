@@ -97,10 +97,14 @@ public:
 	PhysBody* Useextinguisher;//to use the left extinguisher
 	PhysBody* extinguisher2;//to appear the left extinguisher 
 	PhysBody* Useextinguisher2;//to use the left extinguisher
-	PhysBody* extinguisher3;//to appear the left extinguisher 
-	PhysBody* Useextinguisher3;//to use the left extinguisher
-	PhysBody* extinguisher4;//to appear the left extinguisher 
-	PhysBody* Useextinguisher4;//to use the left extinguisher
+	PhysBody* extinguisher3;
+	PhysBody* Useextinguisher3;
+	PhysBody* extinguisher4;
+	PhysBody* Useextinguisher4;
+	PhysBody* extinguisher5;
+	PhysBody* Useextinguisher5;
+	PhysBody* extinguisher6;
+	PhysBody* Useextinguisher6;
 
 	PhysBody* DetectFatKirbyAnimation;
 	bool ballupumbrella;
