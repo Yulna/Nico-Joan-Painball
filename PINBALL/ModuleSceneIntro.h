@@ -38,9 +38,13 @@ public:
 	Animation cloudanim;
 	Animation fatkirbyanim;
 	Animation sadcloudanim;
+
 	Animation rainingcloud;
 	Animation kirbyumbrella;
 	Animation fatkirbyThrowup;
+
+	Animation sunanim;
+
 	PhysBody* sensor;
 	bool sensed;
 	SDL_Texture* circle;
@@ -53,6 +57,7 @@ public:
 	SDL_Texture* cloud;
 	SDL_Texture* fatkirbytext;
 	SDL_Texture* tripleKirby;
+	SDL_Texture* sun_moon_textures;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
@@ -62,6 +67,9 @@ public:
 
 
 	TripleKirby* tKirby;
+
+	int sun_life;
+	int moon_life;
 
 	bool printThObj;
 

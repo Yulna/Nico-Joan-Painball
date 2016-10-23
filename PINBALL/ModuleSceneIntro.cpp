@@ -25,6 +25,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	extappear = false;
 	printThObj = false;
+	sun_life = moon_life = 3;
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	background = App->textures->Load("pinball/KirbyPinball.png");
@@ -84,8 +85,18 @@ bool ModuleSceneIntro::Start()
 	fatkirbyThrowup.speed = 0.02f;
 
 
-
 	tKirby = new TripleKirby(App->physics->tripleKirby);
+
+
+
+
+	//Sun & Moon animation
+	sun_moon_textures = App->textures->Load("pinball/sun_moon_cloud.png");
+	sunanim.PushBack({ 0, 0, 24, 28 });
+	sunanim.PushBack({ 27, 0, 24, 28 });
+	sunanim.PushBack({ 54, 0, 24, 28 });
+	sunanim.PushBack({ 81, 0, 24, 28 });
+	sunanim.speed = 0.02f;
 
 	return ret;
 }
@@ -298,6 +309,18 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 		}
 		
+
+	//Print sun & Moon
+
+	if (App->physics->sun)
+	{
+		int x, y;
+		App->physics->sun->GetPosition(x, y);
+		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(sunanim.GetCurrentFrame()));
+	}
+
+	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -351,6 +374,19 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			tKirby->state++;
 		else
 			tKirby->state = 1;
+	}
+
+
+
+	//Sun
+	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
+	{
+		sun_life--;
+	}
+
+	if (bodyA == App->physics->moon || bodyB == App->physics->moon)
+	{
+		moon_life--;
 	}
 
 }

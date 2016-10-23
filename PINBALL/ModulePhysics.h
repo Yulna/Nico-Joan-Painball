@@ -95,8 +95,16 @@ public:
 	PhysBody* fatkirby;
 	PhysBody* extinguisher;//to appear the extinguisher
 	PhysBody* Useextinguisher;//to use the extinguisher
+
 	PhysBody* DetectFatKirbyAnimation;
 	bool ballupumbrella;
+
+
+	PhysBody* sun;
+	PhysBody* moon;
+
+
+
 	PhysBody* tripleKirby;
 
 	PhysBody* cloudrightsensor;

@@ -180,6 +180,9 @@ bool ModulePhysics::Start()
 	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
+	sun = CreateCircle(27, 40, 10, KINEMATIC, 10, 2,0);
+	sun->body->SetLinearVelocity(b2Vec2(1, 0));
+
 	//Walls
 	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f,0);
 	CreateFloatingWalls();
@@ -233,6 +236,23 @@ update_status ModulePhysics::PreUpdate()
 			if(pb1 && pb2 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2);
 		}
+	}
+
+	//Check if sun or moon are alive and destroy them when they die
+	if ((App->scene_intro->sun_life < 0) && (sun))
+	{
+		world->DestroyBody(sun->body);
+		sun = nullptr;
+
+		//Create moon when sun dies
+		moon = CreateCircle(22, 22, 7, STATIC, 10, 2,0);
+	}
+
+
+	if ((App->scene_intro->moon_life <0) && moon)
+	{
+		world->DestroyBody(moon->body);
+		moon = nullptr;
 	}
 
 	return UPDATE_CONTINUE;
@@ -505,6 +525,22 @@ update_status ModulePhysics::Update() {
 		}
 	}
 	
+
+
+
+	if (sun)
+	{
+		int x, y;
+		sun->GetPosition(x, y);
+		if (x > 120)
+		{
+			sun->body->SetLinearVelocity(b2Vec2(-1, 0));
+		}
+		if (x < 25)
+		{
+			sun->body->SetLinearVelocity(b2Vec2(1, 0));
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }
