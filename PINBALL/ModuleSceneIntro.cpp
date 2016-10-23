@@ -137,9 +137,17 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5,DINAMIC,25,0, -1));
+		circles.add(App->physics->CreateCircle(80, 424, 5,DINAMIC,25,0, -1));
 		circles.getLast()->data->listener = this;
-		player = circles.getFirst()->data;
+		//player = circles.getFirst()->data;
+		//player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		player = App->physics->CreateCircle(80, 424, 5, DINAMIC, 25, 0, -1);
+		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
+		player->listener = this;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -186,6 +194,15 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(background, x, y, NULL, 1.0f, ground->GetRotation());
 	}
 
+	//print player balls
+	int playerx, playery;
+	if (player!=nullptr) {
+		player->GetPosition(playerx, playery);
+		App->renderer->Blit(circle, playerx - (player->width / 2), playery - (player->height / 2), NULL, 1.0f, player->GetRotation());
+	}
+	
+	
+	
 	p2List_item<PhysBody*>* c = circles.getFirst();
 
 	while(c != NULL)
@@ -196,6 +213,7 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(circle, x - (c->data->width / 2), y - (c->data->height / 2), NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
+
 
 	c = boxes.getFirst();
 
