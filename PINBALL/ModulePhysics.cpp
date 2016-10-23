@@ -42,6 +42,11 @@ bool ModulePhysics::Start()
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
 
+
+	
+	leftKickers = new p2List<PhysBody*>;
+	rightKickers = new p2List<PhysBody*>;
+
 	
 	// Pivot 0, 0
 	int Pinball_exterior[164] = {
@@ -135,10 +140,10 @@ bool ModulePhysics::Start()
 
 
 	//Kickers Left
-	BuildLeftKickers(&leftKickers);
+	BuildLeftKickers(leftKickers);
 	
 	//Kickers Right
-	BuildRightKickers(&rightKickers);
+	BuildRightKickers(rightKickers);
 
 
 	
@@ -182,8 +187,12 @@ bool ModulePhysics::Start()
 	extinguisher->listener = App->scene_intro;
 	Useextinguisher = CreateRectangleSensor(20, 388, 3, 7);
 	Useextinguisher->listener = App->scene_intro;
+
+	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
+
 	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1);
 	cloudrightsensor->listener = App->scene_intro;
+
 	return true;
 }
 
@@ -191,7 +200,7 @@ bool ModulePhysics::Start()
 void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl) {
 	if (rl == LEFT) 
 	{
-		p2List_item<PhysBody*>* item = leftKickers.getFirst();
+		p2List_item<PhysBody*>* item = leftKickers->getFirst();
 		while (item != nullptr)
 		{
 			item->data->body->ApplyForce(vectforce, posit, true);
@@ -199,7 +208,7 @@ void ModulePhysics::KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl) {
 		}
 	}
 	else if (rl == RIGHT) {
-		p2List_item<PhysBody*>* item = rightKickers.getFirst();
+		p2List_item<PhysBody*>* item = rightKickers->getFirst();
 		while (item != nullptr)
 		{
 			item->data->body->ApplyForce(vectforce, posit, true);
@@ -299,11 +308,7 @@ PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius, CircleType
 	pbody->width = pbody->height = radius;
 
 	return pbody;
-
-
-
-
-
+	
 }
 
 
@@ -706,6 +711,16 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+p2List<PhysBody*>* ModulePhysics::GetLeftKickers()
+{
+	return leftKickers;
+}
+
+p2List<PhysBody*>* ModulePhysics::GetRightKickers()
+{
+	return rightKickers;
 }
 
 

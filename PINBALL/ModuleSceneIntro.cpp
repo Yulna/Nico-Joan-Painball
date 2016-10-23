@@ -29,7 +29,9 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	kicker = App->textures->Load("pinball/kicker.png");
+	tripleKirby = App->textures->Load("pinball/tripleKirby.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+
 
 	spikyBall = App->textures->Load("pinball/spikyBall.png");
 	spikyball1Anim.PushBack({ 0,0,17,16 });
@@ -65,7 +67,12 @@ bool ModuleSceneIntro::Start()
 		fatkirbyanim.PushBack({ 174,5,25,38 });
 		fatkirbyanim.PushBack({ 202,0,25,43 });
 	}
+
 	fatkirbyanim.speed = 0.02f;
+
+
+	tKirby = new TripleKirby(App->physics->tripleKirby);
+
 	return ret;
 }
 
@@ -179,7 +186,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (kicker) {
 		int x, y;
-		p2List_item<PhysBody*>* item = App->physics->leftKickers.getFirst();
+		p2List_item<PhysBody*>* item = App->physics->GetLeftKickers()->getFirst();
 
 		while (item != nullptr)
 		{
@@ -193,7 +200,7 @@ update_status ModuleSceneIntro::Update()
 	if (kicker)
 	{
 		int x, y;
-		p2List_item<PhysBody*>* item = App->physics->rightKickers.getFirst();
+		p2List_item<PhysBody*>* item = App->physics->GetRightKickers()->getFirst();
 
 		while (item != nullptr)
 		{
@@ -203,6 +210,22 @@ update_status ModuleSceneIntro::Update()
 			item = item->next;
 		}
 
+	}
+
+	if (tKirby)
+	{
+		int x, y;
+		SDL_Rect rect;
+		if (tKirby->state == 1)
+			rect = { 0,0, 14, 15 };
+		if (tKirby->state == 2)
+			rect = { 18,0, 14, 15 };
+		if (tKirby->state == 3)
+			rect = { 37,0, 14, 15 };
+
+
+		App->physics->tripleKirby->GetPosition(x, y);
+		App->renderer->Blit(tripleKirby, x, y, &rect);
 	}
 
 
@@ -274,16 +297,16 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			printThObj = true;
 		}
 	}
-	/*
-	if(bodyA)
+	
+
+
+	//Kirby Jackpot
+	if (bodyA == App->physics->tripleKirby || bodyB == App->physics->tripleKirby)
 	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
+		if (tKirby->state < 3)
+			tKirby->state++;
+		else
+			tKirby->state = 1;
 	}
 
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
 }
