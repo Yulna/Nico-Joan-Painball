@@ -61,6 +61,9 @@ public:
 
 	TripleKirby* tKirby;
 
+	int sun_life;
+	int moon_life;
+
 	bool printThObj;
 
 };

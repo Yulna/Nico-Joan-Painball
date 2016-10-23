@@ -25,6 +25,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	extappear = false;
 	printThObj = false;
+	sun_life = moon_life = 3;
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
 	background = App->textures->Load("pinball/KirbyPinball.png");
@@ -74,7 +75,6 @@ bool ModuleSceneIntro::Start()
 	}
 
 	fatkirbyanim.speed = 0.02f;
-
 
 	tKirby = new TripleKirby(App->physics->tripleKirby);
 
@@ -325,6 +325,19 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			tKirby->state++;
 		else
 			tKirby->state = 1;
+	}
+
+
+
+	//Sun
+	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
+	{
+		sun_life--;
+	}
+
+	if (bodyA == App->physics->moon || bodyB == App->physics->moon)
+	{
+		moon_life--;
 	}
 
 }

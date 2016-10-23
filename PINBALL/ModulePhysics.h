@@ -96,6 +96,8 @@ public:
 	PhysBody* extinguisher;//to appear the extinguisher
 	PhysBody* Useextinguisher;//to use the extinguisher
 
+	PhysBody* sun;
+	PhysBody* moon;
 
 
 	PhysBody* tripleKirby;
