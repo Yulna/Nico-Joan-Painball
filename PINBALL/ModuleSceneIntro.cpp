@@ -57,15 +57,15 @@ bool ModuleSceneIntro::Start()
 	
 	cloudanim.speed = 0.07f;
 	fatkirbytext = App->textures->Load("pinball/bigKirby.png");
-	fatkirbyanim.PushBack({ 0,17,25,26 });
+	fatkirbyanim.PushBack({ 0,0,25,45 });
 	if (kirbyumbrella == false) {
-		fatkirbyanim.PushBack({ 28,17,26,28 });
-		fatkirbyanim.PushBack({ 57,17,26,28 });
-		fatkirbyanim.PushBack({ 86,11,29,32 });
-		fatkirbyanim.PushBack({ 118,3,25,40 });
-		fatkirbyanim.PushBack({ 146,3,25,40 });
-		fatkirbyanim.PushBack({ 174,5,25,38 });
-		fatkirbyanim.PushBack({ 202,0,25,43 });
+		fatkirbyanim.PushBack({ 28,0,26,45});
+		fatkirbyanim.PushBack({ 57,0,26,45 });
+		fatkirbyanim.PushBack({ 86,0,29,45 });
+		fatkirbyanim.PushBack({ 118,0,25,45 });
+		fatkirbyanim.PushBack({ 146,0,25,45 });
+		fatkirbyanim.PushBack({ 174,0,25,45 });
+		fatkirbyanim.PushBack({ 202,0,25,45 });
 	}
 
 	fatkirbyanim.speed = 0.02f;
@@ -251,12 +251,19 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(cloud, x, y, &(cloudanim.GetCurrentFrame()));
 
 
+	//Fat Kirby Blit
 	App->physics->fatkirby->GetPosition(x, y);
-	App->renderer->Blit(fatkirbytext, x , y, &(fatkirbyanim.GetCurrentFrame()));
+	App->renderer->Blit(fatkirbytext, x , y - 17, &(fatkirbyanim.GetCurrentFrame()));
+
+
+
 	if (extappear == true) {
 		App->physics->Useextinguisher->GetPosition(x, y);
 		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 	}
+
+
+
 	if (App->physics->cloudrightthrow) {
 			App->physics->cloudrightthrow->GetPosition(x, y);
 			App->physics->cloudrightthrow->body->SetLinearVelocity(b2Vec2(1, 0));
