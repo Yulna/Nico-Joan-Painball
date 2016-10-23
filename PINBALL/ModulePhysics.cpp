@@ -141,14 +141,9 @@ bool ModulePhysics::Start()
 
 
 	
-<<<<<<< HEAD
 	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1);
 	ghost1 = CreateCircle(31, 324, 7, DINAMIC,500, 1);
-=======
-	spikyball1 = CreateCircle(31,319,5,STATIC,6, 0.3f);
-	ghost1 = CreateCircle(31, 324, 6, DINAMIC,50, 0.6f);
->>>>>>> origin/master
-
+	
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
 	revdef.bodyB = ghost1->body;
@@ -160,13 +155,10 @@ bool ModulePhysics::Start()
 
 	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
 
-<<<<<<< HEAD
+
 	spikyball2=CreateCircle(130, 318, 5,STATIC,6,1);
 	ghost2= CreateCircle(134, 326, 7, DINAMIC, 500, 1);
-=======
-	spikyball2=CreateCircle(132, 318, 5,STATIC,6,0.3f);
-	ghost2= CreateCircle(132, 326, 6, DINAMIC, 50, 0.3f);
->>>>>>> origin/master
+
 	b2RevoluteJointDef revdef2;
 	revdef2.bodyA = spikyball2->body;
 	revdef2.bodyB = ghost2->body;
@@ -886,74 +878,83 @@ void ModulePhysics::CreateFloatingWalls()
 
 	//Bottom Floor
 	// Pivot 0, 0
-	int LeftBottomFloor[12] = {
-		48, 413,
-		52, 406,
-		29, 395,
-		29, 377,
-		24, 377,
-		24, 400
+	int LeftBottomFloor[14] = {
+		51, 406,
+		28, 395,
+		28, 383,
+		26, 378,
+		25, 383,
+		25, 401,
+		48, 412
 	};
 	// Pivot 0, 0
-	int RightBottomFloor[12] = {
-		112, 413,
-		108, 406,
-		131, 395,
-		131, 377,
-		136, 377,
-		136, 400
+	int RightBottomFloor[14] = {
+		109, 406,
+		132, 394,
+		132, 382,
+		134, 377,
+		135, 382,
+		135, 400,
+		112, 412
 	};
 
-	CreateChain(0 , 0, LeftBottomFloor, 12, -2);
-	CreateChain(0, 0, RightBottomFloor, 12, -2);
+	CreateChain(0 , 0, LeftBottomFloor, 14, -2);
+	CreateChain(0, 0, RightBottomFloor, 14, -2);
 
 
 	//MiddleFloor
 	// Pivot 0, 0
-	int LeftMiddleFloor[12] = {
-		47, 268,
-		25, 257,
-		25, 235,
-		28, 235,
-		28, 251,
-		51, 262
+	int LeftMiddleFloor[14] = {
+		51, 261,
+		28, 250,
+		28, 239,
+		26, 233,
+		25, 239,
+		25, 256,
+		48, 267
 	};
 	// Pivot 0, 0
-	int RightMiddleFloor[12] = {
-		112, 268,
+	int RightMiddleFloor[14] = {
+		109, 262,
+		132, 251,
+		132, 239,
+		134, 234,
+		135, 239,
 		135, 257,
-		135, 235,
-		132, 235,
-		132, 250,
-		109, 262
+		112, 267
 	};
 
-	CreateChain(0, 0, LeftMiddleFloor, 12, -2);
-	CreateChain(0, 0, RightMiddleFloor, 12, -2);
+	CreateChain(0, 0, LeftMiddleFloor, 14, -2);
+	CreateChain(0, 0, RightMiddleFloor, 14, -2);
 
-	
+
 	//UpperFloor
 	// Pivot 0, 0
-	int LeftUpperFloor[12] = {
-		48, 124,
-		25, 112,
-		25, 91,
-		28, 91,
+	int LeftUpperFloor[14] = {
+		52, 119,
 		28, 107,
-		51, 118
+		28, 94,
+		26, 89,
+		25, 94,
+		25, 112,
+		48, 124
 	};
 	// Pivot 0, 0
-	int RightUpperFloor[12] = {
-		109, 118,
+	int RightUpperFloor[14] = {
+		108, 118,
 		132, 106,
-		132, 91,
-		135, 91,
-		135, 113,
-		111, 124
+		132, 94,
+		134, 89,
+		135, 94,
+		135, 112,
+		113, 123
 	};
 
-	CreateChain(0, 0, LeftUpperFloor, 12, -2);
-	CreateChain(0, 0, RightUpperFloor, 12, -2);
+	CreateChain(0, 0, LeftUpperFloor, 14, -2);
+	CreateChain(0, 0, RightUpperFloor, 14, -2);
+	
+
+
 
 
 	//Triangles
