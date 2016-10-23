@@ -33,6 +33,7 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> floating_walls;	
 	PhysBody* ground;
+	PhysBody* player;
 	Animation spikyball1Anim;
 	Animation ghostanim;
 	Animation cloudanim;
@@ -59,19 +60,23 @@ public:
 	SDL_Texture* fatkirbytext;
 	SDL_Texture* tripleKirby;
 	SDL_Texture* sun_moon_textures;
+	SDL_Texture* extinguishertext;
+	SDL_Rect extinguisherrect;
+
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
 	int TimesKickCloud;
 	bool raincloud;
 	bool extappear;
-
-
+	bool extappear2;
+	bool extappear3;
+	bool extappear4;
 	TripleKirby* tKirby;
 
 	int sun_life;
 	int moon_life;
 
 	bool printThObj;
-
+	bool printThObj2;
 };

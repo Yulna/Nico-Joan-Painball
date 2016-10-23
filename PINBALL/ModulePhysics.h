@@ -60,7 +60,7 @@ public:
 	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl);
 	void ApplayVerticalForce(PhysBody* ball);
-
+	void ModulePhysics::throwingLeftCloud();
 
 	PhysBody* CreateKicker( int kickerX, int kickerY, int* points, int size);
 
@@ -86,15 +86,21 @@ public:
 
 
 	//Temporary test stuff
-
+	
 	PhysBody* spikyball1;
 	PhysBody* ghost1;
 	PhysBody* spikyball2;
 	PhysBody* ghost2;
 	PhysBody* kinematicrect;
 	PhysBody* fatkirby;
-	PhysBody* extinguisher;//to appear the extinguisher
-	PhysBody* Useextinguisher;//to use the extinguisher
+	PhysBody* extinguisher;//to appear the left extinguisher 
+	PhysBody* Useextinguisher;//to use the left extinguisher
+	PhysBody* extinguisher2;//to appear the left extinguisher 
+	PhysBody* Useextinguisher2;//to use the left extinguisher
+	PhysBody* extinguisher3;//to appear the left extinguisher 
+	PhysBody* Useextinguisher3;//to use the left extinguisher
+	PhysBody* extinguisher4;//to appear the left extinguisher 
+	PhysBody* Useextinguisher4;//to use the left extinguisher
 
 	PhysBody* DetectFatKirbyAnimation;
 	bool ballupumbrella;
@@ -108,11 +114,15 @@ public:
 	PhysBody* tripleKirby;
 
 	PhysBody* cloudrightsensor;
+	PhysBody* cloudrightsensor2;
 	PhysBody* cloudrightthrow;
+	PhysBody* cloudrightthrow2;
 	bool trowrightobj;
 	bool otherthrowobj;
+	bool trowrightobj2;
+	bool otherthrowobj2;
 	int xcloud, ycloud;
-	
+	int ballx, bally;
 
 private:
 

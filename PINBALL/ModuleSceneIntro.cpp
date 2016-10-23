@@ -24,7 +24,11 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	extappear = false;
+	extappear2 = false;
+	extappear3 = false;
 	printThObj = false;
+	printThObj2 = false;
+	extappear4 = false;
 	sun_life = moon_life = 3;
 
 	circle = App->textures->Load("pinball/sadBall.png"); 
@@ -84,7 +88,11 @@ bool ModuleSceneIntro::Start()
 	fatkirbyThrowup.PushBack({ 202,0,25,45 });
 	fatkirbyThrowup.speed = 0.02f;
 
-
+	extinguishertext = App->textures->Load("pinball/extinguisher.png");
+	extinguisherrect.w = 8;
+	extinguisherrect.h = 14;
+	extinguisherrect.x = 0;
+	extinguisherrect.y = 0;
 	tKirby = new TripleKirby(App->physics->tripleKirby);
 
 
@@ -128,7 +136,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5,DINAMIC,25,0, -1));
 		circles.getLast()->data->listener = this;
-
+		player = circles.getFirst()->data;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -303,9 +311,23 @@ update_status ModuleSceneIntro::Update()
 
 	if (extappear == true) {
 		App->physics->Useextinguisher->GetPosition(x, y);
-		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
+		App->renderer->Blit(extinguishertext, x, y , &extinguisherrect);
 	}
 
+	if (extappear2 == true) {
+		App->physics->Useextinguisher2->GetPosition(x, y);
+		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
+	}
+
+	if (extappear3 == true) {
+		App->physics->Useextinguisher3->GetPosition(x, y);
+		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
+	}
+
+	if (extappear4 == true) {
+		App->physics->Useextinguisher4->GetPosition(x, y);
+		App->renderer->Blit(extinguishertext, x, y, &extinguisherrect);
+	}
 
 
 	if (App->physics->cloudrightthrow) {
@@ -313,6 +335,12 @@ update_status ModuleSceneIntro::Update()
 			App->physics->cloudrightthrow->body->SetLinearVelocity(b2Vec2(1, 0));
 			App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
 		}
+
+	if (App->physics->cloudrightthrow2) {
+		App->physics->cloudrightthrow2->GetPosition(x, y);
+		App->physics->cloudrightthrow2->body->SetLinearVelocity(b2Vec2(-1, 0));
+		App->renderer->Blit(spikyBall, (x - (App->physics->spikyball1->width / 2)), y - (App->physics->spikyball1->height / 2), &(spikyball1Anim.GetCurrentFrame()));
+	}
 		
 
 	//Print sun & Moon
@@ -346,7 +374,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			TimesKickCloud++;
 		}
-
+		//extinguisher 1
 		if (bodyA->body == App->physics->extinguisher->body || bodyB->body == App->physics->extinguisher->body) {
 			extappear = true;
 		}
@@ -361,10 +389,66 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			extappear = false;
 		}
+
+		//extinguisher 2
+		if (bodyA->body == App->physics->extinguisher2->body || bodyB->body == App->physics->extinguisher2->body) {
+			extappear2 = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher2->body || bodyB->body == App->physics->Useextinguisher2->body) {
+			if (extappear2 == true) {
+				if (bodyA->body == App->physics->Useextinguisher2->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher2->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear2 = false;
+		}
+
+		//extinguisher 3
+		if (bodyA->body == App->physics->extinguisher3->body || bodyB->body == App->physics->extinguisher3->body) {
+			extappear3 = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher3->body || bodyB->body == App->physics->Useextinguisher3->body) {
+			if (extappear3 == true) {
+				if (bodyA->body == App->physics->Useextinguisher3->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher3->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear3 = false;
+		}
+		//extingisher 4
+		if (bodyA->body == App->physics->extinguisher4->body || bodyB->body == App->physics->extinguisher4->body) {
+			extappear4 = true;
+		}
+		if (bodyA->body == App->physics->Useextinguisher4->body || bodyB->body == App->physics->Useextinguisher4->body) {
+			if (extappear4 == true) {
+				if (bodyA->body == App->physics->Useextinguisher4->body) {
+					App->physics->ApplayVerticalForce(bodyB);
+				}
+				if (bodyB->body == App->physics->Useextinguisher4->body) {
+					App->physics->ApplayVerticalForce(bodyA);
+				}
+			}
+			extappear4 = false;
+		}
+		//
+
+
 		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
 			App->physics->throwingRightCloud();
 			printThObj = true;
 		}
+
+		if (bodyA->body == App->physics->cloudrightsensor2->body || bodyB->body == App->physics->cloudrightsensor2->body) {
+			App->physics->throwingLeftCloud();
+			printThObj2 = true;
+		}
+
 		if (bodyA->body == App->physics->DetectFatKirbyAnimation->body || bodyB->body == App->physics->DetectFatKirbyAnimation->body) {
 			if (bodyA->body == App->physics->DetectFatKirbyAnimation->body) {
 				App->physics->ballupsideumbrella(bodyB);

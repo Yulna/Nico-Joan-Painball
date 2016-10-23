@@ -186,15 +186,36 @@ bool ModulePhysics::Start()
 	//Walls
 	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f,0);
 	CreateFloatingWalls();
+	//Activation of left extinguisher
 	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
 	extinguisher->listener = App->scene_intro;
 	Useextinguisher = CreateRectangleSensor(20, 388, 3, 7);
 	Useextinguisher->listener = App->scene_intro;
+	//Activation of right extinguisher2
+	extinguisher2 = CreateRectangleSensor(34, 388, 5, 7);
+	extinguisher2->listener = App->scene_intro;
+	Useextinguisher2 = CreateRectangleSensor(141, 388, 3, 7);
+	Useextinguisher2->listener = App->scene_intro;
+	//Activation of right extinguisher3
+	extinguisher3 = CreateRectangleSensor(34, 244, 5, 7);
+	extinguisher3->listener = App->scene_intro;
+	Useextinguisher3 = CreateRectangleSensor(141, 244, 3, 7);
+	Useextinguisher3->listener = App->scene_intro;
+	//Activation of right extinguisher4
+	extinguisher4 = CreateRectangleSensor(126, 244, 5, 7);
+	extinguisher4->listener = App->scene_intro;
+	Useextinguisher4 = CreateRectangleSensor(19, 244, 3, 7);
+	Useextinguisher4->listener = App->scene_intro;
+
+
 
 	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
 
 	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1, 0);
 	cloudrightsensor->listener = App->scene_intro;
+
+	cloudrightsensor2 = CreateCircle(141, 198, 12, STATIC, 6, 1, 0);
+	cloudrightsensor2->listener = App->scene_intro;
 
 	DetectFatKirbyAnimation = CreateRectangleSensor(83, 185, 21, 24);
 	DetectFatKirbyAnimation->listener = App->scene_intro;
@@ -525,7 +546,21 @@ update_status ModulePhysics::Update() {
 		}
 	}
 	
+	int posobjthrow_x2, posobjthrow_y2;
+	if (trowrightobj2 == true && otherthrowobj2 == false) {
+		cloudrightthrow2 = CreateCircle(133, 189, 6, KINEMATIC, 50, 0.3f, 0);
+		trowrightobj2 = false;
+		otherthrowobj2 = true;
 
+	}
+	if (cloudrightthrow2) {
+		cloudrightthrow2->GetPosition(posobjthrow_x2, posobjthrow_y2);
+		if (posobjthrow_x2 == 26) {
+			world->DestroyBody(cloudrightthrow2->body);
+			cloudrightthrow2 = nullptr;
+			otherthrowobj2 = false;
+		}
+	}
 
 
 	if (sun)
@@ -539,6 +574,14 @@ update_status ModulePhysics::Update() {
 		if (x < 25)
 		{
 			sun->body->SetLinearVelocity(b2Vec2(1, 0));
+		}
+	}
+	if (App->scene_intro->player != nullptr) {
+		App->scene_intro->player->GetPosition(ballx, bally);
+		if (bally < 154) {
+			b2Filter filter;
+			filter.groupIndex = 0;
+			kinematicrect->body->GetFixtureList()->SetFilterData(filter);
 		}
 	}
 
@@ -1105,12 +1148,22 @@ void ModulePhysics::throwingRightCloud() {
 
 }
 
+void ModulePhysics::throwingLeftCloud() {
+
+	trowrightobj2 = true;
+}
+
 void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
 	
-	//App->scene_intro->circles.clear();
-	Mball->body->SetLinearVelocity(b2Vec2(0, -30));
-	//world->DestroyBody(Mball->body);
-	ballupumbrella = true;
+	kinematicrect->GetPosition(xcloud, ycloud);
+	if (App->scene_intro->TimesKickCloud >= 3) {
+		if (xcloud == 70) {
+			Mball->body->SetLinearVelocity(b2Vec2(0, -15));
+			ballupumbrella = true;
+			App->scene_intro->TimesKickCloud = 0;
+			kinematicrect->body->SetLinearVelocity(b2Vec2(1,0));
+		}
+	}
 	
 
 }
