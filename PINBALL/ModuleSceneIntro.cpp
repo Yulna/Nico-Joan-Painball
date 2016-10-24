@@ -42,6 +42,7 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	kicker = App->textures->Load("pinball/kicker.png");
 	tripleKirby = App->textures->Load("pinball/tripleKirby.png");
+	game_overtext = App->textures->Load("pinball/GameOver.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 
@@ -148,9 +149,10 @@ update_status ModuleSceneIntro::Update()
 		//player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
 	}
 
+	
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	{
-		player = App->physics->CreateCircle(80, 424, 5, DINAMIC, 25, 0, -1);
+		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
 		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
 		player->listener = this;
 	}
@@ -407,13 +409,27 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	
+	if (game_over)
+	{
+		SDL_Rect rect1 = { 0,0,124,14 };
+		App->renderer->Blit(game_overtext, 20, 35, &rect1);
+		App->renderer->Blit(game_overtext, 20, 180, &rect1);
+		App->renderer->Blit(game_overtext, 20, 330, &rect1);
+	}
+
+	
+
+
+
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleSceneIntro::PostUpdate()
 {
-	
+	if (game_over)
+		App->renderer->Blit(game_overtext, 50,50,NULL);
 
 	return UPDATE_CONTINUE;
 }
@@ -594,3 +610,5 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 
 }
+
+

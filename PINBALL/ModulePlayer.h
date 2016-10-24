@@ -18,5 +18,6 @@ public:
 
 public:
 	int score;
+	int life;
 
 };

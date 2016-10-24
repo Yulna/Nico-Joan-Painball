@@ -3,6 +3,7 @@
 #include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "ModulePhysics.h"
+#include "ModuleSceneIntro.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,6 +16,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	score = 0;
+	life = 3;
 
 	LOG("Loading player");
 	return true;
@@ -45,6 +47,16 @@ update_status ModulePlayer::Update()
 	{
 		App->physics->KickersForce(b2Vec2(0, -50), b2Vec2(0, 0), RIGHT);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		life--;
+	}
+
+	if (life == 0)
+		App->scene_intro->game_over = true;
+
+
 
 	return UPDATE_CONTINUE;
 }

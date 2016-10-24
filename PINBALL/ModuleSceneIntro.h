@@ -28,6 +28,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	
 
 public:
 	p2List<PhysBody*> circles;
@@ -62,6 +63,7 @@ public:
 	SDL_Texture* tripleKirby;
 	SDL_Texture* sun_moon_textures;
 	SDL_Texture* extinguishertext;
+	SDL_Texture* game_overtext;
 	SDL_Rect extinguisherrect;
 
 	uint bonus_fx;
@@ -89,5 +91,5 @@ public:
 	bool printThObj;
 	bool printThObj2;
 
-
+	bool game_over;
 };
