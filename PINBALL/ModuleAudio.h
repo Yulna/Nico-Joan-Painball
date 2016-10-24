@@ -26,7 +26,6 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 private:
-
 	Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };

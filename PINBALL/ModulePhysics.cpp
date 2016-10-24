@@ -575,7 +575,6 @@ update_status ModulePhysics::Update() {
 		}
 	}
 
-
 	if (sun)
 	{
 		int x, y;
@@ -591,7 +590,7 @@ update_status ModulePhysics::Update() {
 	}
 	if (App->scene_intro->player != nullptr) {
 		App->scene_intro->player->GetPosition(ballx, bally);
-		if (bally < 154) {
+		if (bally < 160) {
 			b2Filter filter;
 			filter.groupIndex = 0;
 			kinematicrect->body->GetFixtureList()->SetFilterData(filter);

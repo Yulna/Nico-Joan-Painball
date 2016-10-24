@@ -42,8 +42,16 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	kicker = App->textures->Load("pinball/kicker.png");
 	tripleKirby = App->textures->Load("pinball/tripleKirby.png");
+
 	game_overtext = App->textures->Load("pinball/GameOver.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+
+	Point_fx = App->audio->LoadFx("pinball/PointsAndExtingisherSound.ogg");
+	Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");
+	Ghost_fx = App->audio->LoadFx("pinball/GhostSound.ogg");
+	Triangles_fx = App->audio->LoadFx("pinball/TriangleSound.ogg");
+	Fatkirby_fx = App->audio->LoadFx("pinball/FatKirbySound.ogg");
+	GameOver_fx = App->audio->LoadFx("pinball/13 - HAL Sound Team - Game Over.ogg");
 
 
 	spikyBall = App->textures->Load("pinball/spikyBall.png");
@@ -432,16 +440,22 @@ update_status ModuleSceneIntro::PostUpdate()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
-	App->audio->PlayFx(bonus_fx);
 	if (bodyA != nullptr && bodyB != nullptr) {
 		if (bodyA->body == App->physics->kinematicrect->body || bodyB->body == App->physics->kinematicrect->body) {
+			App->audio->PlayFx(Triangles_fx);
 			if (TimesKickCloud == 3) {
 				
 			}
 			TimesKickCloud++;
 		}
+
+		if (bodyB->body == App->physics->ghost1->body || bodyB->body == App->physics->ghost2->body) {
+			App->audio->PlayFx(Ghost_fx);
+		}
+
 		//extinguisher 1
 		if (bodyA->body == App->physics->extinguisher->body || bodyB->body == App->physics->extinguisher->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher->body || bodyB->body == App->physics->Useextinguisher->body) {
@@ -458,6 +472,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		//extinguisher 2
 		if (bodyA->body == App->physics->extinguisher2->body || bodyB->body == App->physics->extinguisher2->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear2 = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher2->body || bodyB->body == App->physics->Useextinguisher2->body) {
@@ -474,6 +489,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		//extinguisher 3
 		if (bodyA->body == App->physics->extinguisher3->body || bodyB->body == App->physics->extinguisher3->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear3 = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher3->body || bodyB->body == App->physics->Useextinguisher3->body) {
@@ -489,6 +505,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		//extingisher 4
 		if (bodyA->body == App->physics->extinguisher4->body || bodyB->body == App->physics->extinguisher4->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear4 = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher4->body || bodyB->body == App->physics->Useextinguisher4->body) {
@@ -504,6 +521,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		//extingisher 5
 		if (bodyA->body == App->physics->extinguisher5->body || bodyB->body == App->physics->extinguisher5->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear5 = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher5->body || bodyB->body == App->physics->Useextinguisher5->body) {
@@ -519,6 +537,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		//extingisher 6
 		if (bodyA->body == App->physics->extinguisher6->body || bodyB->body == App->physics->extinguisher6->body) {
+			App->audio->PlayFx(Point_fx);
 			extappear6 = true;
 		}
 		if (bodyA->body == App->physics->Useextinguisher6->body || bodyB->body == App->physics->Useextinguisher6->body) {
@@ -534,11 +553,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 
 		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
+			App->audio->PlayFx(Ghost_fx);
 			App->physics->throwingRightCloud();
 			printThObj = true;
 		}
 
 		if (bodyA->body == App->physics->cloudrightsensor2->body || bodyB->body == App->physics->cloudrightsensor2->body) {
+			App->audio->PlayFx(Ghost_fx);
 			App->physics->throwingLeftCloud();
 			printThObj2 = true;
 		}
@@ -565,8 +586,9 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			tKirby->state = 1;
 	}
 
-
-
+	if (bodyB == App->physics->fatkirby) {
+		App->audio->PlayFx(Triangles_fx);
+	}
 	//Sun
 	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
 	{
@@ -590,12 +612,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if ((App->physics->GetLeftKickers()->find(bodyA) != -1) || (App->physics->GetLeftKickers()->find(bodyB) != -1)) 
 	{
-		App->player->IncreaseScore(20);
+		
+		
 	}
 
 	if ((App->physics->GetTriangles()->find(bodyB)) != -1)
 	{
 		int x, y;
+		App->audio->PlayFx(Triangles_fx);
 		App->player->IncreaseScore(20);
 		bodyB->GetPosition(triX, triY);
 		SDL_Rect rect = { 0,0,25,30 };

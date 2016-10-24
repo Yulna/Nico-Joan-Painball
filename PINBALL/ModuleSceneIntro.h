@@ -69,6 +69,12 @@ public:
 	SDL_Rect extinguisherrect;
 
 	uint bonus_fx;
+	uint Point_fx;
+	uint Kicker_fx;
+	uint Ghost_fx;
+	uint Triangles_fx;
+	uint Fatkirby_fx;
+	uint GameOver_fx;
 	p2Point<int> ray;
 	bool ray_on;
 	int TimesKickCloud;
