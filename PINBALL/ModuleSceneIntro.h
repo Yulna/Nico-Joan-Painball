@@ -28,6 +28,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void SpawnPLayer();
 	
 
 public:
@@ -36,6 +37,7 @@ public:
 	p2List<PhysBody*> floating_walls;	
 	PhysBody* ground;
 	PhysBody* player;
+	PhysBody* deathSens;
 	Animation spikyball1Anim;
 	Animation ghostanim;
 	Animation cloudanim;

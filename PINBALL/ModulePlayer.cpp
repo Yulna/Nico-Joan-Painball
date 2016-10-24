@@ -17,6 +17,7 @@ bool ModulePlayer::Start()
 {
 	score = 0;
 	life = 3;
+	active = false;
 
 	LOG("Loading player");
 	return true;
@@ -35,17 +36,39 @@ void ModulePlayer::IncreaseScore(int points)
 	score += points;
 }
 
+void ModulePlayer::LoseLife()
+{
+	life--;
+	active = false;
+}
+
+int ModulePlayer::GetLife()
+{
+	return life;
+}
+
+int ModulePlayer::GetScore()
+{
+	return score;
+}
+
 // Update: draw background
 update_status ModulePlayer::Update()
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (life > 0))
 	{
 		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(0, 0), LEFT);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && (life > 0))
 	{
 		App->physics->KickersForce(b2Vec2(0, -50), b2Vec2(0, 0), RIGHT);
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) && !active && life > 0)
+	{
+		App->scene_intro->SpawnPLayer();
+		active = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
@@ -53,9 +76,15 @@ update_status ModulePlayer::Update()
 		life--;
 	}
 
-	if (life == 0)
+	if (life <= 0)
+	{
 		App->scene_intro->game_over = true;
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		life = 3;
+	}
 
 
 	return UPDATE_CONTINUE;

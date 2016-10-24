@@ -146,6 +146,8 @@ bool ModulePhysics::Start()
 	//Kickers Right
 	BuildRightKickers(rightKickers);
 
+	//Death sensor
+	App->scene_intro->deathSens = CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 10, SCREEN_WIDTH, 2);
 
 	
 	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1, 0);

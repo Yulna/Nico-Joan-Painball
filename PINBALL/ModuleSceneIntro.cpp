@@ -150,12 +150,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-	{
-		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
-		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
-		player->listener = this;
-	}
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
@@ -608,7 +603,20 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->renderer->Blit(sun_moon_textures, 80, 100, &rect);
 	}
 
+	//Death
+	if (bodyA == deathSens || bodyB == deathSens)
+	{
+		App->player->LoseLife();
+	}
 
+
+}
+
+void ModuleSceneIntro::SpawnPLayer()
+{
+		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
+		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
+		player->listener = this;
 }
 
 

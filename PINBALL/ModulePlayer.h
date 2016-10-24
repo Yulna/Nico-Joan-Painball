@@ -15,9 +15,15 @@ public:
 	bool CleanUp();
 	
 	void IncreaseScore(int points);
+	void LoseLife();
 
-public:
+	int GetLife();
+	int GetScore();
+
+private:
+
 	int score;
 	int life;
+	bool active;
 
 };
