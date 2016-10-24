@@ -60,13 +60,17 @@ update_status ModulePlayer::Update()
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (life > 0))
 	{
 		App->physics->KickersForce(b2Vec2(0, 50), b2Vec2(0, 0), LEFT);
-		App->audio->PlayFx(App->scene_intro->Kicker_fx);
 	}
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		App->audio->PlayFx(App->scene_intro->Kicker_fx);
+
 	if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && (life > 0))
 	{
 		App->physics->KickersForce(b2Vec2(0, -50), b2Vec2(0, 0), RIGHT);
-		App->audio->PlayFx(App->scene_intro->Kicker_fx);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		App->audio->PlayFx(App->scene_intro->Kicker_fx);
+
 
 	if ((App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) && !active && life > 0)
 	{
