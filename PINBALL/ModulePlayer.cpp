@@ -92,6 +92,7 @@ update_status ModulePlayer::Update()
 	{
 		life = 3;
 		App->scene_intro->game_over = false;
+		App->scene_intro->GameOverFxenabled = false;
 	}
 
 

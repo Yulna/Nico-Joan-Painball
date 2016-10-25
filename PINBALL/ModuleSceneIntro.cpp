@@ -33,6 +33,7 @@ bool ModuleSceneIntro::Start()
 	extappear4 = false;
 	extappear5 = false;
 	extappear6 = false;
+	GameOverFxenabled = false;
 	sun_life = moon_life = 3;
 	triangleDraw = false;
 	trianglecount = 0;
@@ -46,14 +47,14 @@ bool ModuleSceneIntro::Start()
 	game_overtext = App->textures->Load("pinball/GameOver.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	Point_fx = App->audio->LoadFx("pinball/PointsAndExtingisherSound.ogg");
+	Point_fx = App->audio->LoadFx("pinball/ExtintorPointSound.wav");
 	Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");
 	Ghost_fx = App->audio->LoadFx("pinball/GhostSound.ogg");
 	Triangles_fx = App->audio->LoadFx("pinball/TriangleSound.ogg");
 	Fatkirby_fx = App->audio->LoadFx("pinball/FatKirbySound.ogg");
-	GameOver_fx = App->audio->LoadFx("pinball/13 - HAL Sound Team - Game Over.ogg");
-
-
+	GameOver_fx = App->audio->LoadFx("pinball/13_-_HAL_Sound_Team_-_Game_Over.wav");
+	App->audio->PlayMusic("pinball/04 - HAL Sound Team - Kracko Stage.ogg",1);
+	//04 - HAL Sound Team - Kracko Stage.ogg
 	spikyBall = App->textures->Load("pinball/spikyBall.png");
 	spikyball1Anim.PushBack({ 0,0,17,16 });
 	spikyball1Anim.PushBack({ 18,0,17,16 });
@@ -431,9 +432,9 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(game_overtext, 20, 35, &rect1);
 		App->renderer->Blit(game_overtext, 20, 180, &rect1);
 		App->renderer->Blit(game_overtext, 20, 330, &rect1);
+		gameover_sound();
 	}
 
-	
 
 
 
@@ -445,7 +446,6 @@ update_status ModuleSceneIntro::PostUpdate()
 {
 	if (game_over)
 		App->renderer->Blit(game_overtext, 50,50,NULL);
-
 	return UPDATE_CONTINUE;
 }
 
@@ -668,6 +668,13 @@ void ModuleSceneIntro::SpawnPLayer()
 		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
 		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
 		player->listener = this;
+}
+
+void ModuleSceneIntro::gameover_sound()
+{
+	if ( GameOverFxenabled != true) {
+		GameOverFxenabled=App->audio->PlayFx(GameOver_fx);
+	}
 }
 
 SDL_Rect ModuleSceneIntro::GetJackpotKirbyRect(TripleKirby* jkirby)
