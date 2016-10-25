@@ -91,6 +91,7 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		life = 3;
+		App->scene_intro->game_over = false;
 	}
 
 
