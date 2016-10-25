@@ -130,7 +130,9 @@ public:
 
 
 
-	PhysBody* tripleKirby;
+	PhysBody* midKirby;
+	PhysBody* leftKirby;
+	PhysBody* rightKirby;
 
 	PhysBody* cloudrightsensor;
 	PhysBody* cloudrightsensor2;

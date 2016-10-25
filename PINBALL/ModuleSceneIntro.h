@@ -85,7 +85,9 @@ public:
 	bool extappear4;
 	bool extappear5;
 	bool extappear6;
-	TripleKirby* tKirby;
+	TripleKirby* midKirby;
+	TripleKirby* leftKirby;
+	TripleKirby* rightKirby;
 
 	bool triangleDraw;
 	uint trianglecount;

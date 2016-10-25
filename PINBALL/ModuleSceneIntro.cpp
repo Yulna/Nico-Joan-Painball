@@ -109,7 +109,9 @@ bool ModuleSceneIntro::Start()
 	extinguisherrect.h = 14;
 	extinguisherrect.x = 0;
 	extinguisherrect.y = 0;
-	tKirby = new TripleKirby(App->physics->tripleKirby);
+	midKirby = new TripleKirby(App->physics->midKirby);
+	rightKirby = new TripleKirby(App->physics->rightKirby);
+	leftKirby = new TripleKirby(App->physics->leftKirby);
 
 
 
@@ -283,19 +285,19 @@ update_status ModuleSceneIntro::Update()
 
 
 
-	if (tKirby)
+	if (midKirby)
 	{
 		int x, y;
 		SDL_Rect rect;
-		if (tKirby->state == 1)
+		if (midKirby->state == 1)
 			rect = { 0,0, 14, 15 };
-		if (tKirby->state == 2)
+		if (midKirby->state == 2)
 			rect = { 18,0, 14, 15 };
-		if (tKirby->state == 3)
+		if (midKirby->state == 3)
 			rect = { 37,0, 14, 15 };
 
 
-		App->physics->tripleKirby->GetPosition(x, y);
+		App->physics->midKirby->GetPosition(x, y);
 		App->renderer->Blit(tripleKirby, x, y, &rect);
 	}
 
@@ -578,12 +580,12 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 
 	//Kirby Jackpot
-	if (bodyA == App->physics->tripleKirby || bodyB == App->physics->tripleKirby)
+	if (bodyA == App->physics->midKirby || bodyB == App->physics->midKirby)
 	{
-		if (tKirby->state < 3)
-			tKirby->state++;
+		if (midKirby->state < 3)
+			midKirby->state++;
 		else
-			tKirby->state = 1;
+			midKirby->state = 1;
 	}
 
 	if (bodyB == App->physics->fatkirby) {

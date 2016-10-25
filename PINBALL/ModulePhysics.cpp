@@ -220,7 +220,9 @@ bool ModulePhysics::Start()
 	Useextinguisher6 = CreateRectangleSensor(141, 100, 3, 7);
 	Useextinguisher6->listener = App->scene_intro;
 
-	tripleKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
+	midKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
+	leftKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
+	rightKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
 
 	//Kirby Jackpot
 
@@ -689,7 +691,7 @@ update_status ModulePhysics::PostUpdate()
 			
 
 			//Get mous postion in a body
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && (b->GetType() != b2_kinematicBody) ) {
 
 				mouse_pos.x = PIXEL_TO_METERS(App->input->GetMouseX());
 				mouse_pos.y = PIXEL_TO_METERS(App->input->GetMouseY());
@@ -707,7 +709,7 @@ update_status ModulePhysics::PostUpdate()
 
 
 		//Debug mouse joint
-		if (debug_joint == true) {
+		if (debug_joint == true && (b->GetType() != b2_kinematicBody)) {
 			b2MouseJointDef def;
 			def.bodyA = ground;
 			def.bodyB = mouse_body;
@@ -719,14 +721,14 @@ update_status ModulePhysics::PostUpdate()
 		}
 
 
-		if ((mouse_joint != nullptr) && (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)) {
+		if ((mouse_joint != nullptr) && (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) && (b->GetType() != b2_kinematicBody)) {
 
 			mouse_joint->SetTarget(b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY())));
 			App->renderer->DrawLine(METERS_TO_PIXELS( mouse_joint->GetAnchorB().x) , METERS_TO_PIXELS( mouse_joint->GetAnchorB().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 100, 100);
 		}
 	
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != nullptr)
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != nullptr && (b->GetType() != b2_kinematicBody))
 		{
 
 			world->DestroyJoint(mouse_joint);
