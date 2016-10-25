@@ -30,6 +30,7 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void SpawnPLayer();
 	
+	SDL_Rect GetJackpotKirbyRect(TripleKirby* jkirby);
 
 public:
 	p2List<PhysBody*> circles;
@@ -38,16 +39,15 @@ public:
 	PhysBody* ground;
 	PhysBody* player;
 	PhysBody* deathSens;
+
 	Animation spikyball1Anim;
 	Animation ghostanim;
 	Animation cloudanim;
 	Animation fatkirbyanim;
 	Animation sadcloudanim;
-
 	Animation rainingcloud;
 	Animation kirbyumbrella;
 	Animation fatkirbyThrowup;
-
 	Animation sunanim;
 	Animation moonanim;
 

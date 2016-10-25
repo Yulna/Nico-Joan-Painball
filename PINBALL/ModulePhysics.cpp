@@ -221,8 +221,8 @@ bool ModulePhysics::Start()
 	Useextinguisher6->listener = App->scene_intro;
 
 	midKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
-	leftKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
-	rightKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
+	leftKirby = CreateSensorCircle(55, 375, 7, STATIC, 0, 0);
+	rightKirby = CreateSensorCircle(103, 375, 7, STATIC, 0, 0);
 
 	//Kirby Jackpot
 

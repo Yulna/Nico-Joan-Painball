@@ -109,10 +109,11 @@ bool ModuleSceneIntro::Start()
 	extinguisherrect.h = 14;
 	extinguisherrect.x = 0;
 	extinguisherrect.y = 0;
+
+
 	midKirby = new TripleKirby(App->physics->midKirby);
 	rightKirby = new TripleKirby(App->physics->rightKirby);
 	leftKirby = new TripleKirby(App->physics->leftKirby);
-
 
 
 
@@ -288,16 +289,25 @@ update_status ModuleSceneIntro::Update()
 	if (midKirby)
 	{
 		int x, y;
-		SDL_Rect rect;
-		if (midKirby->state == 1)
-			rect = { 0,0, 14, 15 };
-		if (midKirby->state == 2)
-			rect = { 18,0, 14, 15 };
-		if (midKirby->state == 3)
-			rect = { 37,0, 14, 15 };
-
-
+		SDL_Rect rect = GetJackpotKirbyRect(midKirby);
+	
 		App->physics->midKirby->GetPosition(x, y);
+		App->renderer->Blit(tripleKirby, x, y, &rect);
+	}
+	if (rightKirby)
+	{
+		int x, y;
+		SDL_Rect rect = GetJackpotKirbyRect(rightKirby);
+		
+		App->physics->rightKirby->GetPosition(x, y);
+		App->renderer->Blit(tripleKirby, x, y, &rect);
+	}
+	if (leftKirby)
+	{
+		int x, y;
+		SDL_Rect rect = GetJackpotKirbyRect(leftKirby);
+		
+		App->physics->leftKirby->GetPosition(x, y);
 		App->renderer->Blit(tripleKirby, x, y, &rect);
 	}
 
@@ -587,6 +597,21 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		else
 			midKirby->state = 1;
 	}
+	if (bodyA == App->physics->rightKirby || bodyB == App->physics->rightKirby)
+	{
+		if (rightKirby->state < 3)
+			rightKirby->state++;
+		else
+			rightKirby->state = 1;
+	}
+	if (bodyA == App->physics->leftKirby || bodyB == App->physics->leftKirby)
+	{
+		if (leftKirby->state < 3)
+			leftKirby->state++;
+		else
+			leftKirby->state = 1;
+	}
+
 
 	if (bodyB == App->physics->fatkirby) {
 		App->audio->PlayFx(Triangles_fx);
@@ -643,6 +668,17 @@ void ModuleSceneIntro::SpawnPLayer()
 		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
 		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
 		player->listener = this;
+}
+
+SDL_Rect ModuleSceneIntro::GetJackpotKirbyRect(TripleKirby* jkirby)
+{
+	if (jkirby->state == 1)
+		return { 0,0, 15, 16 };
+	if (jkirby->state == 2)
+		return { 18,0, 16, 16 };
+	if (jkirby->state == 3)
+		return { 37,0, 16, 16 };
+
 }
 
 
