@@ -159,10 +159,9 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(80, 424, 5,b2_dynamicBody,25,0, -1));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5, b2_dynamicBody, 25, 0, -1));
 		circles.getLast()->data->listener = this;
-		//player = circles.getFirst()->data;
-		//player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
+
 	}
 
 	
@@ -430,20 +429,17 @@ update_status ModuleSceneIntro::Update()
 		gameover_sound();
 	}
 
-	
 	//Collisions Blits (at least until we are able to move oncollision to postupdate)
 	if (triangleDraw)
 	{
 		trianglecount++;
 		SDL_Rect rect1 = { 0,0,25,30 };
-		App->renderer->Blit(sun_moon_textures, triX, triY, &rect1);
+		App->renderer->Blit(sun_moon_textures,triX, triY, &rect1);
 		if (trianglecount > 15) {
 			triangleDraw = false;
 			trianglecount = 0;
 		}
 	}
-	
-
 
 	return UPDATE_CONTINUE;
 }
@@ -454,6 +450,7 @@ update_status ModuleSceneIntro::PostUpdate()
 		App->renderer->Blit(game_overtext, 50,50,NULL);
 
 
+	
 
 	return UPDATE_CONTINUE;
 }
