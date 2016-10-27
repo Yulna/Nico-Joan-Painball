@@ -218,22 +218,18 @@ bool ModulePhysics::Start()
 
 
 	int sun_moon_cloud[12] = {
-		14, 34,
-		18, 39,
-		13, 43,
-		7, 43,
-		4, 38,
-		7, 34
+		10, 0,
+		14, 5,
+		9, 9,
+		3, 9,
+		0, 4,
+		3, 0
 	};
 
-	Mycloud.add(CreatePolygon(48, 10, sun_moon_cloud, 12,0, 1.2f,-3,b2_staticBody));
-	Mycloud.add(CreatePolygon(80, 10, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-	Mycloud.add(CreatePolygon(68, -10, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-	p2List_item<PhysBody*> *temp= Mycloud.getFirst();
-	/*for (int i = 0; i < Mycloud.count(); i++) {
-		temp->data->listener = App->scene_intro;
-		temp = temp->next;
-	}*/
+	Mycloud.add(CreatePolygon(48, 30, sun_moon_cloud, 12,0, 1.2f,-3,b2_staticBody));
+	Mycloud.add(CreatePolygon(80, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+	Mycloud.add(CreatePolygon(68, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+
 
 
 	return true;
@@ -284,6 +280,19 @@ update_status ModulePhysics::PreUpdate()
 
 		//Create moon when sun dies
 		moon = CreateCircle(28, 28, 10, b2_staticBody, 10, 2,0);
+		if (Mycloud.count()==0) {
+			int sun_moon_cloud[12] = {
+				10, 0,
+				14, 5,
+				9, 9,
+				3, 9,
+				0, 4,
+				3, 0
+			};
+			Mystars.add(CreatePolygon(70, 30, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(30, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(40, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		}
 	}
 
 
@@ -526,6 +535,24 @@ update_status ModulePhysics::Update() {
 		}
 	}
 
+	if (clouddie) {
+		p2List_item<PhysBody*> temp = App->scene_intro->cloudtodie;
+		Mycloud.del(Mycloud.findNode(temp.data));
+	
+		world->DestroyBody(temp.data->body);
+	
+		clouddie = false;
+	}
+
+	if (stardie) {
+		p2List_item<PhysBody*> temp = App->scene_intro->startodie;
+		Mystars.del(Mystars.findNode(temp.data));
+
+		world->DestroyBody(temp.data->body);
+
+		stardie = false;
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -756,6 +783,8 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
+
+
 
 p2List<PhysBody*>* ModulePhysics::GetLeftKickers()
 {
@@ -1103,5 +1132,13 @@ void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
 	
 
 
+
+}
+
+void ModulePhysics::goaway(PhysBody *body)
+{
+	p2List_item<PhysBody*> temp = body;
+	world->DestroyBody(temp.data->body);
+	
 
 }

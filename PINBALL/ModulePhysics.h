@@ -85,7 +85,7 @@ public:
 	void BeginContact(b2Contact* contact);
 
 
-	
+	void goaway(PhysBody*);
 
 	//Get variables 
 	p2List<PhysBody*>* GetLeftKickers();
@@ -114,6 +114,7 @@ public:
 	PhysBody* extinguisher6;
 	PhysBody* Useextinguisher6;
 	p2List<PhysBody*> Mycloud;
+	p2List<PhysBody*> Mystars;
 	PhysBody* DetectFatKirbyAnimation;
 	bool ballupumbrella;
 
@@ -121,8 +122,8 @@ public:
 	PhysBody* sun;
 	PhysBody* moon;
 
-
-
+	bool clouddie;
+	bool stardie;
 	PhysBody* midKirby;
 	PhysBody* leftKirby;
 	PhysBody* rightKirby;
@@ -155,7 +156,6 @@ private:
 	b2RevoluteJointDef revolutedef;
 	b2Body* mouse_body;
 	b2Vec2 mouse_pos;
-
 	p2List<PhysBody*>* leftKickers;
 	p2List<PhysBody*>* rightKickers;
 	p2List<PhysBody*>* triangles;

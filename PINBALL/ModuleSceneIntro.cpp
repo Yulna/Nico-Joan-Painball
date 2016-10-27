@@ -130,6 +130,18 @@ bool ModuleSceneIntro::Start()
 	moonanim.PushBack({ 185, 0, 21, 22 });
 	moonanim.speed = 0.02f;
 
+	//cloud sun
+	cloudsunRect.w = 22;
+	cloudsunRect.h = 16;
+	cloudsunRect.x = 24;
+	cloudsunRect.y = 31;
+
+	//star moon
+	starmoonRect.w = 16;
+	starmoonRect.h = 16;
+	starmoonRect.x = 50;
+	starmoonRect.y = 31;
+
 
 	return ret;
 }
@@ -418,7 +430,29 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(moonanim.GetCurrentFrame()));
 	}
 
-	
+	if (App->physics->clouddie==false) {
+		if (App->physics->Mycloud.getFirst() != nullptr) {
+			p2List_item<PhysBody*> *temp = App->physics->Mycloud.getFirst();
+			for (int c = 0; c < App->physics->Mycloud.count(); c++) {
+				int x, y;
+				temp->data->GetPosition(x, y);
+				App->renderer->Blit(sun_moon_textures, x, y, &cloudsunRect);
+				temp = temp->next;
+			}
+		}
+	}
+
+	if (App->physics->stardie == false) {
+		if (App->physics->Mystars.getFirst() != nullptr) {
+			p2List_item<PhysBody*> *temp = App->physics->Mystars.getFirst();
+			for (int c = 0; c < App->physics->Mystars.count(); c++) {
+				int x, y;
+				temp->data->GetPosition(x, y);
+				App->renderer->Blit(sun_moon_textures, x, y, &starmoonRect);
+				temp = temp->next;
+			}
+		}
+	}
 
 	
 	if (game_over)
@@ -490,7 +524,16 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			extappear = false;
 		}
-
+		//cloud sun
+		if (App->physics->Mycloud.find(bodyB)!=-1) {
+			cloudtodie = bodyB;
+			App->physics->clouddie = true;
+		}
+		//stars moon
+		if (App->physics->Mystars.find(bodyB) != -1) {
+			startodie = bodyB;
+			App->physics->stardie = true;
+		}
 		//extinguisher 2
 		if (bodyA->body == App->physics->extinguisher2->body || bodyB->body == App->physics->extinguisher2->body) {
 			App->audio->PlayFx(Point_fx);
@@ -596,12 +639,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 	
-	//cloud sun
-		if (App->physics->Mycloud.find(bodyB)!=-1) {
-
-
-			//App->physics->Mycloud.del(&p2List_item<PhysBody*>(bodyB));
-		}
+		
 
 	//Kirby Jackpot
 	if (bodyA == App->physics->midKirby || bodyB == App->physics->midKirby)
@@ -659,6 +697,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->player->LoseLife();
 	}
 
+	
 
 }
 

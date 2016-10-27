@@ -69,6 +69,8 @@ public:
 	SDL_Texture* extinguishertext;
 	SDL_Texture* game_overtext;
 	SDL_Rect extinguisherrect;
+	SDL_Rect cloudsunRect;
+	SDL_Rect starmoonRect;
 
 	uint bonus_fx;
 	uint Point_fx;
@@ -91,7 +93,8 @@ public:
 	TripleKirby* midKirby;
 	TripleKirby* leftKirby;
 	TripleKirby* rightKirby;
-
+	PhysBody *cloudtodie;
+	PhysBody *startodie;
 	bool triangleDraw;
 	uint trianglecount;
 
