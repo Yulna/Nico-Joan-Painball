@@ -598,8 +598,9 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 	//cloud sun
 		if (App->physics->Mycloud.find(bodyB)!=-1) {
-			p2List_item<PhysBody*> item = bodyB;
-			App->physics->Mycloud.del(&item);
+
+
+			//App->physics->Mycloud.del(&p2List_item<PhysBody*>(bodyB));
 		}
 
 	//Kirby Jackpot
@@ -632,22 +633,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	//Sun
 	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
 	{
+		App->player->IncreaseScore(900);
 		sun_life--;
 	}
 
 	if (bodyA == App->physics->moon || bodyB == App->physics->moon)
 	{
-		moon_life--;
-	}
-
-
-	if (bodyA == App->physics->sun || bodyB == App->physics->sun)
-	{
-		App->player->IncreaseScore(900);
-	}
-	if (bodyA == App->physics->moon || bodyB == App->physics->moon)
-	{
 		App->player->IncreaseScore(1800);
+		moon_life--;
 	}
 
 
