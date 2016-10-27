@@ -154,7 +154,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(80, 424, 5,DINAMIC,25,0, -1));
+		circles.add(App->physics->CreateCircle(80, 424, 5,b2_dynamicBody,25,0, -1));
 		circles.getLast()->data->listener = this;
 		//player = circles.getFirst()->data;
 		//player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
@@ -165,7 +165,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10));
+		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10, b2_dynamicBody));
 	}
 
 
@@ -182,7 +182,7 @@ update_status ModuleSceneIntro::Update()
 		};
 
 
-		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, 0,-2));
+		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, 0,-2, b2_dynamicBody));
 		
 	}
 
@@ -413,16 +413,7 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(sun_moon_textures, x - 2, y - 3, &(moonanim.GetCurrentFrame()));
 	}
 
-	if (triangleDraw)
-	{
-		trianglecount++;
-		SDL_Rect rect1 = { 0,0,25,30 };
-		App->renderer->Blit(sun_moon_textures, triX, triY, &rect1);
-		if (trianglecount > 15) {
-			triangleDraw = false;
-			trianglecount = 0;
-		}
-	}
+	
 
 	
 	if (game_over)
@@ -434,7 +425,18 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	
-
+	//Collisions Blits (at least until we are able to move oncollision to postupdate)
+	if (triangleDraw)
+	{
+		trianglecount++;
+		SDL_Rect rect1 = { 0,0,25,30 };
+		App->renderer->Blit(sun_moon_textures, triX, triY, &rect1);
+		if (trianglecount > 15) {
+			triangleDraw = false;
+			trianglecount = 0;
+		}
+	}
+	
 
 
 
@@ -445,6 +447,9 @@ update_status ModuleSceneIntro::PostUpdate()
 {
 	if (game_over)
 		App->renderer->Blit(game_overtext, 50,50,NULL);
+
+
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -637,11 +642,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->player->IncreaseScore(1800);
 	}
 
-	if ((App->physics->GetLeftKickers()->find(bodyA) != -1) || (App->physics->GetLeftKickers()->find(bodyB) != -1)) 
-	{
-		
-		
-	}
 
 	if ((App->physics->GetTriangles()->find(bodyB)) != -1)
 	{
@@ -649,9 +649,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->audio->PlayFx(Triangles_fx);
 		App->player->IncreaseScore(20);
 		bodyB->GetPosition(triX, triY);
-		SDL_Rect rect = { 0,0,25,30 };
 		triangleDraw = true;
-		App->renderer->Blit(sun_moon_textures, 80, 100, &rect);
 	}
 
 	//Death
@@ -663,9 +661,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 }
 
-void ModuleSceneIntro::SpawnPLayer()
+void ModuleSceneIntro::SpawnPlayer()
 {
-		player = App->physics->CreateCircle(80, 420, 5, DINAMIC, 25, 0, -1);
+		player = App->physics->CreateCircle(80, 420, 5, b2_dynamicBody, 25, 0, -1);
+		player->body->SetBullet(true);
 		player->body->ApplyForce(b2Vec2(0, -900), b2Vec2(0, 0), true);
 		player->listener = this;
 }
@@ -678,7 +677,6 @@ SDL_Rect ModuleSceneIntro::GetJackpotKirbyRect(TripleKirby* jkirby)
 		return { 18,0, 16, 16 };
 	if (jkirby->state == 3)
 		return { 37,0, 16, 16 };
-
 }
 
 

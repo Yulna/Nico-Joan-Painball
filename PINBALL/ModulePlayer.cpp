@@ -74,7 +74,7 @@ update_status ModulePlayer::Update()
 
 	if ((App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) && !active && life > 0)
 	{
-		App->scene_intro->SpawnPLayer();
+		App->scene_intro->SpawnPlayer();
 		active = true;
 	}
 
@@ -93,6 +93,15 @@ update_status ModulePlayer::Update()
 		life = 3;
 		App->scene_intro->game_over = false;
 	}
+
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModulePlayer::PostUpdate()
+{
+
+
 
 
 	return UPDATE_CONTINUE;

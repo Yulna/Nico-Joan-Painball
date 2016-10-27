@@ -150,8 +150,8 @@ bool ModulePhysics::Start()
 	App->scene_intro->deathSens = CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 10, SCREEN_WIDTH, 2);
 
 	
-	spikyball1 = CreateCircle(31,319,5,STATIC,6, 1, 0);
-	ghost1 = CreateCircle(31, 324, 7, DINAMIC,500, 1, 0);
+	spikyball1 = CreateCircle(31,319,5,b2_staticBody,6, 1, 0);
+	ghost1 = CreateCircle(31, 324, 7, b2_dynamicBody,500, 1, 0);
 	
 	b2RevoluteJointDef revdef;
 	revdef.bodyA = spikyball1->body;
@@ -165,8 +165,8 @@ bool ModulePhysics::Start()
 	revolutemotorghost1 = (b2RevoluteJoint*)world->CreateJoint(&revdef);
 
 
-	spikyball2=CreateCircle(130, 318, 5,STATIC,6,1, 0);
-	ghost2= CreateCircle(134, 326, 7, DINAMIC, 500, 1, 0);
+	spikyball2=CreateCircle(130, 318, 5,b2_staticBody,6,1, 0);
+	ghost2= CreateCircle(134, 326, 7, b2_dynamicBody, 500, 1, 0);
 
 	b2RevoluteJointDef revdef2;
 	revdef2.bodyA = spikyball2->body;
@@ -180,14 +180,14 @@ bool ModulePhysics::Start()
 	
 
 
-	kinematicrect = CreateKinematicRectangle(80, 172, 24, 14);
+	kinematicrect = CreateRectangle(80, 172, 24, 14, b2_kinematicBody);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
-	sun = CreateCircle(27, 40, 10, KINEMATIC, 10, 2,0);
+	sun = CreateCircle(27, 40, 10, b2_kinematicBody, 10, 2,0);
 	sun->body->SetLinearVelocity(b2Vec2(1, 0));
 
 	//Walls
-	fatkirby = CreateCircle(81,210,12,STATIC,6,0.3f,0);
+	fatkirby = CreateCircle(81,210,12,b2_staticBody,6,0.3f,0);
 	CreateFloatingWalls();
 	//Activation of left extinguisher
 	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
@@ -220,16 +220,16 @@ bool ModulePhysics::Start()
 	Useextinguisher6 = CreateRectangleSensor(141, 100, 3, 7);
 	Useextinguisher6->listener = App->scene_intro;
 
-	midKirby = CreateSensorCircle(80, 384, 7, STATIC, 0, 0);
-	leftKirby = CreateSensorCircle(55, 375, 7, STATIC, 0, 0);
-	rightKirby = CreateSensorCircle(103, 375, 7, STATIC, 0, 0);
+	midKirby = CreateSensorCircle(80, 384, 7, b2_staticBody, 0, 0);
+	leftKirby = CreateSensorCircle(55, 375, 7, b2_staticBody, 0, 0);
+	rightKirby = CreateSensorCircle(103, 375, 7, b2_staticBody, 0, 0);
 
 	//Kirby Jackpot
 
-	cloudrightsensor = CreateCircle(18, 198, 12, STATIC, 6, 1, 0);
+	cloudrightsensor = CreateCircle(18, 198, 12, b2_staticBody, 6, 1, 0);
 	cloudrightsensor->listener = App->scene_intro;
 
-	cloudrightsensor2 = CreateCircle(141, 198, 12, STATIC, 6, 1, 0);
+	cloudrightsensor2 = CreateCircle(141, 198, 12, b2_staticBody, 6, 1, 0);
 	cloudrightsensor2->listener = App->scene_intro;
 
 	DetectFatKirbyAnimation = CreateRectangleSensor(83, 185, 21, 24);
@@ -281,7 +281,7 @@ update_status ModulePhysics::PreUpdate()
 		sun = nullptr;
 
 		//Create moon when sun dies
-		moon = CreateCircle(28, 28, 10, STATIC, 10, 2,0);
+		moon = CreateCircle(28, 28, 10, b2_staticBody, 10, 2,0);
 	}
 
 
@@ -294,23 +294,14 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, int density, float rest, int index)
 {
 	b2BodyDef body;
-	if (type == DINAMIC) {
-		body.type = b2_dynamicBody;
-	}
-	else if (type == KINEMATIC) {
-		body.type = b2_kinematicBody;
-	}
-	else if (type == STATIC) {
-		body.type = b2_staticBody;
-	}
+
+	body.type = type;
 
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	if (type == DINAMIC) {
-		body.bullet = true;
-	}
+	
 	b2Body* b = world->CreateBody(&body);
 
 	b2CircleShape shape;
@@ -331,23 +322,14 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, CircleTypes type
 }
 
 
-PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest) {
+PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius, b2BodyType type, int density, float rest) {
 
 	b2BodyDef body;
-	if (type == DINAMIC) {
-		body.type = b2_dynamicBody;
-	}
-	else if (type == KINEMATIC) {
-		body.type = b2_kinematicBody;
-	}
-	else if (type == STATIC) {
-		body.type = b2_staticBody;
-	}
+
+	body.type = type;
 
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	if (type == DINAMIC) {
-		body.bullet = true;
-	}
+	
 	b2Body* b = world->CreateBody(&body);
 
 	b2CircleShape shape;
@@ -370,10 +352,10 @@ PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius, CircleType
 }
 
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -397,39 +379,11 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-
-PhysBody* ModulePhysics::CreateKinematicRectangle(int x, int y, int width, int height)
-{
-	b2BodyDef body;
-	body.type = b2_kinematicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
-
-
-
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 1.0f;
-	fixture.restitution = 0.3f;
-	
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = width * 0.5f;
-	pbody->height = height * 0.5f;
-
-	return pbody;
-}
 
 
 
 //Tes purposes only, Erase/Change later-------------------------------------------------------------------------------------------------------------------------
-PhysBody* ModulePhysics::CreateRectangleKickerPoint(int x, int y, int width, int height)
+/*PhysBody* ModulePhysics::CreateRectangleKickerPoint(int x, int y, int width, int height)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -452,7 +406,7 @@ PhysBody* ModulePhysics::CreateRectangleKickerPoint(int x, int y, int width, int
 	pbody->height = height * 0.5f;
 
 	return pbody;
-}
+}*/
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
@@ -547,7 +501,7 @@ update_status ModulePhysics::Update() {
 	}
 	int posobjthrow_x, posobjthrow_y;
 	if (trowrightobj == true && otherthrowobj == false) {
-		cloudrightthrow = CreateCircle(28, 189, 6, KINEMATIC, 50, 0.3f, 0);
+		cloudrightthrow = CreateCircle(28, 189, 6, b2_kinematicBody, 50, 0.3f, 0);
 		trowrightobj = false;
 		otherthrowobj = true;
 		
@@ -563,7 +517,7 @@ update_status ModulePhysics::Update() {
 	
 	int posobjthrow_x2, posobjthrow_y2;
 	if (trowrightobj2 == true && otherthrowobj2 == false) {
-		cloudrightthrow2 = CreateCircle(133, 189, 6, KINEMATIC, 50, 0.3f, 0);
+		cloudrightthrow2 = CreateCircle(133, 189, 6, b2_kinematicBody, 50, 0.3f, 0);
 		trowrightobj2 = false;
 		otherthrowobj2 = true;
 
@@ -598,10 +552,6 @@ update_status ModulePhysics::Update() {
 			kinematicrect->body->GetFixtureList()->SetFilterData(filter);
 		}
 	}
-
-
-
-
 
 	return UPDATE_CONTINUE;
 }
@@ -847,10 +797,10 @@ p2List<PhysBody*>* ModulePhysics::GetTriangles()
 
 
 //
-PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int rest, int filterIndex)
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, float dens, int rest, int filterIndex, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -890,7 +840,7 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, floa
 
 PhysBody * ModulePhysics::CreateKicker( int kickerX, int kickerY, int* points, int size)
 {
-		return CreatePolygon(kickerX, kickerY, points, size, 100, 0, -2);
+		return CreatePolygon(kickerX, kickerY, points, size, 100, 0, -2, b2_dynamicBody);
 }
 
 void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
@@ -904,7 +854,7 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 	};
 
 	PhysBody* k = CreateKicker(48, 407, kicker1, 10);
-	PhysBody* k2 = CreateRectangleKickerPoint(53, 411, 1, 1);
+	PhysBody* k2 = CreateRectangle(53, 411, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -918,7 +868,7 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 	leftKickers->add(k);
 
 	k = CreateKicker(48, 263, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(53, 267, 1, 1);
+	k2 = CreateRectangle(53, 267, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -933,9 +883,7 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 
 
 	k = CreateKicker(48, 119, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(53, 123, 1, 1);
-
-	//CreateKickerRev(k, k2, RIGHT);
+	k2 = CreateRectangle(53, 123, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -945,6 +893,7 @@ void ModulePhysics::BuildLeftKickers(p2List<PhysBody*>* leftKickers)
 	revolutedef.upperAngle = (3.14 / 32);
 	revolutedef.collideConnected = false;
 	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
+	
 	
 	leftKickers->add(k);
 
@@ -961,7 +910,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	};
 
 	PhysBody* k = CreateKicker(86, 407, kicker1, 10);
-	PhysBody* k2 = CreateRectangleKickerPoint(107, 411, 1, 1);
+	PhysBody* k2 = CreateRectangle(107, 411, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -976,7 +925,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 
 
 	k = CreateKicker(86, 119, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(107, 123, 1, 1);
+	k2 = CreateRectangle(107, 123, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -990,7 +939,7 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	rightKickers->add(k);
 
 	k = CreateKicker(86, 263, kicker1, 10);
-	k2 = CreateRectangleKickerPoint(107, 267, 1, 1);
+	k2 = CreateRectangle(107, 267, 1, 1, b2_staticBody);
 
 	revolutedef.bodyA = k2->body;
 	revolutedef.bodyB = k->body;
@@ -1006,21 +955,6 @@ void ModulePhysics::BuildRightKickers(p2List<PhysBody*>* rightKickers) {
 	
 }
 
-void ModulePhysics::CreateKickerRev(PhysBody * b_A, PhysBody * b_B, sides map_side)
-{
-	revolutedef.bodyA = b_A->body;
-	revolutedef.bodyB = b_B->body;
-	revolutedef.collideConnected = false;
-
-	
-		revolutedef.localAnchorB = b2Vec2(0.1, 0.1);
-		revolutedef.enableLimit = true;
-		revolutedef.lowerAngle = -(3.14 / 3);
-		revolutedef.upperAngle = (3.14 / 32);
-
-	
-	revolute_joint = (b2RevoluteJoint*)world->CreateJoint(&revolutedef);
-}
 
 
 
@@ -1086,7 +1020,7 @@ void ModulePhysics::CreateFloatingWalls()
 		52, 119,
 		28, 107,
 		28, 94,
-		26, 89,
+		26, 91,
 		25, 94,
 		25, 112,
 		48, 124
@@ -1096,7 +1030,7 @@ void ModulePhysics::CreateFloatingWalls()
 		108, 118,
 		132, 106,
 		132, 94,
-		134, 89,
+		134, 91,
 		135, 94,
 		135, 112,
 		113, 123
@@ -1123,9 +1057,8 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 379
 	};
 
-	CreatePolygon(0, 0, LeftBottomTriangle, 6, 100, 100, 0)->body->SetType(b2_staticBody);
-
-	triangles->add(CreateChain(0, 0, RightBottomTriangle, 6, -2));
+	CreateChain(0, 0, LeftBottomTriangle, 6, -2);
+	CreateChain(0, 0, RightBottomTriangle, 6, -2);
 
 	
 	// Pivot 0, 0
@@ -1141,9 +1074,8 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 236
 	};
 
-	triangles->add(CreateChain(0, 0, LeftMiddleTriangle, 6, -2));
-	triangles->add(CreateChain(0, 0, RightMiddleTriangle, 6, -2));
-
+	CreateChain(0, 0, LeftMiddleTriangle, 6, -2);
+	CreateChain(0, 0, RightMiddleTriangle, 6, -2);
 
 	// Pivot 0, 0
 	int LeftUpperTriangle[6] = {
@@ -1157,9 +1089,11 @@ void ModulePhysics::CreateFloatingWalls()
 		120, 99,
 		120, 92
 	};
-	triangles->add(CreateChain(0, 0, LeftUpperTriangle, 6, -2));
-	triangles->add(CreateChain(0, 0, RightUpperTriangle, 6, -2));
+	CreateChain(0, 0, LeftUpperTriangle, 6, -2);
+	CreateChain(0, 0, RightUpperTriangle, 6, -2);
 
+
+	//triangles->add(
 
 }
 

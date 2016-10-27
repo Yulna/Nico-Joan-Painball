@@ -28,7 +28,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
-	void SpawnPLayer();
+	void SpawnPlayer();
 	
 	SDL_Rect GetJackpotKirbyRect(TripleKirby* jkirby);
 

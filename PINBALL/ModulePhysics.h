@@ -13,11 +13,6 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
-enum CircleTypes {
-	STATIC,
-	KINEMATIC,
-	DINAMIC
-};
 
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
@@ -64,14 +59,13 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, CircleTypes type, int density, float rest, int index);
-	PhysBody* CreateSensorCircle(int x, int y, int radius, CircleTypes type, int density, float rest);
-	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
+	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, int density, float rest, int index);
+	PhysBody* CreateSensorCircle(int x, int y, int radius, b2BodyType type, int density, float rest);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type);
+	//PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, int filterIndex);
-	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int rest, int filterIndex);
-	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
+	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int rest, int filterIndex, b2BodyType type);
 	void KickersForce(b2Vec2 vectforce, b2Vec2 posit, sides rl);
 	void ApplayVerticalForce(PhysBody* ball);
 	void ModulePhysics::throwingLeftCloud();
@@ -81,7 +75,6 @@ public:
 	void BuildLeftKickers(p2List<PhysBody*>* leftKickers);
 	void BuildRightKickers(p2List<PhysBody*>* rightKickers);
 
-	void CreateKickerRev(PhysBody* b_A, PhysBody* b_B, sides map_side);
 
 	//Floating walls
 	void CreateFloatingWalls();
