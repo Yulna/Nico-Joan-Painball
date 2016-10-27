@@ -93,14 +93,18 @@ public:
 	TripleKirby* leftKirby;
 	TripleKirby* rightKirby;
 
+	bool ghostImpact;
+	uint ghostcount;
 	bool triangleDraw;
 	uint trianglecount;
-
+	
 	int sun_life;
 	int moon_life;
 
 	int triX;
 	int triY;
+	int ghostX;
+	int ghostY;
 	bool GameOverFxenabled;
 	bool printThObj;
 	bool printThObj2;

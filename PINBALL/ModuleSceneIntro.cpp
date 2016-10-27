@@ -35,6 +35,7 @@ bool ModuleSceneIntro::Start()
 	extappear6 = false;
 	GameOverFxenabled = false;
 	sun_life = moon_life = 3;
+	ghostImpact = false;
 	triangleDraw = false;
 	trianglecount = 0;
 
@@ -438,6 +439,19 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	if (ghostImpact)
+	{
+		ghostcount++;
+		SDL_Rect ghost_rect = { 158,0,14,15 };
+		App->renderer->Blit(ghost, ghostX, ghostY, &ghost_rect);
+		if (ghostcount > 8) 
+		{
+			ghostImpact = false;
+			ghostcount = 0;
+		}
+	}
+
+
 
 	//print player balls
 	///Printed last so it's always on top of the other textures
@@ -455,6 +469,8 @@ update_status ModuleSceneIntro::PostUpdate()
 	if (game_over)
 		App->renderer->Blit(game_overtext, 50,50,NULL);
 
+
+	//Kirby Jackpot price
 	if (!(App->player->pickedJackpot))
 	{
 		//Check kirby state
@@ -655,13 +671,27 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 
 
+	//Triangles collision
 	if ((App->physics->GetTriangles()->find(bodyB)) != -1)
 	{
-		int x, y;
 		App->audio->PlayFx(Triangles_fx);
 		App->player->IncreaseScore(20);
 		bodyB->GetPosition(triX, triY);
 		triangleDraw = true;
+	}
+
+	//Spikyball
+	if ((App->physics->spikyball1 == bodyB) || (App->physics->spikyball2 == bodyB))
+	{
+		App->player->IncreaseScore(240);
+	}
+
+	//Ghosts
+	if ((App->physics->ghost1 == bodyB) || (App->physics->ghost2 == bodyB))
+	{
+		App->player->IncreaseScore(360);
+		bodyB->GetPosition(ghostX, ghostY);
+		ghostImpact = true;
 	}
 
 	//Death

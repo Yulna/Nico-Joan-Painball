@@ -92,8 +92,8 @@ public:
 	p2List<PhysBody*>* GetTriangles();
 
 
-	//Temporary test stuff
-	
+
+public:
 	PhysBody* spikyball1;
 	PhysBody* ghost1;
 	PhysBody* spikyball2;
