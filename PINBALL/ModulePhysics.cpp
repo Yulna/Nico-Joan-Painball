@@ -51,94 +51,75 @@ bool ModulePhysics::Start()
 
 	
 	// Pivot 0, 0
-	int Pinball_exterior[164] = {
-		28, 448,
-		39, 423,
-		16, 413,
-		13, 406,
-		13, 374,
-		17, 368,
-		23, 365,
-		23, 350,
-		8, 336,
-		8, 305,
-		10, 297,
-		17, 294,
-		46, 294,
-		53, 298,
+	// Pivot 0, 0
+	int KirbyPinball[122] = {
+		40, 425,
+		12, 413,
+		10, 371,
+		21, 362,
+		21, 350,
+		7, 332,
+		6, 303,
+		14, 293,
+		50, 293,
 		55, 305,
-		56, 319,
+		55, 319,
 		61, 310,
-		61, 291,
-		13, 266,
-		13, 231,
-		15, 224,
-		23, 221,
-		23, 195,
-		7, 181,
-		7, 159,
-		12, 154,
-		63, 154,
-		63, 148,
-		14, 123,
-		14, 89,
-		16, 80,
-		24, 78,
-		24, 72,
-		16, 72,
-		10, 70,
-		8, 63,
-		8, 16,
-		11, 10,
-		17, 7,
-		144, 6,
-		150, 9,
-		152, 16,
-		152, 65,
-		150, 70,
-		144, 72,
-		136, 72,
-		136, 79,
-		145, 81,
-		147, 87,
-		147, 122,
-		97, 148,
+		61, 289,
+		10, 267,
+		10, 229,
+		18, 220,
+		23, 218,
+		23, 189,
+		6, 178,
+		8, 156,
+		15, 152,
+		63, 153,
+		63, 147,
+		10, 124,
+		9, 87,
+		18, 77,
+		8, 70,
+		8, 13,
+		15, 8,
+		142, 7,
+		150, 14,
+		152, 69,
+		136, 73,
+		150, 84,
+		148, 127,
+		97, 149,
 		97, 154,
-		147, 154,
-		153, 160,
-		153, 182,
-		137, 197,
-		137, 222,
-		145, 225,
-		147, 231,
-		147, 267,
+		151, 156,
+		152, 179,
+		136, 194,
+		138, 220,
+		151, 229,
+		149, 267,
 		99, 291,
-		99, 310,
-		104, 320,
-		105, 305,
-		108, 298,
-		115, 295,
-		144, 295,
-		150, 298,
-		152, 305,
-		152, 334,
-		137, 352,
-		137, 365,
-		144, 368,
-		147, 375,
-		147, 407,
-		144, 413,
-		120, 424,
-		128, 452,
-		184, 452,
-		184, -14,
-		-23, -14,
-		-23, 449
+		99, 311,
+		104, 319,
+		106, 297,
+		115, 293,
+		150, 294,
+		156, 306,
+		153, 337,
+		139, 352,
+		141, 364,
+		150, 372,
+		150, 390,
+		150, 413,
+		120, 426,
+		160, 424,
+		159, -1,
+		0, 0,
+		0, 423
 	};
 
+	
 
 
-	App->scene_intro->ground = CreateChain(0, 0 - (App->renderer->camera.y / SCREEN_SIZE), Pinball_exterior, 164, NULL);
+	App->scene_intro->ground = CreateChain(0, 0 - (App->renderer->camera.y / SCREEN_SIZE), KirbyPinball, 122, NULL);
 
 
 	//Kickers Left
@@ -190,32 +171,32 @@ bool ModulePhysics::Start()
 	fatkirby = CreateCircle(81,210,12,b2_staticBody,6,0.3f,0);
 	CreateFloatingWalls();
 	//Activation of left extinguisher
-	extinguisher = CreateRectangleSensor(127, 388, 5, 7);
+	extinguisher = CreateRectangleSensor(127, 388, 1, 1);
 	extinguisher->listener = App->scene_intro;
 	Useextinguisher = CreateRectangleSensor(20, 388, 3, 7);
 	Useextinguisher->listener = App->scene_intro;
 	//Activation of right extinguisher2
-	extinguisher2 = CreateRectangleSensor(34, 388, 5, 7);
+	extinguisher2 = CreateRectangleSensor(34, 388, 1, 1);
 	extinguisher2->listener = App->scene_intro;
 	Useextinguisher2 = CreateRectangleSensor(141, 388, 3, 7);
 	Useextinguisher2->listener = App->scene_intro;
 	//Activation of right extinguisher3
-	extinguisher3 = CreateRectangleSensor(34, 244, 5, 7);
+	extinguisher3 = CreateRectangleSensor(34, 244, 1, 1);
 	extinguisher3->listener = App->scene_intro;
 	Useextinguisher3 = CreateRectangleSensor(141, 244, 3, 7);
 	Useextinguisher3->listener = App->scene_intro;
 	//Activation of right extinguisher4
-	extinguisher4 = CreateRectangleSensor(126, 244, 5, 7);
+	extinguisher4 = CreateRectangleSensor(126, 244, 1, 1);
 	extinguisher4->listener = App->scene_intro;
 	Useextinguisher4 = CreateRectangleSensor(19, 244, 3, 7);
 	Useextinguisher4->listener = App->scene_intro;
 	//Activation of right extinguisher5
-	extinguisher5 = CreateRectangleSensor(127, 100, 5, 7);
+	extinguisher5 = CreateRectangleSensor(127, 100, 1, 1);
 	extinguisher5->listener = App->scene_intro;
 	Useextinguisher5 = CreateRectangleSensor(20, 100, 3, 7);
 	Useextinguisher5->listener = App->scene_intro;
 	//Activation of right extinguisher6
-	extinguisher6 = CreateRectangleSensor(34, 100, 5, 7);
+	extinguisher6 = CreateRectangleSensor(34, 100, 1, 1);
 	extinguisher6->listener = App->scene_intro;
 	Useextinguisher6 = CreateRectangleSensor(141, 100, 3, 7);
 	Useextinguisher6->listener = App->scene_intro;
@@ -540,7 +521,7 @@ update_status ModulePhysics::Update() {
 
 	if (App->scene_intro->player != nullptr) {
 		App->scene_intro->player->GetPosition(ballx, bally);
-		if (bally < 160) {
+		if (bally < 155) {
 			b2Filter filter;
 			filter.groupIndex = 0;
 			kinematicrect->body->GetFixtureList()->SetFilterData(filter);
@@ -1121,7 +1102,7 @@ void ModulePhysics::CreateFloatingWalls()
 }
 
 void ModulePhysics::ApplayVerticalForce(PhysBody* ball) {
-	ball->body->ApplyForce(b2Vec2(0, -200), b2Vec2(0, 0), true);
+	ball->body->ApplyForce(b2Vec2(0, -300), b2Vec2(0, 0), true);
 }
 
 void ModulePhysics::throwingRightCloud() {
