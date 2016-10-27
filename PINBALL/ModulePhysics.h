@@ -127,8 +127,8 @@ public:
 	PhysBody* leftKirby;
 	PhysBody* rightKirby;
 
+	PhysBody* cloudleftsensor;
 	PhysBody* cloudrightsensor;
-	PhysBody* cloudrightsensor2;
 	PhysBody* cloudrightthrow;
 	PhysBody* cloudrightthrow2;
 	bool trowrightobj;

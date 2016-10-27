@@ -207,11 +207,11 @@ bool ModulePhysics::Start()
 
 	//Kirby Jackpot
 
-	cloudrightsensor = CreateCircle(18, 198, 12, b2_staticBody, 6, 1, 0);
-	cloudrightsensor->listener = App->scene_intro;
+	cloudleftsensor = CreateCircle(18, 198, 12, b2_staticBody, 6, 1, 0);
+	cloudleftsensor->listener = App->scene_intro;
 
-	cloudrightsensor2 = CreateCircle(141, 198, 12, b2_staticBody, 6, 1, 0);
-	cloudrightsensor2->listener = App->scene_intro;
+	cloudrightsensor = CreateCircle(141, 198, 12, b2_staticBody, 6, 1, 0);
+	cloudrightsensor->listener = App->scene_intro;
 
 	DetectFatKirbyAnimation = CreateRectangleSensor(83, 185, 21, 24);
 	DetectFatKirbyAnimation->listener = App->scene_intro;

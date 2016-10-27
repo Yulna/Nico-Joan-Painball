@@ -529,6 +529,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				
 			}
 			TimesKickCloud++;
+			App->player->IncreaseScore(300);
 		}
 
 		if (bodyB->body == App->physics->ghost1->body || bodyB->body == App->physics->ghost2->body) {
@@ -539,6 +540,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher->body || bodyB->body == App->physics->extinguisher->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher->body || bodyB->body == App->physics->Useextinguisher->body) {
 			if (extappear==true) {
@@ -567,6 +569,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher2->body || bodyB->body == App->physics->extinguisher2->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear2 = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher2->body || bodyB->body == App->physics->Useextinguisher2->body) {
 			if (extappear2 == true) {
@@ -584,6 +587,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher3->body || bodyB->body == App->physics->extinguisher3->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear3 = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher3->body || bodyB->body == App->physics->Useextinguisher3->body) {
 			if (extappear3 == true) {
@@ -600,6 +604,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher4->body || bodyB->body == App->physics->extinguisher4->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear4 = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher4->body || bodyB->body == App->physics->Useextinguisher4->body) {
 			if (extappear4 == true) {
@@ -616,6 +621,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher5->body || bodyB->body == App->physics->extinguisher5->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear5 = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher5->body || bodyB->body == App->physics->Useextinguisher5->body) {
 			if (extappear5 == true) {
@@ -632,6 +638,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (bodyA->body == App->physics->extinguisher6->body || bodyB->body == App->physics->extinguisher6->body) {
 			App->audio->PlayFx(Point_fx);
 			extappear6 = true;
+			App->player->IncreaseScore(40);
 		}
 		if (bodyA->body == App->physics->Useextinguisher6->body || bodyB->body == App->physics->Useextinguisher6->body) {
 			if (extappear6 == true) {
@@ -645,16 +652,18 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			extappear6 = false;
 		}
 
-		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
+		if (bodyA->body == App->physics->cloudleftsensor->body || bodyB->body == App->physics->cloudleftsensor->body) {
 			App->audio->PlayFx(Ghost_fx);
 			App->physics->throwingRightCloud();
 			printThObj = true;
+			App->player->IncreaseScore(300);
 		}
 
-		if (bodyA->body == App->physics->cloudrightsensor2->body || bodyB->body == App->physics->cloudrightsensor2->body) {
+		if (bodyA->body == App->physics->cloudrightsensor->body || bodyB->body == App->physics->cloudrightsensor->body) {
 			App->audio->PlayFx(Ghost_fx);
 			App->physics->throwingLeftCloud();
 			printThObj2 = true;
+			App->player->IncreaseScore(300);
 		}
 
 		if (bodyA->body == App->physics->DetectFatKirbyAnimation->body || bodyB->body == App->physics->DetectFatKirbyAnimation->body) {
@@ -715,7 +724,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if ((App->physics->GetTriangles()->find(bodyB)) != -1)
 	{
 		App->audio->PlayFx(Triangles_fx);
-		App->player->IncreaseScore(20);
+		App->player->IncreaseScore(100);
 		bodyB->GetPosition(triX, triY);
 		triangleDraw = true;
 	}
@@ -733,6 +742,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyB->GetPosition(ghostX, ghostY);
 		ghostImpact = true;
 	}
+
+
 
 	//Death
 	if (bodyA == deathSens || bodyB == deathSens)
