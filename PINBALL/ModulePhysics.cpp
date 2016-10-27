@@ -526,6 +526,8 @@ update_status ModulePhysics::Update() {
 			sun->body->SetLinearVelocity(b2Vec2(1, 0));
 		}
 	}
+
+
 	if (App->scene_intro->player != nullptr) {
 		App->scene_intro->player->GetPosition(ballx, bally);
 		if (bally < 155) {
@@ -1098,8 +1100,36 @@ void ModulePhysics::CreateFloatingWalls()
 	CreateChain(0, 0, LeftUpperTriangle, 6, -2);
 	CreateChain(0, 0, RightUpperTriangle, 6, -2);
 
+	///Triangles restitution & points
+	// Pivot 0, 0
+	/*int LeftBotRest[8] = {
+		41, 381,
+		41, 378,
+		50, 390,
+		47, 390
+	};
+	*/
 
-	//triangles->add(
+	int LeftRest[8] = {
+		0, 3,
+		0, 0,
+		9, 12,
+		6, 12
+	};
+	triangles->add(CreatePolygon(41, 377, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(41, 234, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(41, 89, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
+
+	
+	int RightRest[8] = {
+		0, 3,
+		0, 0,
+		-9, 12,
+		-6, 12
+	};
+	triangles->add(CreatePolygon(119, 378, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(119, 235, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(119, 90, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
 
 }
 

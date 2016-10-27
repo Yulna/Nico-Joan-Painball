@@ -62,7 +62,6 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, int density, float rest, int index);
 	PhysBody* CreateSensorCircle(int x, int y, int radius, b2BodyType type, int density, float rest);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type);
-	//PhysBody* CreateRectangleKickerPoint(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, int filterIndex);
 	PhysBody* CreatePolygon(int x, int y, int* points , int size, float dens, int rest, int filterIndex, b2BodyType type);
@@ -93,8 +92,8 @@ public:
 	p2List<PhysBody*>* GetTriangles();
 
 
-	//Temporary test stuff
-	
+
+public:
 	PhysBody* spikyball1;
 	PhysBody* ghost1;
 	PhysBody* spikyball2;

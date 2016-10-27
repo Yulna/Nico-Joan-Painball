@@ -21,10 +21,14 @@ public:
 	int GetLife();
 	int GetScore();
 
+public:
+	bool pickedJackpot;
+
 private:
 
 	int score;
 	int life;
 	bool active;
+
 
 };

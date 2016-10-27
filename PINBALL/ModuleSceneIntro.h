@@ -68,6 +68,7 @@ public:
 	SDL_Texture* sun_moon_textures;
 	SDL_Texture* extinguishertext;
 	SDL_Texture* game_overtext;
+	SDL_Texture* impact_tri;
 	SDL_Rect extinguisherrect;
 	SDL_Rect cloudsunRect;
 	SDL_Rect starmoonRect;
@@ -93,16 +94,23 @@ public:
 	TripleKirby* midKirby;
 	TripleKirby* leftKirby;
 	TripleKirby* rightKirby;
+
 	PhysBody *cloudtodie;
 	PhysBody *startodie;
+
+
+	bool ghostImpact;
+	uint ghostcount;
 	bool triangleDraw;
 	uint trianglecount;
-
+	
 	int sun_life;
 	int moon_life;
 
 	int triX;
 	int triY;
+	int ghostX;
+	int ghostY;
 	bool GameOverFxenabled;
 	bool printThObj;
 	bool printThObj2;
