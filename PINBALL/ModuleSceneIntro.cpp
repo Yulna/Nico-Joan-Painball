@@ -43,7 +43,7 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/KirbyPinball.png");
 	kicker = App->textures->Load("pinball/kicker.png");
 	tripleKirby = App->textures->Load("pinball/tripleKirby.png");
-
+	impact_tri = App->textures->Load("pinball/changing_tri.png");
 	game_overtext = App->textures->Load("pinball/GameOver.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -165,14 +165,10 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	
-	
-
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10, b2_dynamicBody));
 	}
-
-
 
 	//Spawning test objects
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -190,7 +186,6 @@ update_status ModuleSceneIntro::Update()
 		
 	}
 
-	
 	
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -211,12 +206,7 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(background, x, y, NULL, 1.0f, ground->GetRotation());
 	}
 
-	//print player balls
-	int playerx, playery;
-	if (player!=nullptr) {
-		player->GetPosition(playerx, playery);
-		App->renderer->Blit(circle, playerx - (player->width / 2), playery - (player->height / 2), NULL, 1.0f, player->GetRotation());
-	}
+	
 	
 	
 	
@@ -289,7 +279,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 
-
+	//Jackpot Kirby print
 	if (midKirby)
 	{
 		int x, y;
@@ -433,12 +423,28 @@ update_status ModuleSceneIntro::Update()
 	if (triangleDraw)
 	{
 		trianglecount++;
-		SDL_Rect rect1 = { 0,0,25,30 };
-		App->renderer->Blit(sun_moon_textures,triX, triY, &rect1);
+		if (triX < 80) {
+			SDL_Rect tri_rect = { 0,0,12,16 };
+			App->renderer->Blit(impact_tri, triX - 3, triY, &tri_rect);
+		}
+		if (triX > 80) {
+			SDL_Rect tri_rect = { 23,0,12,16 };
+			App->renderer->Blit(impact_tri, triX - 8, triY-1, &tri_rect);
+		}
+
 		if (trianglecount > 15) {
 			triangleDraw = false;
 			trianglecount = 0;
 		}
+	}
+
+
+	//print player balls
+	///Printed last so it's always on top of the other textures
+	if (player != nullptr) {
+		int playerx, playery;
+		player->GetPosition(playerx, playery);
+		App->renderer->Blit(circle, playerx - (player->width / 2), playery - (player->height / 2), NULL, 1.0f, player->GetRotation());
 	}
 
 	return UPDATE_CONTINUE;
@@ -448,8 +454,6 @@ update_status ModuleSceneIntro::PostUpdate()
 {
 	if (game_over)
 		App->renderer->Blit(game_overtext, 50,50,NULL);
-
-
 	
 
 	return UPDATE_CONTINUE;

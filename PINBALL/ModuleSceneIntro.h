@@ -68,6 +68,7 @@ public:
 	SDL_Texture* sun_moon_textures;
 	SDL_Texture* extinguishertext;
 	SDL_Texture* game_overtext;
+	SDL_Texture* impact_tri;
 	SDL_Rect extinguisherrect;
 
 	uint bonus_fx;

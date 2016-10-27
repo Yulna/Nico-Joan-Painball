@@ -1081,23 +1081,26 @@ void ModulePhysics::CreateFloatingWalls()
 	};
 	*/
 
-	int LeftBotRest[8] = {
+	int LeftRest[8] = {
 		0, 3,
 		0, 0,
 		9, 12,
 		6, 12
 	};
-	triangles->add(CreatePolygon(41, 378, LeftBotRest, 8, 0, 1.75f, -2, b2_staticBody));
-	
-	// Pivot 0, 0
-	int LeftMidRest[8] = {
-		41, 238,
-		41, 234,
-		50, 247,
-		47, 246
-	};
-	triangles->add(CreatePolygon(0, 0, LeftMidRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(41, 377, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(41, 234, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(41, 89, LeftRest, 8, 0, 1.75f, -2, b2_staticBody));
 
+	
+	int RightRest[8] = {
+		0, 3,
+		0, 0,
+		-9, 12,
+		-6, 12
+	};
+	triangles->add(CreatePolygon(119, 378, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(119, 235, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
+	triangles->add(CreatePolygon(119, 90, RightRest, 8, 0, 1.75f, -2, b2_staticBody));
 
 }
 
