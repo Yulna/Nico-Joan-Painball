@@ -280,8 +280,11 @@ update_status ModulePhysics::PreUpdate()
 				3, 0
 			};
 			Mystars.add(CreatePolygon(70, 30, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-			Mystars.add(CreatePolygon(30, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(30, 45, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
 			Mystars.add(CreatePolygon(40, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(65, 45, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(120, 25, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+			Mystars.add(CreatePolygon(130, 45, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
 		}
 	}
 
