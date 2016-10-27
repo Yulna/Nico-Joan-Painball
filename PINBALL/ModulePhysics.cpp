@@ -288,8 +288,9 @@ update_status ModulePhysics::PreUpdate()
 
 	if ((App->scene_intro->moon_life <0) && moon)
 	{
-		App->scene_intro->game_over = true;
+		App->scene_intro->win = true;
 		world->DestroyBody(moon->body);
+		
 		moon = nullptr;
 	}
 
@@ -793,9 +794,9 @@ void ModulePhysics::SpawnBoss()
 			3, 0
 		};
 
-		Mycloud.add(CreatePolygon(48, 30, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-		Mycloud.add(CreatePolygon(80, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-		Mycloud.add(CreatePolygon(68, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		Mycloud.add(CreatePolygon(38, 40, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		Mycloud.add(CreatePolygon(105, 35, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		Mycloud.add(CreatePolygon(68, 25, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
 	}
 
 }

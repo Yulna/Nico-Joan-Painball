@@ -47,7 +47,7 @@ bool ModuleSceneIntro::Start()
 	impact_tri = App->textures->Load("pinball/changing_tri.png");
 	game_overtext = App->textures->Load("pinball/GameOver.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-
+	victorysound = App->audio->LoadFx("pinball/11 - HAL Sound Team - Victory Dance.ogg");
 	Point_fx = App->audio->LoadFx("pinball/ExtintorPointSound.wav");
 	Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");Kicker_fx = App->audio->LoadFx("pinball/KickersSound.ogg");
 	Ghost_fx = App->audio->LoadFx("pinball/GhostSound.ogg");
@@ -140,7 +140,7 @@ bool ModuleSceneIntro::Start()
 	//star moon
 	starmoonRect.w = 16;
 	starmoonRect.h = 16;
-	starmoonRect.x = 50;
+	starmoonRect.x = 48;
 	starmoonRect.y = 31;
 
 
@@ -432,6 +432,9 @@ update_status ModuleSceneIntro::Update()
 		gameover_sound();
 	}
 
+	if (win) {
+		gamewin_sound();
+	}
 	//Collisions Blits (at least until we are able to move oncollision to postupdate)
 	if (triangleDraw)
 	{
@@ -483,6 +486,7 @@ update_status ModuleSceneIntro::PostUpdate()
 		App->renderer->Blit(game_overtext, 50, 50, NULL);
 
 	}
+	
 
 
 
@@ -750,6 +754,12 @@ void ModuleSceneIntro::gameover_sound()
 {
 	if ( GameOverFxenabled != true) {
 		GameOverFxenabled=App->audio->PlayFx(GameOver_fx);
+	}
+}
+
+void ModuleSceneIntro::gamewin_sound() {
+	if (gamewinenabled != true) {
+		gamewinenabled = App->audio->PlayFx(victorysound);
 	}
 }
 

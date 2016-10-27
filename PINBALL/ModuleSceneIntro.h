@@ -32,6 +32,7 @@ public:
 	void SpawnPlayer();
 	void gameover_sound();
 	void ResetJackpot();
+	void gamewin_sound();
 
 	SDL_Rect GetJackpotKirbyRect(TripleKirby* jkirby);
 
@@ -73,7 +74,7 @@ public:
 	SDL_Rect extinguisherrect;
 	SDL_Rect cloudsunRect;
 	SDL_Rect starmoonRect;
-
+	uint victorysound;
 	uint bonus_fx;
 	uint Point_fx;
 	uint Kicker_fx;
@@ -98,7 +99,7 @@ public:
 
 	PhysBody *cloudtodie;
 	PhysBody *startodie;
-
+	bool win;
 
 	bool ghostImpact;
 	uint ghostcount;
@@ -113,6 +114,7 @@ public:
 	int ghostX;
 	int ghostY;
 	bool GameOverFxenabled;
+	bool gamewinenabled;
 	bool printThObj;
 	bool printThObj2;
 
