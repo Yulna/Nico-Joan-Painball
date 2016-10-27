@@ -113,7 +113,7 @@ public:
 	PhysBody* Useextinguisher5;
 	PhysBody* extinguisher6;
 	PhysBody* Useextinguisher6;
-
+	p2List<PhysBody*> Mycloud;
 	PhysBody* DetectFatKirbyAnimation;
 	bool ballupumbrella;
 

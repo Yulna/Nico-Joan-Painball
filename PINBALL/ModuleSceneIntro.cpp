@@ -596,7 +596,11 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 	
-
+	//cloud sun
+		if (App->physics->Mycloud.find(bodyB)!=-1) {
+			p2List_item<PhysBody*> item = bodyB;
+			App->physics->Mycloud.del(&item);
+		}
 
 	//Kirby Jackpot
 	if (bodyA == App->physics->midKirby || bodyB == App->physics->midKirby)

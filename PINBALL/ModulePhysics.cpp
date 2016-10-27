@@ -234,6 +234,27 @@ bool ModulePhysics::Start()
 
 	DetectFatKirbyAnimation = CreateRectangleSensor(83, 185, 21, 24);
 	DetectFatKirbyAnimation->listener = App->scene_intro;
+
+
+	int sun_moon_cloud[12] = {
+		14, 34,
+		18, 39,
+		13, 43,
+		7, 43,
+		4, 38,
+		7, 34
+	};
+
+	Mycloud.add(CreatePolygon(48, 10, sun_moon_cloud, 12,0, 1.2f,-3,b2_staticBody));
+	Mycloud.add(CreatePolygon(80, 10, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+	Mycloud.add(CreatePolygon(68, -10, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+	p2List_item<PhysBody*> *temp= Mycloud.getFirst();
+	/*for (int i = 0; i < Mycloud.count(); i++) {
+		temp->data->listener = App->scene_intro;
+		temp = temp->next;
+	}*/
+
+
 	return true;
 }
 
@@ -795,7 +816,7 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, floa
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = dens;
-	fixture.restitution = 0;
+	fixture.restitution = rest;
 	fixture.filter.groupIndex = filterIndex;
 
 	b->CreateFixture(&fixture);
