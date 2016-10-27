@@ -31,6 +31,7 @@ public:
 
 	void SpawnPlayer();
 	void gameover_sound();
+	void ResetJackpot();
 
 	SDL_Rect GetJackpotKirbyRect(TripleKirby* jkirby);
 

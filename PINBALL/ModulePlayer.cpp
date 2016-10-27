@@ -92,8 +92,12 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		life = 3;
+		score = 0;
+		pickedJackpot = false;
 		App->scene_intro->game_over = false;
 		App->scene_intro->GameOverFxenabled = false;
+		App->physics->SpawnBoss();
+		App->scene_intro->ResetJackpot();
 	}
 
 

@@ -770,6 +770,13 @@ void ModuleSceneIntro::gameover_sound()
 	}
 }
 
+void ModuleSceneIntro::ResetJackpot()
+{
+	midKirby->state = 1;
+	leftKirby->state = 1;
+	rightKirby->state = 1;
+}
+
 SDL_Rect ModuleSceneIntro::GetJackpotKirbyRect(TripleKirby* jkirby)
 {
 	if (jkirby->state == 1)

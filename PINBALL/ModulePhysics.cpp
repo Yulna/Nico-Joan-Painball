@@ -164,8 +164,8 @@ bool ModulePhysics::Start()
 	kinematicrect = CreateRectangle(80, 172, 24, 14, b2_kinematicBody);
 	kinematicrect->body->SetLinearVelocity(b2Vec2(1, 0));
 
-	sun = CreateCircle(27, 40, 10, b2_kinematicBody, 10, 2,0);
-	sun->body->SetLinearVelocity(b2Vec2(1, 0));
+	SpawnBoss();
+
 
 	//Walls
 	fatkirby = CreateCircle(81,210,12,b2_staticBody,6,0.3f,0);
@@ -217,18 +217,7 @@ bool ModulePhysics::Start()
 	DetectFatKirbyAnimation->listener = App->scene_intro;
 
 
-	int sun_moon_cloud[12] = {
-		10, 0,
-		14, 5,
-		9, 9,
-		3, 9,
-		0, 4,
-		3, 0
-	};
-
-	Mycloud.add(CreatePolygon(48, 30, sun_moon_cloud, 12,0, 1.2f,-3,b2_staticBody));
-	Mycloud.add(CreatePolygon(80, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
-	Mycloud.add(CreatePolygon(68, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+	
 
 
 
@@ -279,6 +268,7 @@ update_status ModulePhysics::PreUpdate()
 		sun = nullptr;
 
 		//Create moon when sun dies
+		App->scene_intro->moon_life = 3;
 		moon = CreateCircle(28, 28, 10, b2_staticBody, 10, 2,0);
 		if (Mycloud.count()==0) {
 			int sun_moon_cloud[12] = {
@@ -784,6 +774,29 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+void ModulePhysics::SpawnBoss()
+{
+	if (!sun)
+	{
+		sun = CreateCircle(27, 40, 10, b2_kinematicBody, 10, 2, 0);
+		sun->body->SetLinearVelocity(b2Vec2(1, 0));
+
+		int sun_moon_cloud[12] = {
+			10, 0,
+			14, 5,
+			9, 9,
+			3, 9,
+			0, 4,
+			3, 0
+		};
+
+		Mycloud.add(CreatePolygon(48, 30, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		Mycloud.add(CreatePolygon(80, 50, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+		Mycloud.add(CreatePolygon(68, 20, sun_moon_cloud, 12, 0, 1.2f, -3, b2_staticBody));
+	}
+
 }
 
 
