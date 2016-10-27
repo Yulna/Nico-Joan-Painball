@@ -454,6 +454,16 @@ update_status ModuleSceneIntro::PostUpdate()
 {
 	if (game_over)
 		App->renderer->Blit(game_overtext, 50,50,NULL);
+
+	if (!(App->player->pickedJackpot))
+	{
+		//Check kirby state
+		if ((midKirby->state == 3) && (leftKirby->state == 3) && (rightKirby->state == 3))
+		{
+			App->player->IncreaseScore(10000);
+			App->player->pickedJackpot = true;
+		}
+	}
 	
 
 	return UPDATE_CONTINUE;

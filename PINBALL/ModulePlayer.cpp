@@ -19,6 +19,7 @@ bool ModulePlayer::Start()
 	score = 0;
 	life = 3;
 	active = false;
+	pickedJackpot = false;
 
 	LOG("Loading player");
 	return true;
