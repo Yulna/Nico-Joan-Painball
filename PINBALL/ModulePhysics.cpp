@@ -380,35 +380,6 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 }
 
 
-
-
-//Tes purposes only, Erase/Change later-------------------------------------------------------------------------------------------------------------------------
-/*PhysBody* ModulePhysics::CreateRectangleKickerPoint(int x, int y, int width, int height)
-{
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
-
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = width * 0.5f;
-	pbody->height = height * 0.5f;
-
-	return pbody;
-}*/
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
 {
 	b2BodyDef body;
@@ -701,6 +672,10 @@ bool ModulePhysics::CleanUp()
 
 	// Delete the whole physics world!
 	delete world;
+
+	delete triangles;
+	delete rightKickers;
+	delete leftKickers;
 
 	return true;
 }
@@ -1128,5 +1103,3 @@ void ModulePhysics::ballupsideumbrella(PhysBody* Mball) {
 
 
 }
-
-

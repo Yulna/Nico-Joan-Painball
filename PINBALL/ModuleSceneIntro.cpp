@@ -137,6 +137,10 @@ bool ModuleSceneIntro::Start()
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
+	delete midKirby;
+	delete rightKirby;
+	delete leftKirby;
+
 	LOG("Unloading Intro scene");
 
 	return true;
