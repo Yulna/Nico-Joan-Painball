@@ -28,8 +28,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
 	void SpawnPlayer();
-	
+	void gameover_sound();
+
 	SDL_Rect GetJackpotKirbyRect(TripleKirby* jkirby);
 
 public:
@@ -75,6 +77,7 @@ public:
 	uint Triangles_fx;
 	uint Fatkirby_fx;
 	uint GameOver_fx;
+	uint MusicOflvl;
 	p2Point<int> ray;
 	bool ray_on;
 	int TimesKickCloud;
@@ -97,7 +100,7 @@ public:
 
 	int triX;
 	int triY;
-
+	bool GameOverFxenabled;
 	bool printThObj;
 	bool printThObj2;
 
