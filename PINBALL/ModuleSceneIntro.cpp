@@ -501,7 +501,12 @@ update_status ModuleSceneIntro::Update()
 update_status ModuleSceneIntro::PostUpdate()
 {
 	if (game_over)
-		App->renderer->Blit(game_overtext, 50,50,NULL);
+	{
+		App->renderer->Blit(game_overtext, 50, 50, NULL);
+		player->body->SetType(b2_staticBody);
+	}
+
+
 
 
 	//Kirby Jackpot price

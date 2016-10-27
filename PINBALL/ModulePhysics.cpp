@@ -288,6 +288,7 @@ update_status ModulePhysics::PreUpdate()
 
 	if ((App->scene_intro->moon_life <0) && moon)
 	{
+		App->scene_intro->game_over = true;
 		world->DestroyBody(moon->body);
 		moon = nullptr;
 	}
@@ -651,7 +652,7 @@ update_status ModulePhysics::PostUpdate()
 
 
 		//Debug mouse joint
-		if (debug_joint == true && (b->GetType() != b2_kinematicBody)) {
+		if (debug_joint == true && (b->GetType() != b2_kinematicBody) && (b->GetType() != b2_staticBody)) {
 			b2MouseJointDef def;
 			def.bodyA = ground;
 			def.bodyB = mouse_body;
@@ -663,14 +664,14 @@ update_status ModulePhysics::PostUpdate()
 		}
 
 
-		if ((mouse_joint != nullptr) && (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) && (b->GetType() != b2_kinematicBody)) {
+		if ((mouse_joint != nullptr) && (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) && (b->GetType() != b2_kinematicBody) && (b->GetType() != b2_staticBody)) {
 
 			mouse_joint->SetTarget(b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY())));
 			App->renderer->DrawLine(METERS_TO_PIXELS( mouse_joint->GetAnchorB().x) , METERS_TO_PIXELS( mouse_joint->GetAnchorB().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 100, 100);
 		}
 	
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != nullptr && (b->GetType() != b2_kinematicBody))
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != nullptr && (b->GetType() != b2_kinematicBody) && (b->GetType() != b2_staticBody))
 		{
 
 			world->DestroyJoint(mouse_joint);
