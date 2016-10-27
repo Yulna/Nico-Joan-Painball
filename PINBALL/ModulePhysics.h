@@ -85,7 +85,7 @@ public:
 	void BeginContact(b2Contact* contact);
 
 
-
+	
 
 	//Get variables 
 	p2List<PhysBody*>* GetLeftKickers();
