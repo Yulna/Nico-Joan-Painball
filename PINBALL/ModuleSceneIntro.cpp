@@ -555,11 +555,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (App->physics->Mycloud.find(bodyB)!=-1) {
 			cloudtodie = bodyB;
 			App->physics->clouddie = true;
+			App->audio->PlayFx(Ghost_fx);
 		}
 		//stars moon
 		if (App->physics->Mystars.find(bodyB) != -1) {
 			startodie = bodyB;
 			App->physics->stardie = true;
+			App->audio->PlayFx(Ghost_fx);
 		}
 		//extinguisher 2
 		if (bodyA->body == App->physics->extinguisher2->body || bodyB->body == App->physics->extinguisher2->body) {
