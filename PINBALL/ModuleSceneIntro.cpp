@@ -170,34 +170,12 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && App->physics->debug)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 5, b2_dynamicBody, 25, 0, -1));
 		circles.getLast()->data->listener = this;
-
 	}
 
-	
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 20, 10, b2_dynamicBody));
-	}
-
-	//Spawning test objects
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		int kicker[12] = {
-			2, 1,
-			0, 7,
-			13, 11,
-			22, 10,
-			8, 2,
-		};
-
-
-		boxes.add(App->physics->CreatePolygon(App->input->GetMouseX(), App->input->GetMouseY(), kicker, 10, 1.0f, 0,-2, b2_dynamicBody));
-		
-	}
 
 	
 	// Prepare for raycast ------------------------------------------------------
@@ -503,7 +481,7 @@ update_status ModuleSceneIntro::PostUpdate()
 	if (game_over)
 	{
 		App->renderer->Blit(game_overtext, 50, 50, NULL);
-		player->body->SetType(b2_staticBody);
+
 	}
 
 

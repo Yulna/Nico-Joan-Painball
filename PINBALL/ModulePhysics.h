@@ -95,6 +95,8 @@ public:
 
 
 public:
+	bool debug;
+
 	PhysBody* spikyball1;
 	PhysBody* ghost1;
 	PhysBody* spikyball2;
@@ -142,7 +144,7 @@ public:
 
 private:
 
-	bool debug;
+	
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2RevoluteJoint* revolute_joint;

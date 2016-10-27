@@ -79,10 +79,19 @@ update_status ModulePlayer::Update()
 		active = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && App->physics->debug)
 	{
 		life--;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && App->physics->debug)
+	{
+		life++;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->physics->debug)
+	{
+		IncreaseScore(1000);
+	}
+
 
 	if (life <= 0)
 	{
